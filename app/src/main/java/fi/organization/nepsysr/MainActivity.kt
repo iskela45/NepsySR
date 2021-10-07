@@ -11,7 +11,6 @@ import fi.organization.nepsysr.ContactDatabase.*
 
 class MainActivity : AppCompatActivity() {
 
-    private val newContactActivityRequestCode = 1
     private val contactViewModel: ContactViewModel by viewModels {
         ContactViewModelFactory((application as ContactsApplication).repository)
     }
@@ -19,10 +18,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        print("here")
-        Log.d("create", "onCreateaaaaaaaaaaaaaaaaaaaa")
         setContentView(R.layout.activity_main)
 
+        // Create recyclerViews for all of the names.
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerview)
         val adapter = ContactListAdapter()
         recyclerView.adapter = adapter
@@ -38,23 +36,18 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+        // Observes changes to the data and updates the GUI accordingly
         contactViewModel.allContacts.observe(this) { contacts ->
             // Update the cached copy of the contacts in the adapter.
             contacts.let { adapter.submitList(it) }
         }
 
+        // More examples of adding to the database, can be freely removed.
         var contact = Contact(0, "aaa", "no image", "#000000", 0)
         contactViewModel.insert(contact)
         contact = Contact(0, "bbb", "no image", "#000000", 0)
         contactViewModel.insert(contact)
 
-
-
-        //var contacts: List<Contact>? = null
-        //var test: Contact = Contact(0, "test", "img1", "#111", 0)
-
-        Log.d("createeeeeeeeee", contactViewModel.toString())
-        //print(contacts)
     }
 
 }
