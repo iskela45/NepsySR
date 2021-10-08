@@ -6,8 +6,6 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,7 +18,6 @@ class MainActivity : AppCompatActivity() {
     private val contactViewModel: ContactViewModel by viewModels {
         ContactViewModelFactory((application as ContactsApplication).repository)
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +38,6 @@ class MainActivity : AppCompatActivity() {
             Log.d("clickListener", "success")
         }
 
-
         // Observes changes to the data and updates the GUI accordingly
         contactViewModel.allContacts.observe(this) { contacts ->
             // Update the cached copy of the contacts in the adapter.
@@ -56,20 +52,16 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
 
         // Inflate the menu; this adds items to the action bar if it's present.
         inflater.inflate(R.menu.my_menu, menu)
         return true
-
     }
 
     // Determine if action bar item was selected. If true do corresponding action.
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
-        Log.d("TAG" , "works")
 
         // handle presses on the action bar menu.
         return when (item.itemId) {
@@ -85,5 +77,4 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
     }
-
 }
