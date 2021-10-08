@@ -1,20 +1,23 @@
 package fi.organization.nepsysr
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import fi.organization.nepsysr.ContactDatabase.*
 
+
 class MainActivity : AppCompatActivity() {
 
     private val contactViewModel: ContactViewModel by viewModels {
         ContactViewModelFactory((application as ContactsApplication).repository)
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +38,6 @@ class MainActivity : AppCompatActivity() {
             Log.d("clickListener", "success")
         }
 
-
         // Observes changes to the data and updates the GUI accordingly
         contactViewModel.allContacts.observe(this) { contacts ->
             // Update the cached copy of the contacts in the adapter.
@@ -50,4 +52,29 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater = menuInflater
+
+        // Inflate the menu; this adds items to the action bar if it's present.
+        inflater.inflate(R.menu.my_menu, menu)
+        return true
+    }
+
+    // Determine if action bar item was selected. If true do corresponding action.
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        // handle presses on the action bar menu.
+        return when (item.itemId) {
+            R.id.action_settings -> {
+                val intent = Intent(this, Settings::class.java)
+                startActivity(intent)
+                true
+            }
+        else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+    }
 }

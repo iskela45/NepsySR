@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">NepsySR</string>
+    
+    <string name="action_settings">Settings</string>
 </resources>
