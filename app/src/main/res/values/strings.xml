@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">NepsySR</string>
-    
+
+    <!--Toolbar-->
     <string name="action_settings">Settings</string>
+
+    <!--Settings-->
+    <string name="set_alarm_time">Aseta hälytysaika</string>
 </resources>
