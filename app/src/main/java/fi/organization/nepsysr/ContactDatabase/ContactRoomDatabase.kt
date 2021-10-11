@@ -33,6 +33,7 @@ public abstract class ContactRoomDatabase : RoomDatabase() {
                     ContactRoomDatabase::class.java,
                     "contact_database"
                 )
+                    .fallbackToDestructiveMigration()
                     .addCallback(ContactDatabaseCallback(scope))
                     .build()
                 INSTANCE = instance

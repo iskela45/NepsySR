@@ -15,6 +15,10 @@ class ContactViewModel(private val repository: ContactRepository) : ViewModel() 
     fun insert(contact: Contact) = viewModelScope.launch {
         repository.insert(contact)
     }
+
+    fun deleteAll() = viewModelScope.launch {
+        repository.deleteAll()
+    }
 }
 
 // Boilerplate code
