@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         val testButton = findViewById<FloatingActionButton>(R.id.fab)
         testButton.setOnClickListener {
             // use 0 for auto incrementing uid.
-            var contact = Contact(0, "ddd", "no image", "#000000", 0)
+            var contact = Contact(0, "ddd", "no image", "#49ba54", 0)
             contactViewModel.insert(contact)
             Log.d("clickListener", "success")
         }
@@ -48,9 +48,9 @@ class MainActivity : AppCompatActivity() {
         contactViewModel.deleteAll()
 
         // More examples of adding to the database, can be freely removed.
-        var contact = Contact(0, "aaa", "no image", "#000000", 0)
+        var contact = Contact(0, "aaa", "no image", "#ffc870", 0)
         contactViewModel.insert(contact)
-        contact = Contact(0, "bbb", "no image", "#000000", 0)
+        contact = Contact(0, "bbb", "no image", "#6cb9f0", 0)
         contactViewModel.insert(contact)
 
     }

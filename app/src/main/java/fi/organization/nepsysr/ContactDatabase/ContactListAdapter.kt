@@ -1,5 +1,6 @@
 package fi.organization.nepsysr.ContactDatabase
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,14 +18,15 @@ class ContactListAdapter : ListAdapter<Contact, ContactListAdapter.ContactViewHo
 
     override fun onBindViewHolder(holder: ContactViewHolder, position: Int) {
         val current = getItem(position)
-        holder.bind(current.name)
+        holder.bind(current.name, current.color)
     }
 
     class ContactViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val ContactItemView: TextView = itemView.findViewById(R.id.textView)
 
-        fun bind(text: String?) {
+        fun bind(text: String?, color: String?) {
             ContactItemView.text = text
+            ContactItemView.setBackgroundColor(Color.parseColor(color))
         }
 
         companion object {

@@ -63,9 +63,9 @@ public abstract class ContactRoomDatabase : RoomDatabase() {
             contactDao.deleteAll()
 
             // Adding placeholder contacts.
-            var contact = Contact(0, "Zezima", "img1", "#000000", 0)
+            var contact = Contact(0, "Zezima", "img1", "#e34f32", 0)
             contactDao.insert(contact)
-            contact = Contact(0, "Kekkonen", "img2", "#000000", 0)
+            contact = Contact(0, "Kekkonen", "img2", "#e34f32", 0)
             contactDao.insert(contact)
         }
     }
