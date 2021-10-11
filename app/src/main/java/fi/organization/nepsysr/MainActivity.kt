@@ -26,6 +26,8 @@ class MainActivity : AppCompatActivity() {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
 
+
+
         // Just an example of how to add to the database.
         val testButton = findViewById<FloatingActionButton>(R.id.fab)
         testButton.setOnClickListener {
@@ -41,6 +43,7 @@ class MainActivity : AppCompatActivity() {
             // Update the cached copy of the contacts in the adapter.
             contacts.let { adapter.submitList(it) }
         }
+        contactViewModel.deleteAll()
 
         // More examples of adding to the database, can be freely removed.
         var contact = Contact(0, "aaa", "no image", "#000000", 0)
