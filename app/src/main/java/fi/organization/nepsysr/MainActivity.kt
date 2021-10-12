@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity() {
         // handle presses on the action bar menu.
         return when (item.itemId) {
             R.id.action_settings -> {
-                val intent = Intent(this, Settings::class.java)
+                val intent = Intent(this, SettingsActivity::class.java)
                 startActivity(intent)
                 true
             }
