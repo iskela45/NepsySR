@@ -4,6 +4,14 @@
     <!--Toolbar-->
     <string name="action_settings">Settings</string>
 
-    <!--Settings-->
+    <!--Settings titles-->
     <string name="set_alarm_time">Aseta hälytysaika</string>
+    <string name="title_activity_settings">Asetukset</string>
+    <string name="notifications">Ilmoitukset</string>
+    <string name="disable_notifications">Poista ilmoitukset käytöstä</string>
+
+    <!--Settings summaries-->
+    <string name="notifications_on">Ilmoitukset pois päältä</string>
+    <string name="notifications_off">Ilmoitukset päällä</string>
+
 </resources>
