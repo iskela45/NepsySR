@@ -1,10 +1,13 @@
 package fi.organization.nepsysr
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,9 +17,20 @@ import fi.organization.nepsysr.ContactDatabase.*
 
 
 class MainActivity : AppCompatActivity() {
-
     private val contactViewModel: ContactViewModel by viewModels {
         ContactViewModelFactory((application as ContactsApplication).repository)
+    }
+
+    lateinit var name: String
+    val profileResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+    { result: ActivityResult? ->
+        if (result?.resultCode == Activity.RESULT_OK) {
+            name = result.data?.getStringExtra("name").toString()
+            var contact = Contact(0, name, "no image", "#49ba54", 0)
+            contactViewModel.insert(contact)
+            Log.d("TAG", "name: ${name}")
+        }
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,6 +52,9 @@ class MainActivity : AppCompatActivity() {
             var contact = Contact(0, "ddd", "no image", "#49ba54", 0)
             contactViewModel.insert(contact)
             Log.d("clickListener", "success")
+
+            val intent = Intent(this, ProfileActivity::class.java)
+            profileResult.launch(intent)
         }
 
         // Observes changes to the data and updates the GUI accordingly
