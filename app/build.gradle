@@ -56,7 +56,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-common-java8:$rootProject.lifecycleVersion"
 
     // Room dependencies
-    def room_version = "2.3.0"
+    // def room_version = "2.3.0" siirretty alustus projektin build gradle ext
 
     implementation("androidx.room:room-runtime:$room_version")
     annotationProcessor "androidx.room:room-compiler:$room_version"

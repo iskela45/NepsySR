@@ -1,4 +1,4 @@
-package fi.organization.nepsysr.ContactDatabase
+package fi.organization.nepsysr.database
 
 import android.graphics.Color
 import android.view.LayoutInflater
@@ -22,11 +22,11 @@ class ContactListAdapter : ListAdapter<Contact, ContactListAdapter.ContactViewHo
     }
 
     class ContactViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val ContactItemView: TextView = itemView.findViewById(R.id.textView)
+        private val contactItemView: TextView = itemView.findViewById(R.id.textView)
 
         fun bind(text: String?, color: String?) {
-            ContactItemView.text = text
-            ContactItemView.setBackgroundColor(Color.parseColor(color))
+            contactItemView.text = text
+            contactItemView.setBackgroundColor(Color.parseColor(color))
         }
 
         companion object {

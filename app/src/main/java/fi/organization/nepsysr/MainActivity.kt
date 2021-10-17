@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Button
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -13,12 +14,12 @@ import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import fi.organization.nepsysr.ContactDatabase.*
+import fi.organization.nepsysr.database.*
 
 
 class MainActivity : AppCompatActivity() {
     private val contactViewModel: ContactViewModel by viewModels {
-        ContactViewModelFactory((application as ContactsApplication).repository)
+        ContactViewModelFactory((application as AppApplication).repository)
     }
 
     lateinit var name: String
@@ -55,6 +56,14 @@ class MainActivity : AppCompatActivity() {
 
             val intent = Intent(this, ProfileActivity::class.java)
             profileResult.launch(intent)
+        }
+
+        // This button works as a placeholder to go into tasks activity until the
+        // functionality is set for going from recyclerview items
+        val test = findViewById<Button>(R.id.test)
+        test.setOnClickListener {
+            val intent = Intent(this, TaskActivity::class.java)
+            startActivity(intent)
         }
 
         // Observes changes to the data and updates the GUI accordingly

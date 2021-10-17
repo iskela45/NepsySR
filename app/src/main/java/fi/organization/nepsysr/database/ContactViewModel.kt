@@ -1,9 +1,9 @@
-package fi.organization.nepsysr.ContactDatabase
+package fi.organization.nepsysr.database
 
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 
-class ContactViewModel(private val repository: ContactRepository) : ViewModel() {
+class ContactViewModel(private val repository: AppRepository) : ViewModel() {
 
     // Using LiveData and caching what allContacts returns has several benefits:
     // - We can put an observer on the data (instead of polling for changes) and only update the
@@ -20,9 +20,8 @@ class ContactViewModel(private val repository: ContactRepository) : ViewModel() 
         repository.deleteAll()
     }
 }
-
 // Boilerplate code
-class ContactViewModelFactory(private val repository: ContactRepository) : ViewModelProvider.Factory {
+class ContactViewModelFactory(private val repository: AppRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(ContactViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
