@@ -1,16 +1,22 @@
 package fi.organization.nepsysr.ContactDatabase
 
 import android.content.Context
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toBitmap
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
+import fi.organization.nepsysr.R
+import fi.organization.nepsysr.utilities.BitmapConverter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 
 // Annotates class to be a Room Database with a table (entity) of the contact class
 @Database(entities = arrayOf(Contact::class), version = 1, exportSchema = false)
+@TypeConverters(BitmapConverter::class)
 public abstract class ContactRoomDatabase : RoomDatabase() {
 
     abstract fun contactDao(): ContactDao
@@ -63,10 +69,10 @@ public abstract class ContactRoomDatabase : RoomDatabase() {
             contactDao.deleteAll()
 
             // Adding placeholder contacts.
-            var contact = Contact(0, "Zezima", "img1", "#e34f32", 0)
-            contactDao.insert(contact)
-            contact = Contact(0, "Kekkonen", "img2", "#e34f32", 0)
-            contactDao.insert(contact)
+            //var contact = Contact(0, "Zezima", "img1", "#e34f32", 0)
+            //contactDao.insert(contact)
+            //contact = Contact(0, "Kekkonen", "img2", "#e34f32", 0)
+            //contactDao.insert(contact)
         }
     }
 }

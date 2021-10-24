@@ -1,9 +1,12 @@
 package fi.organization.nepsysr.ContactDatabase
 
+import android.graphics.Bitmap
 import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -18,15 +21,17 @@ class ContactListAdapter : ListAdapter<Contact, ContactListAdapter.ContactViewHo
 
     override fun onBindViewHolder(holder: ContactViewHolder, position: Int) {
         val current = getItem(position)
-        holder.bind(current.name, current.color)
+        holder.bind(current.name, current.img, current.color)
     }
 
     class ContactViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val ContactItemView: TextView = itemView.findViewById(R.id.textView)
+        private val ContactImageView: ImageView = itemView.findViewById(R.id.profile_Img)
 
-        fun bind(text: String?, color: String?) {
+        fun bind(text: String?, img: Bitmap?, color: String?) {
             ContactItemView.text = text
             ContactItemView.setBackgroundColor(Color.parseColor(color))
+            ContactImageView.setImageBitmap(img)
         }
 
         companion object {

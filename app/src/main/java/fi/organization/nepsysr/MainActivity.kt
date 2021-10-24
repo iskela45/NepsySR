@@ -3,6 +3,8 @@ package fi.organization.nepsysr
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -11,6 +13,10 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.viewModels
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.graphics.drawable.toBitmap
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -18,6 +24,8 @@ import fi.organization.nepsysr.ContactDatabase.*
 
 
 class MainActivity : AppCompatActivity() {
+
+
     private val contactViewModel: ContactViewModel by viewModels {
         ContactViewModelFactory((application as ContactsApplication).repository)
     }
@@ -26,17 +34,24 @@ class MainActivity : AppCompatActivity() {
     val profileResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult())
     { result: ActivityResult? ->
         if (result?.resultCode == Activity.RESULT_OK) {
+            // Placeholder image
+            val drawable = AppCompatResources.getDrawable(this, R.drawable.ic_baseline_image_search_24)
+            val placeholderBitmap = drawable?.toBitmap()
+
             name = result.data?.getStringExtra("name").toString()
-            var contact = Contact(0, name, "no image", "#49ba54", 0)
+            var contact = Contact(0, name, placeholderBitmap!!, "#49ba54", 0)
             contactViewModel.insert(contact)
             Log.d("TAG", "name: ${name}")
         }
 
     }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // Placeholder image
+        val drawable = AppCompatResources.getDrawable(this, R.drawable.ic_baseline_image_search_24)
+        val placeholderBitmap = drawable?.toBitmap()
 
         // Create recyclerViews for all of the names.
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerview)
@@ -66,9 +81,9 @@ class MainActivity : AppCompatActivity() {
         contactViewModel.deleteAll()
 
         // More examples of adding to the database, can be freely removed.
-        var contact = Contact(0, "aaa", "no image", "#ffc870", 0)
+        var contact = Contact(0, "aaa", placeholderBitmap!!, "#ffc870", 0)
         contactViewModel.insert(contact)
-        contact = Contact(0, "bbb", "no image", "#6cb9f0", 0)
+        contact = Contact(0, "bbb", placeholderBitmap!!, "#6cb9f0", 0)
         contactViewModel.insert(contact)
 
     }
