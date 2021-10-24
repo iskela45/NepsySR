@@ -49,8 +49,8 @@ class MainActivity : AppCompatActivity() {
         val testButton = findViewById<FloatingActionButton>(R.id.fab)
         testButton.setOnClickListener {
             // use 0 for auto incrementing uid.
-            var contact = Contact(0, "ddd", "no image", "#49ba54", 0)
-            contactViewModel.insert(contact)
+            //var contact = Contact(0, "ddd", "no image", "#49ba54", 0)
+            //contactViewModel.insert(contact)
             Log.d("clickListener", "success")
 
             val intent = Intent(this, ProfileActivity::class.java)
