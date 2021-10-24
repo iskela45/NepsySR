@@ -2,6 +2,7 @@ package fi.organization.nepsysr
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -72,6 +73,8 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
 
@@ -92,9 +95,5 @@ class MainActivity : AppCompatActivity() {
             }
         else -> super.onOptionsItemSelected(item)
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
     }
 }
