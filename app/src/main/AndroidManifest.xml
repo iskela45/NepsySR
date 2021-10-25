@@ -27,6 +27,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Settings" />
+        <receiver android:name=".receivers.AlarmReceiver"></receiver>
     </application>
 
 </manifest>
