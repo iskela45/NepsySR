@@ -1,10 +1,10 @@
-package fi.organization.nepsysr.ContactDatabase
+package fi.organization.nepsysr.database
 
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface ContactDao {
+interface AppDao {
     @Query("SELECT * FROM contact")
     suspend fun getAll(): List<Contact>
 
@@ -29,4 +29,21 @@ interface ContactDao {
     @Query("DELETE FROM contact")
     suspend fun deleteAll()
 
+    // Tasks
+
+    @Query("SELECT * FROM task")
+    fun getAllTasks(): Flow<List<Task>>
+
+    @Insert
+    fun insertTask2(task: Task)
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertTask(task: Task)
+
+    @Query("DELETE FROM task")
+    suspend fun deleteAllTasks()
+
+    //@Transaction
+    //@Query("SELECT * FROM contact")
+    //un getContactWithTasks(): List<ContactWithTasks>
 }

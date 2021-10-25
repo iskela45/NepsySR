@@ -4,22 +4,24 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import androidx.activity.viewModels
-import fi.organization.nepsysr.ContactDatabase.*
+import fi.organization.nepsysr.database.*
 
 class ProfileActivity : AppCompatActivity() {
 
     lateinit var etName: EditText
     lateinit var btSave : Button
+/*
+    Näitä ei ainakaan vielä käytetä missään. Ovat tulleet vahingossa?
 
     val adapter = ContactListAdapter()
 
     private val contactViewModel: ContactViewModel by viewModels {
-        ContactViewModelFactory((application as ContactsApplication).repository)
+        ContactViewModelFactory((application as AppApplication).repository)
     }
+*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
