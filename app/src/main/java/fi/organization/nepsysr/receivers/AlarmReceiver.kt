@@ -14,6 +14,7 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import fi.organization.nepsysr.ProfileActivity
 import fi.organization.nepsysr.R
+import fi.organization.nepsysr.TaskActivity
 
 class AlarmReceiver : BroadcastReceiver() {
 
@@ -29,25 +30,11 @@ class AlarmReceiver : BroadcastReceiver() {
         createNotificationChannel(context)
 
         // When notification is tapped, call ProfileActivity
-        var intent = Intent(context, ProfileActivity::class.java)
+        var intent = Intent(context, TaskActivity::class.java)
         var contentIntent = PendingIntent.getActivity(context, 0, intent, 0)
 
         var notificationManager : NotificationManager =
             context?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-        /*
-        // Prepare Notification-
-        var builder : Notification.Builder = Notification.Builder(context)
-        builder.setSmallIcon(R.drawable.ic_notifications)
-            .setContentTitle("kh")
-            .setContentText("akhdfkha")
-            .setWhen(System.currentTimeMillis())
-            .setAutoCancel(true)
-            .setContentIntent(contentIntent)
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
-
-
-         */
 
         val builder = NotificationCompat.Builder(context, CHANNEL_ID) // Create notification with channel Id
             .setSmallIcon(R.drawable.ic_notifications)
@@ -59,14 +46,8 @@ class AlarmReceiver : BroadcastReceiver() {
         val mNotificationManager =
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         with(mNotificationManager) {
-            notify(123, builder.build())
+            notify(notificationId!!, builder.build())
         }
-
-        // Notify
-        //notificationManager.notify(notificationId!!, builder.build())
-
-        Log.d("TAGI", "TÄÄLLÄ")
-
     }
 
     private fun createNotificationChannel(context : Context?) {
@@ -78,6 +59,8 @@ class AlarmReceiver : BroadcastReceiver() {
                 NotificationManager.IMPORTANCE_DEFAULT.apply {
                 }
             )
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
             val notificationManager =
                 context!!.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(mChannel)
