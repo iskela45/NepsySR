@@ -1,20 +1,13 @@
 package fi.organization.nepsysr
 
-import android.app.AlarmManager
-import android.app.AlarmManager.RTC_WAKEUP
-import android.app.PendingIntent
 import android.content.Intent
-import android.icu.util.Calendar
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import androidx.annotation.RequiresApi
-import androidx.preference.PreferenceManager
 import fi.organization.nepsysr.alarm.AlarmHandler
-import fi.organization.nepsysr.alarm.AlarmReceiver
 
 class AddingTaskActivity : AppCompatActivity() {
 
@@ -23,7 +16,6 @@ class AddingTaskActivity : AppCompatActivity() {
     lateinit var editTopic: EditText
     lateinit var addImage: EditText
     lateinit var saveTask: Button
-    private var days: Int? = null
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,14 +38,16 @@ class AddingTaskActivity : AppCompatActivity() {
 
             alarm.start(title, timer, topic, this)
 
+            var requestCode = alarm.getRequestCode()
+            var daysRemain = alarm.getDaysDifference()
+
             val data = Intent()
             data.putExtra("title", title)
             data.putExtra("timer", timer)
             data.putExtra("topic", topic)
             data.putExtra("img", img)
-            if (days != null) {
-                data.putExtra("days", days)
-            }
+            data.putExtra("requestCode", requestCode)
+            data.putExtra("daysRemain", daysRemain)
 
             setResult(RESULT_OK, data)
             finish()
