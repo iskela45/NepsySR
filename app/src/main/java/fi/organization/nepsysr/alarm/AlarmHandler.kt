@@ -13,7 +13,8 @@ import androidx.core.content.ContextCompat.getSystemService
 
 class AlarmHandler {
 
-    private var days: Int? = null
+    private var days: Int = 0
+    private var penIntentRequestCode: Int = 0
 
     @RequiresApi(Build.VERSION_CODES.N)
     fun start(title : String, timer : String, topic: String, context : Context) {
@@ -24,7 +25,7 @@ class AlarmHandler {
 
         val splittedTime = time.getAlarmTime(context)
         var notificationId = rnd.getRandomNumber()
-        val penIntentRequestCode = rnd.getRandomNumber()
+        this.penIntentRequestCode = rnd.getRandomNumber()
 
         val intent = Intent(context, AlarmReceiver::class.java)
         intent.putExtra("notificationId", notificationId)
@@ -37,9 +38,17 @@ class AlarmHandler {
 
         var cal : Calendar = time.getExactAlarmTime(splittedTime, timer)
         var alarmStartTime : Long = cal.timeInMillis
-        time.getDaysDifference(cal)
+        this.days = time.getDaysDifference(cal)
 
         // Set alarm (type, milliseconds, intent)
         alarm.set(AlarmManager.RTC_WAKEUP, alarmStartTime, alarmIntent)
+    }
+
+    fun getRequestCode() : Int {
+        return penIntentRequestCode
+    }
+
+    fun getDaysDifference() : Int {
+        return days
     }
 }
