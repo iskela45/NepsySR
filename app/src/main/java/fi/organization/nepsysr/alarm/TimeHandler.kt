@@ -13,8 +13,6 @@ import androidx.preference.PreferenceManager
 class TimeHandler {
 
     private var days: Int? = null
-    private var context : Context? = null
-
 
     fun getAlarmTime(context : Context): List<String> {
 
@@ -43,13 +41,13 @@ class TimeHandler {
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
-    fun getDaysDifference(calDate : Calendar) {
+    fun getDaysDifference(calDate : Calendar) : Int {
 
         // Calculates the difference between the current date and the days given by the user
         val today = Calendar.getInstance()
         val difference: Long =  calDate.timeInMillis - today.timeInMillis
         this.days = (difference / (1000 * 60 * 60 * 24)).toInt()
 
-        Log.d("TAGI","$days")
+        return days as Int
     }
 }
