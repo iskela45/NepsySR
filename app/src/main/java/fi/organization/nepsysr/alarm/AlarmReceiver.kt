@@ -1,18 +1,15 @@
-package fi.organization.nepsysr.receivers
+package fi.organization.nepsysr.alarm
 
 import android.annotation.SuppressLint
-import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
-import fi.organization.nepsysr.ProfileActivity
 import fi.organization.nepsysr.R
 import fi.organization.nepsysr.TaskActivity
 
