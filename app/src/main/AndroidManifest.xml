@@ -10,7 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NepsySR">
-        <activity android:name=".AddingTaskActivity"></activity>
+        <activity android:name=".AddingTaskActivity" />
         <activity android:name=".TaskActivity" />
         <activity android:name=".utilities.TasksActivity" />
         <activity
@@ -27,7 +27,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".Settings" />
-        <receiver android:name=".receivers.AlarmReceiver"></receiver>
+
+        <receiver android:name=".alarm.AlarmReceiver" />
     </application>
 
 </manifest>
