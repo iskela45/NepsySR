@@ -26,13 +26,15 @@ class ContactListAdapter : ListAdapter<Contact, ContactListAdapter.ContactViewHo
 
     class ContactViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val contactItemView: TextView = itemView.findViewById(R.id.textView)
-        private val ContactImageView: ImageView = itemView.findViewById(R.id.profile_Img)
+        private val contactImageView: ImageView = itemView.findViewById(R.id.profile_Img)
 
         fun bind(text: String?, img: Bitmap?, color: String?) {
             contactItemView.text = text
             contactItemView.setBackgroundColor(Color.parseColor(color))
-            ContactImageView.setImageBitmap(img)
+            contactImageView.setImageBitmap(img)
         }
+        
+
 
         companion object {
             fun create(parent: ViewGroup): ContactViewHolder {
