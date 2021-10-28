@@ -18,7 +18,16 @@ class TimeHandler {
 
         // Retrieves the user chosen alarm time from shared preferences
         val sp = PreferenceManager.getDefaultSharedPreferences(context)
-        val alarmSp = sp.getString("alarmTime", "")
+        var alarmSp = sp.getString("alarmTime", "")
+        val defaultSummary = "09:00"
+
+        // If user has put nothing on to the alarm time in the
+        // settings, puts default value to 09:00
+        if(alarmSp!!.isEmpty()) {
+            val edit = sp.edit()
+            edit.putString("alarmTime",defaultSummary).apply()
+            alarmSp = defaultSummary
+        }
 
         return alarmSp!!.split(":")
     }
