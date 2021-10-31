@@ -28,7 +28,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.internal.ContextUtils.getActivity
 import fi.organization.nepsysr.R
-import fi.organization.nepsysr.interfaces.OnClickContactImageListener
 
 class ContactListAdapter() : ListAdapter<Contact, ContactListAdapter.ContactViewHolder>(ContactsComparator()), ActivityCompat.OnRequestPermissionsResultCallback {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactViewHolder {
