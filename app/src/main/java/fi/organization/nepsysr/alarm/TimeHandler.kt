@@ -3,11 +3,7 @@ package fi.organization.nepsysr.alarm
 import android.content.Context
 import android.icu.util.Calendar
 import android.os.Build
-import android.os.Bundle
-import android.os.PersistableBundle
-import android.util.Log
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
 
 class TimeHandler {
