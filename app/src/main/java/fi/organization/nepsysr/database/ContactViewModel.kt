@@ -1,5 +1,6 @@
 package fi.organization.nepsysr.database
 
+import android.graphics.Bitmap
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 
@@ -18,6 +19,10 @@ class ContactViewModel(private val repository: AppRepository) : ViewModel() {
 
     fun deleteAll() = viewModelScope.launch {
         repository.deleteAll()
+    }
+
+    fun updateContactImage(uid: Int, img: Bitmap) = viewModelScope.launch {
+        repository.updateContactImage(uid, img)
     }
 }
 // Boilerplate code

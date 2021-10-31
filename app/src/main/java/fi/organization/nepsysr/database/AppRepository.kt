@@ -1,5 +1,6 @@
 package fi.organization.nepsysr.database
 
+import android.graphics.Bitmap
 import androidx.annotation.WorkerThread
 import kotlinx.coroutines.flow.Flow
 
@@ -28,6 +29,12 @@ class AppRepository(private val appDao: AppDao) {
     @WorkerThread
     suspend fun deleteAll() {
         appDao.deleteAll()
+    }
+
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun updateContactImage(uid: Int, img: Bitmap) {
+        appDao.updateContactImage(ContactImageUpdate(uid, img))
     }
 
 

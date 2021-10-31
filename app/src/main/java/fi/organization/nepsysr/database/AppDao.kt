@@ -29,6 +29,15 @@ interface AppDao {
     @Query("DELETE FROM contact")
     suspend fun deleteAll()
 
+    @Update
+    suspend fun updateContact(contact: Contact)
+
+    @Query("SELECT * FROM contact WHERE uid == :uid")
+    suspend fun getContact(uid: Int): Contact
+
+    @Update(entity = Contact::class)
+    suspend fun updateContactImage(obj: ContactImageUpdate)
+
     // Tasks
 
     @Query("SELECT * FROM task")

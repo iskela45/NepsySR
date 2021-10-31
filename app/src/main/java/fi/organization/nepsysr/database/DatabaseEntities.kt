@@ -3,6 +3,7 @@ package fi.organization.nepsysr.database
 import android.graphics.Bitmap
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.Update
 
 @Entity
 data class Contact(
@@ -11,6 +12,11 @@ data class Contact(
     var img: Bitmap,
     var color: String,
     var points: Int)
+
+class ContactImageUpdate (
+    var uid: Int,
+    var img: Bitmap
+)
 
 @Entity
 data class Task(

@@ -1,11 +1,14 @@
 package fi.organization.nepsysr
 
+import android.R.attr
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.os.Looper
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -15,6 +18,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.viewModels
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
@@ -22,6 +26,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import fi.organization.nepsysr.database.*
+import android.provider.MediaStore
+import android.R.attr.bitmap
+import android.graphics.ImageDecoder
+
+import android.os.Build
+import android.provider.SyncStateContract
+import androidx.activity.result.ActivityResultLauncher
 
 
 class MainActivity : AppCompatActivity() {
@@ -32,20 +43,23 @@ class MainActivity : AppCompatActivity() {
     }
 
     lateinit var name: String
-    val profileResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult())
-    { result: ActivityResult? ->
-        if (result?.resultCode == Activity.RESULT_OK) {
-            // Placeholder image
-            val drawable = AppCompatResources.getDrawable(this, R.drawable.ic_baseline_image_search_24)
-            val placeholderBitmap = drawable?.toBitmap()
 
-            name = result.data?.getStringExtra("name").toString()
-            var contact = Contact(0, name, placeholderBitmap!!, "#49ba54", 0)
-            contactViewModel.insert(contact)
-            Log.d("TAG", "name: ${name}")
+    val profileResult: ActivityResultLauncher<Intent> =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+        { result: ActivityResult? ->
+            if (result?.resultCode == Activity.RESULT_OK) {
+                // Placeholder image
+                val drawable =
+                    AppCompatResources.getDrawable(this, R.drawable.ic_baseline_image_search_24)
+                val placeholderBitmap = drawable?.toBitmap()
+
+                name = result.data?.getStringExtra("name").toString()
+                var contact = Contact(0, name, placeholderBitmap!!, "#49ba54", 0)
+                contactViewModel.insert(contact)
+                Log.d("TAG", "name: ${name}")
+            }
         }
 
-    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -60,16 +74,9 @@ class MainActivity : AppCompatActivity() {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-
-
         // Just an example of how to add to the database.
         val testButton = findViewById<FloatingActionButton>(R.id.fab)
         testButton.setOnClickListener {
-            // use 0 for auto incrementing uid.
-            //var contact = Contact(0, "ddd", "no image", "#49ba54", 0)
-            //contactViewModel.insert(contact)
-            Log.d("clickListener", "success")
-
             val intent = Intent(this, ProfileActivity::class.java)
             profileResult.launch(intent)
         }
@@ -94,9 +101,7 @@ class MainActivity : AppCompatActivity() {
         contactViewModel.insert(contact)
         contact = Contact(0, "bbb", placeholderBitmap!!, "#6cb9f0", 0)
         contactViewModel.insert(contact)
-
     }
-
 
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -117,7 +122,33 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
                 true
             }
-        else -> super.onOptionsItemSelected(item)
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    /**
+     * Receive image from gallery, use request code to identify the contact.
+     * This solution is really hacky but since this is a prototype it doesn't really matter.
+     */
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        // This is the hacky part, checking that the activity result isn't from contact creation
+        // By checking if the name extra exists.
+        var extraCheck = data?.getStringExtra("name")
+        if(extraCheck == null){
+            var uriImg = data?.data
+            lateinit var bitmap : Bitmap
+
+            if (Build.VERSION.SDK_INT < 28) {
+                bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uriImg)
+            } else {
+                val source = ImageDecoder.createSource(contentResolver, uriImg!!)
+                bitmap = ImageDecoder.decodeBitmap(source)
+            }
+            contactViewModel.updateContactImage(requestCode, bitmap)
+            data?.getStringExtra("uid")?.let { contactViewModel.updateContactImage(it.toInt(), bitmap) }
+
         }
     }
 }
+
