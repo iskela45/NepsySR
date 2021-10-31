@@ -26,6 +26,8 @@ data class Task(
     var timer: Int,
     val topic: String,
     var img: String,
+    var requestCode: Int,
+    var daysRemain: Int
 )
 
 /*

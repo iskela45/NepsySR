@@ -73,7 +73,7 @@ public abstract class AppRoomDatabase : RoomDatabase() {
             //contact = Contact(0, "Kekkonen", "img2", "#e34f32", 0)
             //appDao.insert(contact)
 
-            val task = Task(0, 0, "Soitto", 7, "Lomareissu", "img3")
+            val task = Task(0, 0, "Soitto", 7, "Lomareissu", "img3", 1, 1)
             Log.d("TAG", "populate")
             appDao.insertTask(task)
         }

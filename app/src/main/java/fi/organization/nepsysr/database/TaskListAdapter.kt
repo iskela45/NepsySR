@@ -17,14 +17,14 @@ class TaskListAdapter : ListAdapter<Task, TaskListAdapter.TaskViewHolder>(TasksC
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         val current = getItem(position)
-        holder.bind(current.title)
+        holder.bind(current.title, current.daysRemain)
     }
 
     class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val taskItemView: TextView = itemView.findViewById(R.id.textView)
 
-        fun bind(text: String?) {
-            taskItemView.text = text
+        fun bind(text: String?, daysRemain: Int) {
+            taskItemView.text = "$text \n$daysRemain päivää jäljellä"
         }
 
         companion object {
