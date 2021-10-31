@@ -3,7 +3,6 @@ package fi.organization.nepsysr
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -32,8 +31,6 @@ class TaskActivity : AppCompatActivity() {
             img = result.data?.getStringExtra("img").toString()
             val requestCode = result.data?.getIntExtra("requestCode", 0)
             var daysRemain = result.data?.getIntExtra("daysRemain", 0)
-            Log.d("Testiä", "$requestCode")
-            Log.d("Testiä", "$daysRemain")
 
             val timerInt = Integer.parseInt(timer)
             val task = Task(0, 0, title, timerInt, topic, img, requestCode!!, daysRemain!!)

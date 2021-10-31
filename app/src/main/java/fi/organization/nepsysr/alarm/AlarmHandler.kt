@@ -8,8 +8,6 @@ import android.content.Intent
 import android.icu.util.Calendar
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat.getSystemService
 
 class AlarmHandler {
 
