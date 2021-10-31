@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import fi.organization.nepsysr.alarm.AlarmHandler
 
@@ -29,28 +30,32 @@ class AddingTaskActivity : AppCompatActivity() {
         this.saveTask = findViewById(R.id.saveTask)
 
         saveTask.setOnClickListener {
-            val title = editTitle.text.toString()
-            val timer = setTimer.text.toString()
-            val topic = editTopic.text.toString()
-            val img = addImage.text.toString()
+            var title = editTitle.text.toString()
+            var timer = setTimer.text.toString()
+            var topic = editTopic.text.toString()
+            var img = addImage.text.toString()
 
-            val alarm = AlarmHandler()
+            if (timer.isNotEmpty()) {
+                val alarm = AlarmHandler()
 
-            alarm.start(title, timer, topic, this)
+                alarm.start(title, timer, topic, this)
 
-            var requestCode = alarm.getRequestCode()
-            var daysRemain = alarm.getDaysDifference()
+                var requestCode = alarm.getRequestCode()
+                var daysRemain = alarm.getDaysDifference()
 
-            val data = Intent()
-            data.putExtra("title", title)
-            data.putExtra("timer", timer)
-            data.putExtra("topic", topic)
-            data.putExtra("img", img)
-            data.putExtra("requestCode", requestCode)
-            data.putExtra("daysRemain", daysRemain)
+                val data = Intent()
+                data.putExtra("title", title)
+                data.putExtra("timer", timer)
+                data.putExtra("topic", topic)
+                data.putExtra("img", img)
+                data.putExtra("requestCode", requestCode)
+                data.putExtra("daysRemain", daysRemain)
 
-            setResult(RESULT_OK, data)
-            finish()
+                setResult(RESULT_OK, data)
+                finish()
+            } else {
+                Toast.makeText(applicationContext,"Aseta ajastimeen tehtävän ilmoitusten aikaväli",Toast.LENGTH_LONG).show()
+            }
         }
     }
 }
