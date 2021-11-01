@@ -28,6 +28,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.internal.ContextUtils.getActivity
 import fi.organization.nepsysr.R
+import fi.organization.nepsysr.TaskActivity
 
 class ContactListAdapter() : ListAdapter<Contact, ContactListAdapter.ContactViewHolder>(ContactsComparator()), ActivityCompat.OnRequestPermissionsResultCallback {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactViewHolder {
@@ -50,6 +51,12 @@ class ContactListAdapter() : ListAdapter<Contact, ContactListAdapter.ContactView
             contactItemView.text = text
             contactItemView.setBackgroundColor(Color.parseColor(color))
             contactImageView.setImageBitmap(img)
+
+            contactItemView.setOnClickListener {
+                val intent = Intent(mContext, TaskActivity::class.java)
+                intent.putExtra("uid", id)
+                startActivityForResult(mContext as Activity, intent, 3000, null)
+            }
 
             // Check and ask for permissions, then start gallery activity.
             contactImageView.setOnClickListener {

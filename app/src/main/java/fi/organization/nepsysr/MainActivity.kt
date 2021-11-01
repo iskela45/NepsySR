@@ -135,7 +135,7 @@ class MainActivity : AppCompatActivity() {
         // This is the hacky part, checking that the activity result isn't from contact creation
         // By checking if the name extra exists.
         var extraCheck = data?.getStringExtra("name")
-        if(extraCheck == null){
+        if(extraCheck == null && data?.data != null){
             var uriImg = data?.data
             lateinit var bitmap : Bitmap
 

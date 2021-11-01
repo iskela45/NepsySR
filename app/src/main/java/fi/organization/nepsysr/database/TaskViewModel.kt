@@ -11,6 +11,14 @@ class TaskViewModel(private val repository: AppRepository) : ViewModel() {
     // - Repository is completely separated from the UI through the ViewModel.
     val allTasks: LiveData<List<Task>> = repository.allTasks.asLiveData()
 
+    fun getFilteredList(filter: Int): LiveData<List<Task>> {
+        return Transformations.map(allTasks) {
+            it.filter {
+                it.contactId == filter
+            }
+        }
+    }
+
     // Launching a new coroutine to insert the data in a non-blocking way
     fun insertTask(task: Task) = viewModelScope.launch {
         repository.insertTask(task)
