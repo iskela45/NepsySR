@@ -28,11 +28,14 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import fi.organization.nepsysr.database.*
 import android.provider.MediaStore
 import android.R.attr.bitmap
+import android.app.AlarmManager
 import android.graphics.ImageDecoder
 
 import android.os.Build
 import android.provider.SyncStateContract
 import androidx.activity.result.ActivityResultLauncher
+import androidx.annotation.RequiresApi
+import fi.organization.nepsysr.alarm.AlarmHandler
 
 
 class MainActivity : AppCompatActivity() {
@@ -63,6 +66,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        var alarm = AlarmHandler(this)
+        alarm.timeObserve()
 
         // Placeholder image
         val drawable = AppCompatResources.getDrawable(this, R.drawable.ic_baseline_image_search_24)
