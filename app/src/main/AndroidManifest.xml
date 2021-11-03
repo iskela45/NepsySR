@@ -30,6 +30,7 @@
         <activity android:name=".Settings" />
 
         <receiver android:name=".alarm.AlarmReceiver" />
+        <receiver android:name=".alarm.TimeReceiver" />
     </application>
 
 </manifest>
