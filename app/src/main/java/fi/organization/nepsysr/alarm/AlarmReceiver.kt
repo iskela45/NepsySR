@@ -22,27 +22,30 @@ class AlarmReceiver : BroadcastReceiver() {
         val notificationId = intent?.getIntExtra("notificationId", 0)
         var title = intent?.getStringExtra("title")
         var topic = intent?.getStringExtra("topic")
+        var days = intent?.getIntExtra("days", 0)
 
-        createNotificationChannel(context)
+        if (days!! >= 0) {
+            createNotificationChannel(context)
 
-        // When notification is tapped, call ProfileActivity
-        var intent = Intent(context, TaskActivity::class.java)
-        var contentIntent = PendingIntent.getActivity(context, 0, intent, 0)
+            // When notification is tapped, call ProfileActivity
+            var intent = Intent(context, TaskActivity::class.java)
+            var contentIntent = PendingIntent.getActivity(context, 0, intent, 0)
 
-        var notificationManager : NotificationManager =
-            context?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            var notificationManager : NotificationManager =
+                context?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        val builder = NotificationCompat.Builder(context, CHANNEL_ID) // Create notification with channel Id
-            .setSmallIcon(R.drawable.ic_notifications)
-            .setContentTitle(title)
-            .setContentText(topic)
-            .setPriority(NotificationCompat.PRIORITY_MAX)
-        builder.setContentIntent(contentIntent).setAutoCancel(true)
+            val builder = NotificationCompat.Builder(context, CHANNEL_ID) // Create notification with channel Id
+                .setSmallIcon(R.drawable.ic_notifications)
+                .setContentTitle(title)
+                .setContentText(topic)
+                .setPriority(NotificationCompat.PRIORITY_MAX)
+            builder.setContentIntent(contentIntent).setAutoCancel(true)
 
-        val mNotificationManager =
-            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        with(mNotificationManager) {
-            notify(notificationId!!, builder.build())
+            val mNotificationManager =
+                context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            with(mNotificationManager) {
+                notify(notificationId!!, builder.build())
+            }
         }
     }
 

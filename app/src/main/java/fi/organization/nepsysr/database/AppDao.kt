@@ -52,6 +52,12 @@ interface AppDao {
     @Query("DELETE FROM task")
     suspend fun deleteAllTasks()
 
+    @Query("SELECT * FROM task")
+    fun getAllTasksList(): List<Task>
+
+    @Query("UPDATE task SET daysRemain = daysRemain - 1 WHERE taskId = :id")
+    fun updateDaysRemain(id : Int)
+    
     //@Transaction
     //@Query("SELECT * FROM contact")
     //un getContactWithTasks(): List<ContactWithTasks>

@@ -1,15 +1,21 @@
 package fi.organization.nepsysr.fragments
 
+import android.app.AlarmManager
 import android.app.TimePickerDialog
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.widget.TimePicker
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
+import fi.organization.nepsysr.alarm.AlarmHandler
 import fi.organization.nepsysr.utilities.PopTimePicker
 
 class SettingsFragment : PreferenceFragmentCompat(),
-    androidx.preference.Preference.OnPreferenceClickListener, TimePickerDialog.OnTimeSetListener {
+    Preference.OnPreferenceClickListener, TimePickerDialog.OnTimeSetListener,
+    SharedPreferences.OnSharedPreferenceChangeListener
+ {
 
     private var timePref: Preference? = null
 
@@ -61,4 +67,22 @@ class SettingsFragment : PreferenceFragmentCompat(),
         timePref!!.setSummary(x)
         saveSettings(x)
     }
+
+     override fun onResume() {
+         super.onResume()
+         preferenceManager.sharedPreferences.registerOnSharedPreferenceChangeListener(this)
+     }
+
+     override fun onPause() {
+         preferenceManager.sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
+         super.onPause()
+     }
+
+     override fun onSharedPreferenceChanged(p0: SharedPreferences?, p1: String) {
+         if (p1 == "alarmTime") {
+             val newTime = p0!!.getString("$p1", "")!!
+             val alarm = AlarmHandler(requireContext())
+             alarm.updateAlarm(newTime)
+         }
+     }
 }

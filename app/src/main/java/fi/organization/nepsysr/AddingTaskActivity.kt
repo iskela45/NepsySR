@@ -36,9 +36,9 @@ class AddingTaskActivity : AppCompatActivity() {
             var img = addImage.text.toString()
 
             if (timer.isNotEmpty()) {
-                val alarm = AlarmHandler()
+                val alarm = AlarmHandler(this)
 
-                alarm.start(title, timer, topic, this)
+                alarm.start(title, timer, topic)
 
                 var requestCode = alarm.getRequestCode()
                 var daysRemain = alarm.getDaysDifference()

@@ -52,4 +52,22 @@ class AppRepository(private val appDao: AppDao) {
     suspend fun deleteAllTasks() {
         appDao.deleteAllTasks()
     }
+
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun getAllTasks() {
+        appDao.getAllTasks()
+    }
+
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun getAllTasksList() {
+        appDao.getAllTasksList()
+    }
+
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun updateDaysRemain(id : Int) {
+        appDao.updateDaysRemain(id)
+    }
 }
