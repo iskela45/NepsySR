@@ -59,6 +59,15 @@ class AlarmHandler(val context: Context) {
         return days
     }
 
+    fun updateSpecificTaskAlarm(id : Int, timer: Int, reqCode: Int, title: String, topic: String) {
+        //var task = database.appDao().getTask(id)
+        var alarmTime = time.getAlarmTime()
+        thread {
+            database.appDao().updateTimer(id, timer)
+            intentHandler(timer,title, topic, reqCode, alarmTime)
+        }
+    }
+
     @RequiresApi(Build.VERSION_CODES.N)
     fun updateAlarm(newTime : String = "") {
 
@@ -74,7 +83,6 @@ class AlarmHandler(val context: Context) {
                 intentHandler(i.daysRemain, i.title, i.topic, i.requestCode, splittedTime)
                 //requestCodes.add(i.requestCode)
             }
-
         }
     }
 
