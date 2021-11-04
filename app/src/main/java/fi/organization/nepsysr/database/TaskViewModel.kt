@@ -35,6 +35,14 @@ class TaskViewModel(private val repository: AppRepository) : ViewModel() {
     fun updateDaysRemain(id: Int) = viewModelScope.launch {
         repository.updateDaysRemain(id)
     }
+
+    /*fun getTask(id: Int) = viewModelScope.launch {
+        repository.getTask(id)
+    }*/
+
+    fun updateTimer(id : Int, days : Int) = viewModelScope.launch {
+        repository.updateTimer(id, days)
+    }
 }
 
 // Boilerplate code

@@ -70,4 +70,16 @@ class AppRepository(private val appDao: AppDao) {
     suspend fun updateDaysRemain(id : Int) {
         appDao.updateDaysRemain(id)
     }
+
+    /*@Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun getTask(id : Int) {
+        appDao.getTask(id)
+    }*/
+
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun updateTimer(id : Int, days : Int) {
+        appDao.updateTimer(id, days)
+    }
 }
