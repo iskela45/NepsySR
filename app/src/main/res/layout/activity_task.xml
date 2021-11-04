@@ -10,7 +10,7 @@
         android:id="@+id/recyclerviewTasks"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        tools:listitem="@layout/recyclerview_item"
+        tools:listitem="@layout/recyclerview_item_task"
         android:padding="@dimen/custom_padding"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"

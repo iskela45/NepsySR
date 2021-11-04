@@ -1,14 +1,9 @@
 package fi.organization.nepsysr
 
-import android.R.attr
 import android.app.Activity
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.os.Looper
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -18,23 +13,16 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.viewModels
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import fi.organization.nepsysr.database.*
 import android.provider.MediaStore
-import android.R.attr.bitmap
-import android.app.AlarmManager
 import android.graphics.ImageDecoder
 
 import android.os.Build
-import android.provider.SyncStateContract
 import androidx.activity.result.ActivityResultLauncher
-import androidx.annotation.RequiresApi
 import fi.organization.nepsysr.alarm.AlarmHandler
 
 

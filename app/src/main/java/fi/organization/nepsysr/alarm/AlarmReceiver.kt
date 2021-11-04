@@ -24,7 +24,7 @@ class AlarmReceiver : BroadcastReceiver() {
         var topic = intent?.getStringExtra("topic")
         var days = intent?.getIntExtra("days", 0)
 
-        if (days!! >= 0) {
+        if (days!! == 0) {
             createNotificationChannel(context)
 
             // When notification is tapped, call ProfileActivity

@@ -57,6 +57,13 @@ interface AppDao {
 
     @Query("UPDATE task SET daysRemain = daysRemain - 1 WHERE taskId = :id")
     fun updateDaysRemain(id : Int)
+
+    @Query("UPDATE task SET daysRemain = :days WHERE taskId = :id")
+    fun updateTimer(id : Int, days : Int)
+
+    /*@Query("SELECT * FROM task WHERE taskId = :id")
+    fun getTask(id: Int)
+*/
     
     //@Transaction
     //@Query("SELECT * FROM contact")

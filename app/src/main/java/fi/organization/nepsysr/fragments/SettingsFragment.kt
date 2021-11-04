@@ -1,10 +1,8 @@
 package fi.organization.nepsysr.fragments
 
-import android.app.AlarmManager
 import android.app.TimePickerDialog
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.widget.TimePicker
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
