@@ -1,11 +1,21 @@
 package fi.organization.nepsysr.database
 
+import android.Manifest
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.Color
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -20,25 +30,60 @@ class TaskListAdapter : ListAdapter<Task, TaskListAdapter.TaskViewHolder>(TasksC
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         val current = getItem(position)
-        holder.bind(current.title, current.topic, current.daysRemain, current.requestCode, current.timer, current.taskId)
+        holder.bind(current.title, current.topic, current.daysRemain, current.requestCode, current.timer, current.taskId, current.img)
     }
 
     class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val taskItemView: TextView = itemView.findViewById(R.id.textView)
+        var taskImageView: ImageView = itemView.findViewById(R.id.profile_Img)
 
         var resButton: Button = itemView.findViewById(R.id.resButton)
         var context : Context = resButton.context
         val alarm = AlarmHandler(context)
 
-        fun bind(title: String?, topic: String, daysRemain: Int, requestCode: Int, timer: Int, taskId: Int) {
+        var mContext : Context = itemView.context
+
+        fun bind(title: String?, topic: String, daysRemain: Int, requestCode: Int, timer: Int, taskId: Int, img: Bitmap) {
             taskItemView.text = "$title \n$topic \n$daysRemain/$timer päivää jäljellä"
+            taskImageView.setImageBitmap(img)
 
             resButton.setOnClickListener {
                 alarm.updateSpecificTaskAlarm(taskId, timer, requestCode, title!!, topic)
             }
+
+            // Check and ask for permissions, then start camera activity.
+            taskImageView.setOnClickListener {
+                when {
+                    ContextCompat.checkSelfPermission(
+                        mContext,
+                        Manifest.permission.CAMERA
+                    ) == PackageManager.PERMISSION_GRANTED -> {
+                        // You can use the API that requires the permission.
+                        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                        ActivityCompat.startActivityForResult(
+                            mContext as Activity,
+                            takePictureIntent,
+                            taskId,
+                            null
+                        )
+                    }
+
+                    else -> {
+                        // You can directly ask for the permission.
+                        ActivityCompat.requestPermissions(
+                            mContext as Activity,
+                            arrayOf(Manifest.permission.CAMERA),
+                            IMAGE_PICK_CODE)
+                    }
+                }
+            }
+
+
         }
 
         companion object {
+            private val IMAGE_PICK_CODE = 1
+
             fun create(parent: ViewGroup): TaskViewHolder {
                 val view: View = LayoutInflater.from(parent.context)
                     .inflate(R.layout.recyclerview_item_task, parent, false)

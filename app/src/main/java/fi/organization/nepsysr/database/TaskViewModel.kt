@@ -1,5 +1,6 @@
 package fi.organization.nepsysr.database
 
+import android.graphics.Bitmap
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 
@@ -42,6 +43,10 @@ class TaskViewModel(private val repository: AppRepository) : ViewModel() {
 
     fun updateTimer(id : Int, days : Int) = viewModelScope.launch {
         repository.updateTimer(id, days)
+    }
+
+    fun updateTaskImage(uid: Int, img: Bitmap) = viewModelScope.launch {
+        repository.updateTaskImage(uid, img)
     }
 }
 

@@ -25,9 +25,14 @@ data class Task(
     var title: String,
     var timer: Int,
     val topic: String,
-    var img: String,
+    var img: Bitmap,
     var requestCode: Int,
     var daysRemain: Int
+)
+
+class TaskImageUpdate (
+    var taskId: Int,
+    var img: Bitmap
 )
 
 /*

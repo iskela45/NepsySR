@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import android.util.Log
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -73,9 +74,11 @@ public abstract class AppRoomDatabase : RoomDatabase() {
             //contact = Contact(0, "Kekkonen", "img2", "#e34f32", 0)
             //appDao.insert(contact)
 
-            val task = Task(0, 0, "Soitto", 7, "Lomareissu", "img3", 1, 1)
-            Log.d("TAG", "populate")
-            appDao.insertTask(task)
+
+            // Needed to disable since Task now requires bitmap for img
+            //val task = Task(0, 0, "Soitto", 7, "Lomareissu", "img3", 1, 1)
+            //Log.d("TAG", "populate")
+            //appDao.insertTask(task)
         }
     }
 }

@@ -61,6 +61,9 @@ interface AppDao {
     @Query("UPDATE task SET daysRemain = :days WHERE taskId = :id")
     fun updateTimer(id : Int, days : Int)
 
+    @Update(entity = Task::class)
+    suspend fun updateTaskImage(obj: TaskImageUpdate)
+
     /*@Query("SELECT * FROM task WHERE taskId = :id")
     fun getTask(id: Int)
 */

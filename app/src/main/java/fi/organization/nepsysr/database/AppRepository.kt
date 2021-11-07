@@ -82,4 +82,10 @@ class AppRepository(private val appDao: AppDao) {
     suspend fun updateTimer(id : Int, days : Int) {
         appDao.updateTimer(id, days)
     }
+
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun updateTaskImage(uid: Int, img: Bitmap) {
+        appDao.updateTaskImage(TaskImageUpdate(uid, img))
+    }
 }

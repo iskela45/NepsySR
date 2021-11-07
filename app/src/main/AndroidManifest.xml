@@ -3,6 +3,7 @@
     package="fi.organization.nepsysr">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
     <application
         android:name=".database.AppApplication"
         android:allowBackup="true"
