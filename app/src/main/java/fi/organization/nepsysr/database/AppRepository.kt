@@ -1,6 +1,7 @@
 package fi.organization.nepsysr.database
 
 import android.graphics.Bitmap
+import android.util.Log
 import androidx.annotation.WorkerThread
 import kotlinx.coroutines.flow.Flow
 
@@ -63,6 +64,12 @@ class AppRepository(private val appDao: AppDao) {
     @WorkerThread
     suspend fun getAllTasksList() {
         appDao.getAllTasksList()
+    }
+
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun updateTask(task: Task) {
+        appDao.updateTask(task)
     }
 
     @Suppress("RedundantSuspendModifier")

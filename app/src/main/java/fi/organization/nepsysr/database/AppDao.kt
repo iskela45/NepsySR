@@ -1,5 +1,6 @@
 package fi.organization.nepsysr.database
 
+import android.graphics.Bitmap
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
 
@@ -54,6 +55,9 @@ interface AppDao {
 
     @Query("SELECT * FROM task")
     fun getAllTasksList(): List<Task>
+
+    @Update
+    suspend fun updateTask(task: Task)
 
     @Query("UPDATE task SET daysRemain = daysRemain - 1 WHERE taskId = :id")
     fun updateDaysRemain(id : Int)

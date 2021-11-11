@@ -4,8 +4,10 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import fi.organization.nepsysr.alarm.AlarmHandler
@@ -29,6 +31,20 @@ class AddingTaskActivity : AppCompatActivity() {
         this.addImage = findViewById(R.id.addImage)
         this.saveTask = findViewById(R.id.saveTask)
 
+        var taskId = intent.getIntExtra("taskId", -1)
+        var itIsUpdate = intent.getBooleanExtra("update", false)
+        var contactUserId = intent.getIntExtra("contactUserId", -1)
+
+
+        if (itIsUpdate) {
+            editTitle.setText(intent.getStringExtra("title").toString())
+            setTimer.setText(intent.getIntExtra("timer", 0).toString())
+            editTopic.setText(intent.getStringExtra("topic").toString())
+            addImage.setText(intent.getStringExtra("img").toString())
+            this.findViewById<TextView>(R.id.tvHeading).setText("Päivitä tehtävää")
+            this.findViewById<TextView>(R.id.saveTask).setText("Päivitä")
+        }
+
         saveTask.setOnClickListener {
             var title = editTitle.text.toString()
             var timer = setTimer.text.toString()
@@ -50,8 +66,14 @@ class AddingTaskActivity : AppCompatActivity() {
                 data.putExtra("img", img)
                 data.putExtra("requestCode", requestCode)
                 data.putExtra("daysRemain", daysRemain)
+                data.putExtra("taskId", taskId)
+                data.putExtra("contactUserId", contactUserId)
+                if(itIsUpdate){
+                    setResult(2000, data)
+                } else {
+                    setResult(RESULT_OK, data)
+                }
 
-                setResult(RESULT_OK, data)
                 finish()
             } else {
                 Toast.makeText(applicationContext,"Aseta ajastimeen tehtävän ilmoitusten aikaväli",Toast.LENGTH_LONG).show()

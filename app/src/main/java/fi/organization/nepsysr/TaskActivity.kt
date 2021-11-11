@@ -32,12 +32,16 @@ class TaskActivity : AppCompatActivity() {
     lateinit var img: String
     lateinit var taskResult: ActivityResultLauncher<Intent>
 
+    // Moved here, because it is required in 2 places
+
+
     val taskViewModel: TaskViewModel by viewModels {
         TaskViewModelFactory((application as AppApplication).repository)
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_task)
+        Log.d("TAG", "taski auki")
 
         // Placeholder image
         val drawable = AppCompatResources.getDrawable(this, R.drawable.ic_baseline_image_search_24)
@@ -59,6 +63,7 @@ class TaskActivity : AppCompatActivity() {
                 val task = Task(0, contactUid, title, timerInt, topic, placeholderBitmap!!, requestCode!!, daysRemain!!)
                 taskViewModel.insertTask(task)
             }
+
         }
 
         // Create recyclerViews for all of the names.
@@ -93,6 +98,26 @@ class TaskActivity : AppCompatActivity() {
 
         if(extraCheck == null && imageBitmap != null){
             taskViewModel.updateTaskImage(requestCode, imageBitmap!!)
+        }
+
+        // resultcode 2000 is for update
+        if (resultCode == 2000) {
+            title = data?.getStringExtra("title").toString()
+            timer = data?.getStringExtra("timer").toString()
+            var timerInt = timer.toInt()
+            topic = data?.getStringExtra("topic").toString()
+            img = data?.getStringExtra("img").toString()
+            var taskId = data?.getIntExtra("taskId", -1)
+            var contactUid = data?.getIntExtra("contactUserId", -1)
+            var daysRemain = data?.getIntExtra("daysRemain", 0)
+            // Placeholder image
+            val drawable = AppCompatResources.getDrawable(this, R.drawable.ic_baseline_image_search_24)
+            val placeholderBitmap = drawable?.toBitmap()
+            Log.d("TAG", "$taskId")
+            if(taskId != null && contactUid != null && timer != null){
+                var taskToUpdate = Task(taskId, contactUid, title, timerInt, topic, placeholderBitmap!!, requestCode!!, daysRemain!!)
+                taskViewModel.updateTask(taskToUpdate)
+            }
         }
     }
 

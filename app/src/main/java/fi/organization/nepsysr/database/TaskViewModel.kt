@@ -32,6 +32,9 @@ class TaskViewModel(private val repository: AppRepository) : ViewModel() {
     fun getAllTasksList() = viewModelScope.launch {
         repository.getAllTasksList()
     }
+    fun updateTask(task: Task) = viewModelScope.launch {
+        repository.updateTask(task)
+    }
 
     fun updateDaysRemain(id: Int) = viewModelScope.launch {
         repository.updateDaysRemain(id)
