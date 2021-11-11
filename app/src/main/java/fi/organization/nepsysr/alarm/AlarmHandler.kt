@@ -45,10 +45,8 @@ class AlarmHandler(val context: Context) {
             intent, PendingIntent.FLAG_CANCEL_CURRENT)
         val alarm : AlarmManager = context.getSystemService(ALARM_SERVICE) as AlarmManager
 
-
-
         // Set alarm (type, milliseconds, intent)
-        alarm.set(AlarmManager.RTC_WAKEUP, alarmStartTime, alarmIntent)
+        alarm.setExact(AlarmManager.RTC_WAKEUP, alarmStartTime, alarmIntent)
     }
 
     fun getRequestCode() : Int {
@@ -91,7 +89,7 @@ class AlarmHandler(val context: Context) {
         val notificationId = rnd.getRandomNumber()
         penIntentRequestCode = requestCode
 
-        var cal : Calendar = time.getExactAlarmTimeForUpdate(splittedTime, daysRemain.toString())
+        var cal : Calendar = time.getExactAlarmTime(splittedTime, daysRemain.toString())
         var alarmStartTime : Long = cal.timeInMillis
 
         val intent = Intent(context, AlarmReceiver::class.java)
@@ -105,7 +103,7 @@ class AlarmHandler(val context: Context) {
         val alarm : AlarmManager = context.getSystemService(ALARM_SERVICE) as AlarmManager
 
         // Set alarm (type, milliseconds, intent)
-        alarm.set(AlarmManager.RTC_WAKEUP, alarmStartTime, alarmIntent)
+        alarm.setExact(AlarmManager.RTC_WAKEUP, alarmStartTime, alarmIntent)
 
     }
 

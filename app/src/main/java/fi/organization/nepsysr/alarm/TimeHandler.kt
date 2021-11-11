@@ -45,17 +45,6 @@ class TimeHandler(val context: Context) {
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
-    fun getExactAlarmTimeForUpdate(splittedTime : List<String>, timer : String) : Calendar {
-        val cal = Calendar.getInstance()
-        cal.set(Calendar.HOUR_OF_DAY, splittedTime[0].toInt())
-        cal.set(Calendar.MINUTE, splittedTime[1].toInt())
-        cal.set(Calendar.SECOND, 0)
-
-        cal.add(Calendar.DATE, Integer.parseInt(timer))
-        return cal
-    }
-
-    @RequiresApi(Build.VERSION_CODES.N)
     fun getDaysDifference(calDate : Calendar) : Int {
 
         // Calculates the difference between the current date and the days given by the user

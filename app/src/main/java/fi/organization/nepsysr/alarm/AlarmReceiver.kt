@@ -8,7 +8,10 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.util.Log
 import androidx.core.app.NotificationCompat
+import androidx.preference.PreferenceManager
+import fi.organization.nepsysr.MainActivity
 import fi.organization.nepsysr.R
 import fi.organization.nepsysr.TaskActivity
 
@@ -24,11 +27,14 @@ class AlarmReceiver : BroadcastReceiver() {
         var topic = intent?.getStringExtra("topic")
         var days = intent?.getIntExtra("days", 0)
 
-        if (days!! == 0) {
+        val sp = PreferenceManager.getDefaultSharedPreferences(context)
+        var notificationsOnOrOff = sp.getBoolean("disable_notifications", false)
+
+        if (days!! == 0 && !notificationsOnOrOff) {
             createNotificationChannel(context)
 
             // When notification is tapped, call ProfileActivity
-            var intent = Intent(context, TaskActivity::class.java)
+            var intent = Intent(context, MainActivity::class.java)
             var contentIntent = PendingIntent.getActivity(context, 0, intent, 0)
 
             var notificationManager : NotificationManager =

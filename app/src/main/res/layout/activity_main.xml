@@ -18,28 +18,5 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <Button
-        android:id="@+id/test"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="328dp"
-        android:background="@color/black"
-        android:text="Henkilö"
-        android:textAllCaps="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/recyclerview"
-        app:layout_constraintWidth_percent="0.7" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:contentDescription="text placeholder"/>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
