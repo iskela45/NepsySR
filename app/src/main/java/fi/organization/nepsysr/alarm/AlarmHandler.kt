@@ -48,7 +48,7 @@ class AlarmHandler(val context: Context) {
 
 
         // Set alarm (type, milliseconds, intent)
-        alarm.set(AlarmManager.RTC_WAKEUP, alarmStartTime, alarmIntent)
+        alarm.setExact(AlarmManager.RTC_WAKEUP, alarmStartTime, alarmIntent)
     }
 
     fun getRequestCode() : Int {
@@ -105,7 +105,7 @@ class AlarmHandler(val context: Context) {
         val alarm : AlarmManager = context.getSystemService(ALARM_SERVICE) as AlarmManager
 
         // Set alarm (type, milliseconds, intent)
-        alarm.set(AlarmManager.RTC_WAKEUP, alarmStartTime, alarmIntent)
+        alarm.setExact(AlarmManager.RTC_WAKEUP, alarmStartTime, alarmIntent)
 
     }
 

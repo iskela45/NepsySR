@@ -8,7 +8,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.content.res.AppCompatResources
@@ -27,6 +30,7 @@ class TaskActivity : AppCompatActivity() {
     lateinit var timer: String
     lateinit var topic: String
     lateinit var img: String
+    lateinit var taskResult: ActivityResultLauncher<Intent>
 
     val taskViewModel: TaskViewModel by viewModels {
         TaskViewModelFactory((application as AppApplication).repository)
@@ -41,7 +45,7 @@ class TaskActivity : AppCompatActivity() {
 
         var contactUid = intent.getIntExtra("uid", -1)
 
-        val taskResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+        this.taskResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult())
         { result: ActivityResult? ->
             if (result?.resultCode == RESULT_OK) {
                 title = result.data?.getStringExtra("title").toString()
@@ -69,11 +73,13 @@ class TaskActivity : AppCompatActivity() {
             tasks.let { adapter.submitList(it) }
         }
 
+        /*
         val addTask = findViewById<FloatingActionButton>(R.id.addNewTask)
         addTask.setOnClickListener {
             val intent = Intent(this, AddingTaskActivity::class.java)
             taskResult.launch(intent)
         }
+         */
     }
 
     /**
@@ -87,6 +93,28 @@ class TaskActivity : AppCompatActivity() {
 
         if(extraCheck == null && imageBitmap != null){
             taskViewModel.updateTaskImage(requestCode, imageBitmap!!)
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater = menuInflater
+
+        // Inflate the menu; this adds items to the action bar if it's present.
+        inflater.inflate(R.menu.task_menu, menu)
+        return true
+    }
+
+    // Determine if action bar item was selected. If true do corresponding action.
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        // handle presses on the action bar menu.
+        return when (item.itemId) {
+            R.id.action_add_task -> {
+                val intent = Intent(this, AddingTaskActivity::class.java)
+                taskResult.launch(intent)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 }

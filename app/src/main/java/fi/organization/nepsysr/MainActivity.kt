@@ -69,32 +69,40 @@ class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         // Just an example of how to add to the database.
+        /*
         val testButton = findViewById<FloatingActionButton>(R.id.fab)
         testButton.setOnClickListener {
             val intent = Intent(this, ProfileActivity::class.java)
             profileResult.launch(intent)
         }
+         */
+
 
         // This button works as a placeholder to go into tasks activity until the
         // functionality is set for going from recyclerview items
+        /*
         val test = findViewById<Button>(R.id.test)
         test.setOnClickListener {
             val intent = Intent(this, TaskActivity::class.java)
             startActivity(intent)
         }
+        */
 
         // Observes changes to the data and updates the GUI accordingly
         contactViewModel.allContacts.observe(this) { contacts ->
             // Update the cached copy of the contacts in the adapter.
             contacts.let { adapter.submitList(it) }
         }
-        contactViewModel.deleteAll()
+        //contactViewModel.deleteAll()
 
         // More examples of adding to the database, can be freely removed.
+        /*
         var contact = Contact(0, "aaa", placeholderBitmap!!, "#ffc870", 0)
         contactViewModel.insert(contact)
         contact = Contact(0, "bbb", placeholderBitmap!!, "#6cb9f0", 0)
         contactViewModel.insert(contact)
+
+         */
     }
 
 
@@ -114,6 +122,12 @@ class MainActivity : AppCompatActivity() {
             R.id.action_settings -> {
                 val intent = Intent(this, SettingsActivity::class.java)
                 startActivity(intent)
+                true
+            }
+            // Just an example of how to add to the database.
+            R.id.action_add_contact -> {
+                val intent = Intent(this, ProfileActivity::class.java)
+                profileResult.launch(intent)
                 true
             }
             else -> super.onOptionsItemSelected(item)
