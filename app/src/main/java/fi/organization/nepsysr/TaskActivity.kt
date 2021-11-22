@@ -43,7 +43,7 @@ class TaskActivity : AppCompatActivity() {
         Log.d("TAG", "taski auki")
 
         // Placeholder image
-        val drawable = AppCompatResources.getDrawable(this, R.drawable.ic_baseline_add_a_photo_24)
+        val drawable = AppCompatResources.getDrawable(this, R.drawable.ic_baseline_add_a_photo_124)
         val placeholderBitmap = drawable?.toBitmap()
 
         var contactUid = intent.getIntExtra("uid", -1)
