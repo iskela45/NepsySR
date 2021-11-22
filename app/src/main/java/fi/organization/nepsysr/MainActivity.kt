@@ -3,6 +3,7 @@ package fi.organization.nepsysr
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -44,8 +45,18 @@ class MainActivity : AppCompatActivity() {
                     AppCompatResources.getDrawable(this, R.drawable.ic_baseline_image_search_24)
                 val placeholderBitmap = drawable?.toBitmap()
 
+                lateinit var contact : Contact
                 name = result.data?.getStringExtra("name").toString()
-                var contact = Contact(0, name, placeholderBitmap!!, "#49ba54", 0)
+
+                var byteArray = result.data?.getByteArrayExtra("img")
+                var img = byteArray?.let { BitmapFactory.decodeByteArray(byteArray, 0, it.size) }
+
+                if (img != null) {
+                    contact = Contact(0, name, img, "#49ba54", 0)
+                } else {
+                    contact = Contact(0, name, placeholderBitmap!!, "#49ba54", 0)
+                }
+
                 contactViewModel.insert(contact)
                 Log.d("TAG", "name: ${name}")
             }
