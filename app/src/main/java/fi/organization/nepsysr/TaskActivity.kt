@@ -43,7 +43,7 @@ class TaskActivity : AppCompatActivity() {
         Log.d("TAG", "taski auki")
 
         // Placeholder image
-        val drawable = AppCompatResources.getDrawable(this, R.drawable.ic_baseline_image_search_24)
+        val drawable = AppCompatResources.getDrawable(this, R.drawable.ic_baseline_add_a_photo_24)
         val placeholderBitmap = drawable?.toBitmap()
 
         var contactUid = intent.getIntExtra("uid", -1)
@@ -112,7 +112,7 @@ class TaskActivity : AppCompatActivity() {
             var contactUid = data?.getIntExtra("contactUserId", -1)
             var daysRemain = data?.getIntExtra("daysRemain", 0)
             // Placeholder image
-            val drawable = AppCompatResources.getDrawable(this, R.drawable.ic_baseline_image_search_24)
+            val drawable = AppCompatResources.getDrawable(this, R.drawable.ic_baseline_add_a_photo_24)
             val placeholderBitmap = drawable?.toBitmap()
             Log.d("TAG", "$taskId")
 
