@@ -33,15 +33,6 @@ class ProfileActivity : AppCompatActivity() {
 
     lateinit var etName: EditText
     lateinit var btSave : Button
-/*
-    Näitä ei ainakaan vielä käytetä missään. Ovat tulleet vahingossa?
-
-    val adapter = ContactListAdapter()
-
-    private val contactViewModel: ContactViewModel by viewModels {
-        ContactViewModelFactory((application as AppApplication).repository)
-    }
-*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
