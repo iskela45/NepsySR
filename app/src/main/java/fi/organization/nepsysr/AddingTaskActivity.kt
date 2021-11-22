@@ -5,13 +5,10 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.ImageDecoder
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
-import android.provider.MediaStore.ACTION_IMAGE_CAPTURE
-import android.util.Log
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
@@ -19,6 +16,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import fi.organization.nepsysr.alarm.AlarmHandler
 import fi.organization.nepsysr.utilities.compressBitmap
+import fi.organization.nepsysr.utilities.convertBitmap
 
 class AddingTaskActivity : AppCompatActivity() {
 
@@ -70,7 +68,7 @@ class AddingTaskActivity : AppCompatActivity() {
                 data.putExtra("title", title)
                 data.putExtra("timer", timer)
                 data.putExtra("topic", topic)
-                data.putExtra("img", compressBitmap(bitmap))
+                data.putExtra("img", convertBitmap(bitmap))
                 data.putExtra("requestCode", requestCode)
                 data.putExtra("daysRemain", daysRemain)
                 data.putExtra("taskId", taskId)
@@ -117,7 +115,7 @@ class AddingTaskActivity : AppCompatActivity() {
 
         if(requestCode == 1002 && bitmap != null){
             val img : ImageView = findViewById(R.id.imageView)
-            img.setImageBitmap(bitmap)
+            img.setImageBitmap(compressBitmap(bitmap))
         }
     }
 }

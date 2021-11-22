@@ -7,26 +7,18 @@ import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.viewModels
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
-import fi.organization.nepsysr.database.*
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 
-import android.graphics.drawable.BitmapDrawable
 import android.os.Build
 import fi.organization.nepsysr.utilities.compressBitmap
-import java.io.ByteArrayOutputStream
+import fi.organization.nepsysr.utilities.convertBitmap
 
 
 class ProfileActivity : AppCompatActivity() {
@@ -49,7 +41,7 @@ class ProfileActivity : AppCompatActivity() {
             val data = Intent()
 
             data.putExtra("name", name)
-            data.putExtra("img", compressBitmap(bitmap))
+            data.putExtra("img", convertBitmap(bitmap))
             setResult(Activity.RESULT_OK, data)
             finish()
         }
@@ -91,8 +83,9 @@ class ProfileActivity : AppCompatActivity() {
                 val source = ImageDecoder.createSource(contentResolver, uriImg!!)
                 bitmap = ImageDecoder.decodeBitmap(source)
             }
+
             val img : ImageView = findViewById(R.id.imageView)
-            img.setImageBitmap(bitmap)
+            img.setImageBitmap(compressBitmap(bitmap))
         }
     }
 }

@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
             if (result?.resultCode == Activity.RESULT_OK) {
                 // Placeholder image
                 val drawable =
-                    AppCompatResources.getDrawable(this, R.drawable.ic_baseline_image_search_24)
+                    AppCompatResources.getDrawable(this, R.drawable.ic_baseline_image_search_124)
                 val placeholderBitmap = drawable?.toBitmap()
 
                 name = result.data?.getStringExtra("name").toString()
