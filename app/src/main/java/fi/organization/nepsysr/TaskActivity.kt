@@ -2,6 +2,7 @@ package fi.organization.nepsysr
 
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -56,12 +57,22 @@ class TaskActivity : AppCompatActivity() {
                 timer = result.data?.getStringExtra("timer").toString()
                 topic = result.data?.getStringExtra("topic").toString()
                 img = result.data?.getStringExtra("img").toString()
+
                 val requestCode = result.data?.getIntExtra("requestCode", 0)
                 var daysRemain = result.data?.getIntExtra("daysRemain", 0)
-
                 val timerInt = Integer.parseInt(timer)
-                val task = Task(0, contactUid, title, timerInt, topic, placeholderBitmap!!, requestCode!!, daysRemain!!)
+
+                var byteArray = result.data?.getByteArrayExtra("img")
+                var img = byteArray?.let { BitmapFactory.decodeByteArray(byteArray, 0, it.size) }
+
+                lateinit var task : Task
+                if (img != null) {
+                    task = Task(0, contactUid, title, timerInt, topic, img, requestCode!!, daysRemain!!)
+                } else {
+                    task = Task(0, contactUid, title, timerInt, topic, placeholderBitmap!!, requestCode!!, daysRemain!!)
+                }
                 taskViewModel.insertTask(task)
+
             }
 
         }
@@ -98,6 +109,7 @@ class TaskActivity : AppCompatActivity() {
 
         if(extraCheck == null && imageBitmap != null){
             taskViewModel.updateTaskImage(requestCode, imageBitmap!!)
+            return
         }
 
         // resultcode 2000 is for update
@@ -106,7 +118,6 @@ class TaskActivity : AppCompatActivity() {
             timer = data?.getStringExtra("timer").toString()
             var timerInt = timer.toInt()
             topic = data?.getStringExtra("topic").toString()
-            img = data?.getStringExtra("img").toString()
             var taskId = data?.getIntExtra("taskId", -1)
             var contactUid = data?.getIntExtra("contactUserId", -1)
             var daysRemain = data?.getIntExtra("daysRemain", 0)
@@ -114,8 +125,12 @@ class TaskActivity : AppCompatActivity() {
             val drawable = AppCompatResources.getDrawable(this, R.drawable.ic_baseline_image_search_24)
             val placeholderBitmap = drawable?.toBitmap()
             Log.d("TAG", "$taskId")
-            if(taskId != null && contactUid != null && timer != null){
-                var taskToUpdate = Task(taskId, contactUid, title, timerInt, topic, placeholderBitmap!!, requestCode!!, daysRemain!!)
+
+            var byteArray = data?.getByteArrayExtra("img")
+            var img = byteArray?.let { BitmapFactory.decodeByteArray(byteArray, 0, it.size) }
+
+            if(taskId != null && contactUid != null && timer != null && img != null) {
+                var taskToUpdate = Task(taskId, contactUid, title, timerInt, topic, img, requestCode!!, daysRemain!!)
                 taskViewModel.updateTask(taskToUpdate)
             }
         }

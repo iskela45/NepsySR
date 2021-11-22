@@ -45,12 +45,12 @@ class MainActivity : AppCompatActivity() {
                     AppCompatResources.getDrawable(this, R.drawable.ic_baseline_image_search_24)
                 val placeholderBitmap = drawable?.toBitmap()
 
-                lateinit var contact : Contact
                 name = result.data?.getStringExtra("name").toString()
 
                 var byteArray = result.data?.getByteArrayExtra("img")
                 var img = byteArray?.let { BitmapFactory.decodeByteArray(byteArray, 0, it.size) }
 
+                lateinit var contact : Contact
                 if (img != null) {
                     contact = Contact(0, name, img, "#49ba54", 0)
                 } else {
