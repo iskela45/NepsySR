@@ -114,7 +114,7 @@ class AddingTaskActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         val bitmap = data?.extras?.get("data") as Bitmap?
-        
+
         if(requestCode == 1002 && bitmap != null){
             val img : ImageView = findViewById(R.id.imageView)
             img.setImageBitmap(bitmap)

@@ -33,8 +33,6 @@ class TaskActivity : AppCompatActivity() {
     lateinit var img: String
     lateinit var taskResult: ActivityResultLauncher<Intent>
 
-    // Moved here, because it is required in 2 places
-
 
     val taskViewModel: TaskViewModel by viewModels {
         TaskViewModelFactory((application as AppApplication).repository)
@@ -88,14 +86,6 @@ class TaskActivity : AppCompatActivity() {
             // Update the cached copy of the contacts in the adapter.
             tasks.let { adapter.submitList(it) }
         }
-
-        /*
-        val addTask = findViewById<FloatingActionButton>(R.id.addNewTask)
-        addTask.setOnClickListener {
-            val intent = Intent(this, AddingTaskActivity::class.java)
-            taskResult.launch(intent)
-        }
-         */
     }
 
     /**
