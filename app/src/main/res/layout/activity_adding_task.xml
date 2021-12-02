@@ -47,6 +47,7 @@
                     android:id="@+id/editTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:inputType="textShortMessage"
                     android:hint="Otsikko"
                     android:gravity="center"
                     />
@@ -63,7 +64,7 @@
                     android:id="@+id/setTimer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Ajastin"
+                    android:hint="Ajastin (päivää)"
                     android:gravity="center"
                     android:inputType="number"
                     />
@@ -80,6 +81,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Aihe"
+                    android:inputType="textShortMessage"
                     android:gravity="center"
                     />
             </com.google.android.material.textfield.TextInputLayout>

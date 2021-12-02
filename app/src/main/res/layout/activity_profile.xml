@@ -47,6 +47,8 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:hint="Nimi"
+            android:inputType="textPersonName"
+            android:imeOptions="actionDone"
             android:padding="30dp" />
 
       </com.google.android.material.textfield.TextInputLayout>
