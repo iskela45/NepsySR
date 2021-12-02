@@ -9,7 +9,7 @@ import android.icu.util.Calendar
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
-import fi.organization.nepsysr.database.*
+import fi.organization.nepsysr.database.AppRoomDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import kotlin.concurrent.thread

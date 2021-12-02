@@ -1,6 +1,5 @@
 package fi.organization.nepsysr.database
 
-import android.graphics.Bitmap
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
 

@@ -1,16 +1,11 @@
 package fi.organization.nepsysr.database
 
 import android.content.Context
-import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.toBitmap
-import android.util.Log
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
-import fi.organization.nepsysr.R
 import fi.organization.nepsysr.utilities.BitmapConverter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch

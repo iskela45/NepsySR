@@ -8,12 +8,10 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.preference.PreferenceManager
 import fi.organization.nepsysr.MainActivity
 import fi.organization.nepsysr.R
-import fi.organization.nepsysr.TaskActivity
 
 class AlarmReceiver : BroadcastReceiver() {
 

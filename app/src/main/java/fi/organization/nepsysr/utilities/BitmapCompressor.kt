@@ -3,7 +3,6 @@ package fi.organization.nepsysr.utilities
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Build
-import android.util.Log
 import java.io.ByteArrayOutputStream
 
 fun convertBitmap(bitmap: Bitmap): ByteArray {

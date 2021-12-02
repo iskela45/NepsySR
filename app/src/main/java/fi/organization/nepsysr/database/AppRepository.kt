@@ -1,7 +1,6 @@
 package fi.organization.nepsysr.database
 
 import android.graphics.Bitmap
-import android.util.Log
 import androidx.annotation.WorkerThread
 import kotlinx.coroutines.flow.Flow
 
