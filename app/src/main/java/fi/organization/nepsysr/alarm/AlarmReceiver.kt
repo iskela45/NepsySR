@@ -40,7 +40,8 @@ class AlarmReceiver : BroadcastReceiver() {
             var notificationManager : NotificationManager =
                 context?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-            val builder = NotificationCompat.Builder(context, CHANNEL_ID) // Create notification with channel Id
+            // Create notification with channel Id
+            val builder = NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_notifications)
                 .setContentTitle(title)
                 .setContentText(topic)

@@ -36,14 +36,14 @@ class AddingTaskActivity : AppCompatActivity() {
         this.editTopic = findViewById(R.id.editTopic)
         this.saveTask = findViewById(R.id.saveTask)
         this.taskImageView = findViewById(R.id.imageView)
-        
+
 
         var taskId = intent.getIntExtra("taskId", -1)
-        var itIsUpdate = intent.getBooleanExtra("update", false)
+        var isUpdate = intent.getBooleanExtra("update", false)
         var contactUserId = intent.getIntExtra("contactUserId", -1)
 
 
-        if (itIsUpdate) {
+        if (isUpdate) {
             editTitle.setText(intent.getStringExtra("title").toString())
             setTimer.setText(intent.getIntExtra("timer", 0).toString())
             editTopic.setText(intent.getStringExtra("topic").toString())
@@ -66,8 +66,8 @@ class AddingTaskActivity : AppCompatActivity() {
                 var daysRemain = alarm.getDaysDifference()
                 val drawable = taskImageView.drawable
                 val bitmap = drawable.toBitmap()
-
                 val data = Intent()
+
                 data.putExtra("title", title)
                 data.putExtra("timer", timer)
                 data.putExtra("topic", topic)
@@ -76,7 +76,8 @@ class AddingTaskActivity : AppCompatActivity() {
                 data.putExtra("daysRemain", daysRemain)
                 data.putExtra("taskId", taskId)
                 data.putExtra("contactUserId", contactUserId)
-                if(itIsUpdate){
+
+                if(isUpdate){
                     setResult(2000, data)
                 } else {
                     setResult(RESULT_OK, data)
@@ -84,7 +85,11 @@ class AddingTaskActivity : AppCompatActivity() {
 
                 finish()
             } else {
-                Toast.makeText(applicationContext,"Aseta ajastimeen tehtävän ilmoitusten aikaväli",Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    applicationContext,
+                    "Aseta ajastimeen tehtävän ilmoitusten aikaväli",
+                    Toast.LENGTH_LONG
+                ).show()
             }
         }
 
@@ -97,7 +102,12 @@ class AddingTaskActivity : AppCompatActivity() {
                 ) == PackageManager.PERMISSION_GRANTED -> {
                     // You can use the API that requires the permission.
                     val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                    ActivityCompat.startActivityForResult(this as Activity, takePictureIntent, 1002, null)
+                    ActivityCompat.startActivityForResult(
+                        this as Activity,
+                        takePictureIntent,
+                        1002,
+                        null
+                    )
                 }
 
                 else -> {

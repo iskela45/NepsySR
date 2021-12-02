@@ -41,8 +41,12 @@ class AlarmHandler(val context: Context) {
         intent.putExtra("topic", topic)
         intent.putExtra("days", days)
 
-        val alarmIntent : PendingIntent = PendingIntent.getBroadcast(context, penIntentRequestCode,
-            intent, PendingIntent.FLAG_CANCEL_CURRENT)
+        val alarmIntent : PendingIntent = PendingIntent.getBroadcast(
+            context,
+            penIntentRequestCode,
+            intent,
+            PendingIntent.FLAG_CANCEL_CURRENT
+        )
         val alarm : AlarmManager = context.getSystemService(ALARM_SERVICE) as AlarmManager
 
         // Set alarm (type, milliseconds, intent)
@@ -85,11 +89,16 @@ class AlarmHandler(val context: Context) {
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
-    fun intentHandler(daysRemain : Int, title: String, topic: String, requestCode: Int, splittedTime: List<String>) {
+    fun intentHandler(daysRemain : Int,
+                      title: String,
+                      topic: String,
+                      requestCode: Int,
+                      splitTime: List<String>
+    ) {
         val notificationId = rnd.getRandomNumber()
         penIntentRequestCode = requestCode
 
-        var cal : Calendar = time.getExactAlarmTime(splittedTime, daysRemain.toString())
+        var cal : Calendar = time.getExactAlarmTime(splitTime, daysRemain.toString())
         var alarmStartTime : Long = cal.timeInMillis
 
         val intent = Intent(context, AlarmReceiver::class.java)
@@ -98,8 +107,12 @@ class AlarmHandler(val context: Context) {
         intent.putExtra("topic", topic)
         intent.putExtra("days", daysRemain)
 
-        val alarmIntent : PendingIntent = PendingIntent.getBroadcast(context, penIntentRequestCode,
-            intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val alarmIntent : PendingIntent = PendingIntent.getBroadcast(
+            context,
+            penIntentRequestCode,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
         val alarm : AlarmManager = context.getSystemService(ALARM_SERVICE) as AlarmManager
 
         // Set alarm (type, milliseconds, intent)

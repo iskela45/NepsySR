@@ -34,7 +34,16 @@ class TaskListAdapter : ListAdapter<Task, TaskListAdapter.TaskViewHolder>(TasksC
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         val current = getItem(position)
-        holder.bind(current.title, current.topic, current.daysRemain, current.requestCode, current.timer, current.taskId, current.contactId, current.img)
+        holder.bind(
+            current.title,
+            current.topic,
+            current.daysRemain,
+            current.requestCode,
+            current.timer,
+            current.taskId,
+            current.contactId,
+            current.img
+        )
     }
 
     class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -49,7 +58,14 @@ class TaskListAdapter : ListAdapter<Task, TaskListAdapter.TaskViewHolder>(TasksC
 
         // initialization for list item and it's context
 
-        fun bind(title: String?, topic: String, daysRemain: Int, requestCode: Int, timer: Int, taskId: Int, contactUserId: Int, img: Bitmap) {
+        fun bind(title: String?,
+                 topic: String,
+                 daysRemain: Int,
+                 requestCode: Int,
+                 timer: Int, taskId:
+                 Int, contactUserId:
+                 Int, img: Bitmap
+        ) {
             taskItemView.text = "$title \n$topic \n$daysRemain/$timer päivää jäljellä"
             taskImageView.setImageBitmap(img)
 
@@ -96,7 +112,12 @@ class TaskListAdapter : ListAdapter<Task, TaskListAdapter.TaskViewHolder>(TasksC
                 intent.putExtra("img", img)
                 intent.putExtra("update", true)
 
-                ActivityCompat.startActivityForResult(mContext as Activity, intent, 2000, null)
+                ActivityCompat.startActivityForResult(
+                    mContext as Activity,
+                    intent,
+                    2000,
+                    null
+                )
             }
         }
 

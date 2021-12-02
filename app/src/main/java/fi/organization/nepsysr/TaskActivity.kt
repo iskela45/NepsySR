@@ -37,19 +37,22 @@ class TaskActivity : AppCompatActivity() {
     val taskViewModel: TaskViewModel by viewModels {
         TaskViewModelFactory((application as AppApplication).repository)
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_task)
         Log.d("TAG", "taski auki")
 
         // Placeholder image
-        val drawable = AppCompatResources.getDrawable(this, R.drawable.ic_baseline_add_a_photo_124)
+        val drawable =
+            AppCompatResources.getDrawable(this, R.drawable.ic_baseline_add_a_photo_124)
         val placeholderBitmap = drawable?.toBitmap()
 
         var contactUid = intent.getIntExtra("uid", -1)
 
-        this.taskResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult())
-        { result: ActivityResult? ->
+        this.taskResult = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result: ActivityResult? ->
             if (result?.resultCode == RESULT_OK) {
                 title = result.data?.getStringExtra("title").toString()
                 timer = result.data?.getStringExtra("timer").toString()
@@ -61,13 +64,21 @@ class TaskActivity : AppCompatActivity() {
                 val timerInt = Integer.parseInt(timer)
 
                 var byteArray = result.data?.getByteArrayExtra("img")
-                var img = byteArray?.let { BitmapFactory.decodeByteArray(byteArray, 0, it.size) }
+                var img = byteArray?.let {
+                    BitmapFactory.decodeByteArray(byteArray, 0, it.size)
+                }
 
                 lateinit var task : Task
                 if (img != null) {
-                    task = Task(0, contactUid, title, timerInt, topic, img, requestCode!!, daysRemain!!)
+                    task = Task(
+                        0, contactUid, title, timerInt, topic,
+                        img, requestCode!!, daysRemain!!
+                    )
                 } else {
-                    task = Task(0, contactUid, title, timerInt, topic, placeholderBitmap!!, requestCode!!, daysRemain!!)
+                    task = Task(
+                        0, contactUid, title, timerInt, topic,
+                        placeholderBitmap!!, requestCode!!, daysRemain!!
+                    )
                 }
                 taskViewModel.insertTask(task)
 
@@ -112,7 +123,8 @@ class TaskActivity : AppCompatActivity() {
             var contactUid = data?.getIntExtra("contactUserId", -1)
             var daysRemain = data?.getIntExtra("daysRemain", 0)
             // Placeholder image
-            val drawable = AppCompatResources.getDrawable(this, R.drawable.ic_baseline_add_a_photo_24)
+            val drawable =
+                AppCompatResources.getDrawable(this, R.drawable.ic_baseline_add_a_photo_24)
             val placeholderBitmap = drawable?.toBitmap()
             Log.d("TAG", "$taskId")
 
@@ -120,7 +132,10 @@ class TaskActivity : AppCompatActivity() {
             var img = byteArray?.let { BitmapFactory.decodeByteArray(byteArray, 0, it.size) }
 
             if(taskId != null && contactUid != null && timer != null && img != null) {
-                var taskToUpdate = Task(taskId, contactUid, title, timerInt, topic, img, requestCode!!, daysRemain!!)
+                var taskToUpdate = Task(
+                    taskId, contactUid, title, timerInt, topic,
+                    img, requestCode!!, daysRemain!!
+                )
                 taskViewModel.updateTask(taskToUpdate)
             }
         }

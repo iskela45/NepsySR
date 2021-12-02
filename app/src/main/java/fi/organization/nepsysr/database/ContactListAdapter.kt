@@ -30,7 +30,10 @@ import com.google.android.material.internal.ContextUtils.getActivity
 import fi.organization.nepsysr.R
 import fi.organization.nepsysr.TaskActivity
 
-class ContactListAdapter() : ListAdapter<Contact, ContactListAdapter.ContactViewHolder>(ContactsComparator()), ActivityCompat.OnRequestPermissionsResultCallback {
+class ContactListAdapter() : ListAdapter<Contact,
+                             ContactListAdapter.ContactViewHolder>(ContactsComparator()),
+                             ActivityCompat.OnRequestPermissionsResultCallback {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactViewHolder {
         return ContactViewHolder.create(parent)
     }
@@ -66,7 +69,11 @@ class ContactListAdapter() : ListAdapter<Contact, ContactListAdapter.ContactView
                         Manifest.permission.READ_EXTERNAL_STORAGE
                     ) == PackageManager.PERMISSION_GRANTED -> {
                         // You can use the API that requires the permission.
-                        val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+                        val gallery = Intent(
+                            Intent.ACTION_PICK,
+                            MediaStore.Images.Media.INTERNAL_CONTENT_URI
+                        )
+
                         startActivityForResult(mContext as Activity, gallery, id, null)
                     }
 

@@ -54,9 +54,17 @@ class ProfileActivity : AppCompatActivity() {
                     Manifest.permission.READ_EXTERNAL_STORAGE
                 ) == PackageManager.PERMISSION_GRANTED -> {
                     // You can use the API that requires the permission.
-                    val gallery =
-                        Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
-                    ActivityCompat.startActivityForResult(this as Activity, gallery, 1001, null)
+                    val gallery = Intent(
+                        Intent.ACTION_PICK,
+                        MediaStore.Images.Media.INTERNAL_CONTENT_URI
+                    )
+
+                    ActivityCompat.startActivityForResult(
+                        this as Activity,
+                        gallery,
+                        1001,
+                        null
+                    )
                 }
 
                 else -> {

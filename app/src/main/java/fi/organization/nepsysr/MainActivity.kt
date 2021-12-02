@@ -37,18 +37,23 @@ class MainActivity : AppCompatActivity() {
     lateinit var name: String
 
     val profileResult: ActivityResultLauncher<Intent> =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult())
-        { result: ActivityResult? ->
+        registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result: ActivityResult? ->
             if (result?.resultCode == Activity.RESULT_OK) {
                 // Placeholder image
-                val drawable =
-                    AppCompatResources.getDrawable(this, R.drawable.ic_baseline_image_search_124)
-                val placeholderBitmap = drawable?.toBitmap()
+                val drawable = AppCompatResources.getDrawable(
+                    this,
+                    R.drawable.ic_baseline_image_search_124
+                )
 
                 name = result.data?.getStringExtra("name").toString()
 
+                val placeholderBitmap = drawable?.toBitmap()
                 var byteArray = result.data?.getByteArrayExtra("img")
-                var img = byteArray?.let { BitmapFactory.decodeByteArray(byteArray, 0, it.size) }
+                var img = byteArray?.let {
+                    BitmapFactory.decodeByteArray(byteArray, 0, it.size)
+                }
 
                 lateinit var contact : Contact
                 if (img != null) {
@@ -70,7 +75,10 @@ class MainActivity : AppCompatActivity() {
         alarm.timeObserve()
 
         // Placeholder image
-        val drawable = AppCompatResources.getDrawable(this, R.drawable.ic_baseline_image_search_24)
+        val drawable = AppCompatResources.getDrawable(
+            this,
+            R.drawable.ic_baseline_image_search_24
+        )
         val placeholderBitmap = drawable?.toBitmap()
 
         // Create recyclerViews for all of the names.
@@ -134,8 +142,11 @@ class MainActivity : AppCompatActivity() {
                 val source = ImageDecoder.createSource(contentResolver, uriImg!!)
                 bitmap = ImageDecoder.decodeBitmap(source)
             }
+
             contactViewModel.updateContactImage(requestCode, bitmap)
-            data?.getStringExtra("uid")?.let { contactViewModel.updateContactImage(it.toInt(), bitmap) }
+            data?.getStringExtra("uid")?.let {
+                contactViewModel.updateContactImage(it.toInt(), bitmap)
+            }
 
         }
     }
