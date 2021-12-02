@@ -24,6 +24,7 @@ class AddingTaskActivity : AppCompatActivity() {
     lateinit var setTimer: EditText
     lateinit var editTopic: EditText
     lateinit var saveTask: Button
+    lateinit var taskImageView: ImageView
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,7 +35,8 @@ class AddingTaskActivity : AppCompatActivity() {
         this.setTimer = findViewById(R.id.setTimer)
         this.editTopic = findViewById(R.id.editTopic)
         this.saveTask = findViewById(R.id.saveTask)
-        var taskImageView: ImageView = findViewById(R.id.imageView)
+        this.taskImageView = findViewById(R.id.imageView)
+        
 
         var taskId = intent.getIntExtra("taskId", -1)
         var itIsUpdate = intent.getBooleanExtra("update", false)
@@ -45,8 +47,9 @@ class AddingTaskActivity : AppCompatActivity() {
             editTitle.setText(intent.getStringExtra("title").toString())
             setTimer.setText(intent.getIntExtra("timer", 0).toString())
             editTopic.setText(intent.getStringExtra("topic").toString())
-            this.findViewById<TextView>(R.id.tvHeading).setText("Päivitä tehtävää")
-            this.findViewById<TextView>(R.id.saveTask).setText("Päivitä")
+            this.findViewById<TextView>(R.id.tvHeading).text = "Päivitä tehtävää"
+            this.findViewById<TextView>(R.id.saveTask).text = "Päivitä"
+            taskImageView.setImageBitmap(intent.getParcelableExtra("img"))
         }
 
         saveTask.setOnClickListener {
