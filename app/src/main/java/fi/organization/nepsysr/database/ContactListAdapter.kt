@@ -21,8 +21,10 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import fi.organization.nepsysr.ProfileActivity
 import fi.organization.nepsysr.R
 import fi.organization.nepsysr.TaskActivity
+import fi.organization.nepsysr.utilities.convertBitmap
 
 class ContactListAdapter() : ListAdapter<Contact,
                              ContactListAdapter.ContactViewHolder>(ContactsComparator()),
@@ -54,6 +56,19 @@ class ContactListAdapter() : ListAdapter<Contact,
                 intent.putExtra("uid", id)
                 startActivityForResult(mContext as Activity, intent, 3000, null)
             }
+
+            contactItemView.setOnLongClickListener {
+                val intent = Intent(mContext, ProfileActivity::class.java)
+                intent.putExtra("uid", id)
+                intent.putExtra("name", text)
+                // There is no way to null the image.
+                intent.putExtra("img", convertBitmap(img!!))
+                intent.putExtra("color", color)
+                intent.putExtra("isUpdate", true)
+                startActivityForResult(mContext as Activity, intent, 2000, null)
+                return@setOnLongClickListener true
+            }
+
 
             // Check and ask for permissions, then start gallery activity.
             contactImageView.setOnClickListener {

@@ -38,6 +38,9 @@ interface AppDao {
     @Update(entity = Contact::class)
     suspend fun updateContactImage(obj: ContactImageUpdate)
 
+    @Update(entity = Contact::class)
+    suspend fun updateContact(obj: ContactEditUpdate)
+
     // Tasks
 
     @Query("SELECT * FROM task")

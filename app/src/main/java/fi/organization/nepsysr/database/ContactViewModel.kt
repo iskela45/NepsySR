@@ -24,6 +24,11 @@ class ContactViewModel(private val repository: AppRepository) : ViewModel() {
     fun updateContactImage(uid: Int, img: Bitmap) = viewModelScope.launch {
         repository.updateContactImage(uid, img)
     }
+
+    fun updateContact(uid: Int, name: String,
+                      img: Bitmap, color: String) = viewModelScope.launch {
+        repository.updateContact(uid, name, img, color)
+    }
 }
 // Boilerplate code
 class ContactViewModelFactory(private val repository: AppRepository) : ViewModelProvider.Factory {

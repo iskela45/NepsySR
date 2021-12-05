@@ -17,6 +17,13 @@ class ContactImageUpdate (
     var img: Bitmap
 )
 
+class ContactEditUpdate (
+    var uid: Int,
+    var name: String,
+    var img: Bitmap,
+    var color: String
+)
+
 @Entity
 data class Task(
     @PrimaryKey(autoGenerate = true) val taskId: Int,

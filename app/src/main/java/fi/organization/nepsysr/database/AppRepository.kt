@@ -37,6 +37,12 @@ class AppRepository(private val appDao: AppDao) {
         appDao.updateContactImage(ContactImageUpdate(uid, img))
     }
 
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun updateContact(uid: Int, name: String, img: Bitmap, color: String) {
+        appDao.updateContact(ContactEditUpdate(uid, name, img, color))
+    }
+
 
     // By default Room runs suspend queries off the main thread, therefore, we don't need to
     // implement anything else to ensure we're not doing long running database work

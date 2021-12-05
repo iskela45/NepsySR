@@ -45,6 +45,7 @@ class MainActivity : AppCompatActivity() {
                 )
 
                 name = result.data?.getStringExtra("name").toString()
+                var color = result.data?.getStringExtra("color").toString()
 
                 val placeholderBitmap = drawable?.toBitmap()
                 var byteArray = result.data?.getByteArrayExtra("img")
@@ -54,9 +55,9 @@ class MainActivity : AppCompatActivity() {
 
                 lateinit var contact : Contact
                 if (img != null) {
-                    contact = Contact(0, name, img, "#49ba54", 0)
+                    contact = Contact(0, name, img, color, 0)
                 } else {
-                    contact = Contact(0, name, placeholderBitmap!!, "#49ba54", 0)
+                    contact = Contact(0, name, placeholderBitmap!!, color, 0)
                 }
 
                 contactViewModel.insert(contact)
@@ -128,7 +129,9 @@ class MainActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         // This is the hacky part, checking that the activity result isn't from contact creation
         // By checking if the name extra exists.
+        Log.d("TAG", "BWOAH")
         var extraCheck = data?.getStringExtra("name")
+        var isUpdate = data?.getBooleanExtra("isUpdate", false)
         if(extraCheck == null && data?.data != null){
             var uriImg = data?.data
             lateinit var bitmap : Bitmap
@@ -144,7 +147,19 @@ class MainActivity : AppCompatActivity() {
             data?.getStringExtra("uid")?.let {
                 contactViewModel.updateContactImage(it.toInt(), bitmap)
             }
+        }
 
+        if (isUpdate == true) {
+            var newName = data?.getStringExtra("name").toString()
+            var newColor = data?.getStringExtra("color").toString()
+            var uid = data?.getIntExtra("uid", 0)
+            var byteArray = data?.getByteArrayExtra("img")
+            var newImg = byteArray?.let {
+                BitmapFactory.decodeByteArray(byteArray, 0, it.size)
+            }
+
+            contactViewModel.updateContact(uid!!, newName, newImg!!, newColor)
+            Log.d("TAG", "saved: ${newName}")
         }
     }
 }
