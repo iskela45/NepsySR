@@ -67,12 +67,6 @@ class AppRepository(private val appDao: AppDao) {
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    suspend fun getAllTasks() {
-        appDao.getAllTasks()
-    }
-
-    @Suppress("RedundantSuspendModifier")
-    @WorkerThread
     suspend fun getAllTasksList() {
         appDao.getAllTasksList()
     }

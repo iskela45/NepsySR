@@ -25,15 +25,15 @@ class TimeHandler(val context: Context) {
             alarmSp = defaultSummary
         }
 
-        return alarmSp!!.split(":")
+        return alarmSp.split(":")
     }
 
     // Includes day
     @RequiresApi(Build.VERSION_CODES.N)
-    fun getExactAlarmTime(splittedTime : List<String>, timer : String) : Calendar {
+    fun getExactAlarmTime(splitTime : List<String>, timer : String) : Calendar {
         val cal = Calendar.getInstance()
-        cal.set(Calendar.HOUR_OF_DAY, splittedTime[0].toInt())
-        cal.set(Calendar.MINUTE, splittedTime[1].toInt())
+        cal.set(Calendar.HOUR_OF_DAY, splitTime[0].toInt())
+        cal.set(Calendar.MINUTE, splitTime[1].toInt())
         cal.set(Calendar.SECOND, 0)
 
         // checks alarm's time, if it's before current time, add one day

@@ -13,8 +13,8 @@ import kotlinx.coroutines.launch
 
 // Annotates class to be a Room Database with a table (entity) of the contact class
 @TypeConverters(BitmapConverter::class)
-@Database(entities = arrayOf(Contact::class, Task::class), version = 1, exportSchema = false)
-public abstract class AppRoomDatabase : RoomDatabase() {
+@Database(entities = [Contact::class, Task::class], version = 1, exportSchema = false)
+abstract class AppRoomDatabase : RoomDatabase() {
 
     abstract fun appDao(): AppDao
 

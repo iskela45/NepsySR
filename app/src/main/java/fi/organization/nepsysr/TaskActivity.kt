@@ -4,7 +4,6 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.result.ActivityResult
@@ -23,26 +22,25 @@ class TaskActivity : AppCompatActivity() {
 
     lateinit var title: String
     lateinit var timer: String
-    lateinit var topic: String
+    private lateinit var topic: String
     lateinit var img: String
-    lateinit var taskResult: ActivityResultLauncher<Intent>
+    private lateinit var taskResult: ActivityResultLauncher<Intent>
 
 
-    val taskViewModel: TaskViewModel by viewModels {
+    private val taskViewModel: TaskViewModel by viewModels {
         TaskViewModelFactory((application as AppApplication).repository)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_task)
-        Log.d("TAG", "taski auki")
 
         // Placeholder image
         val drawable =
             AppCompatResources.getDrawable(this, R.drawable.ic_baseline_add_a_photo_124)
         val placeholderBitmap = drawable?.toBitmap()
 
-        var contactUid = intent.getIntExtra("uid", -1)
+        val contactUid = intent.getIntExtra("uid", -1)
 
         this.taskResult = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
@@ -54,22 +52,21 @@ class TaskActivity : AppCompatActivity() {
                 img = result.data?.getStringExtra("img").toString()
 
                 val requestCode = result.data?.getIntExtra("requestCode", 0)
-                var daysRemain = result.data?.getIntExtra("daysRemain", 0)
+                val daysRemain = result.data?.getIntExtra("daysRemain", 0)
                 val timerInt = Integer.parseInt(timer)
 
-                var byteArray = result.data?.getByteArrayExtra("img")
-                var img = byteArray?.let {
+                val byteArray = result.data?.getByteArrayExtra("img")
+                val img = byteArray?.let {
                     BitmapFactory.decodeByteArray(byteArray, 0, it.size)
                 }
 
-                lateinit var task : Task
-                if (img != null) {
-                    task = Task(
+                val task : Task = if (img != null) {
+                    Task(
                         0, contactUid, title, timerInt, topic,
                         img, requestCode!!, daysRemain!!
                     )
                 } else {
-                    task = Task(
+                    Task(
                         0, contactUid, title, timerInt, topic,
                         placeholderBitmap!!, requestCode!!, daysRemain!!
                     )
@@ -99,43 +96,37 @@ class TaskActivity : AppCompatActivity() {
      */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        var extraCheck = data?.getStringExtra("title")
-        var taskId = data?.getIntExtra("taskId", -1)
+        val extraCheck = data?.getStringExtra("title")
+        val taskId = data?.getIntExtra("taskId", -1)
         val imageBitmap = data?.extras?.get("data") as Bitmap?
 
         if(extraCheck == null && imageBitmap != null){
-            taskViewModel.updateTaskImage(requestCode, imageBitmap!!)
+            taskViewModel.updateTaskImage(requestCode, imageBitmap)
             return
         }
 
-        var isUpdate = data?.getBooleanExtra("isUpdate", false)
-        // resultcode 2000 is for update
+        val isUpdate = data?.getBooleanExtra("isUpdate", false)
         if (isUpdate == true) {
-            title = data?.getStringExtra("title").toString()
-            timer = data?.getStringExtra("timer").toString()
-            var timerInt = timer.toInt()
-            topic = data?.getStringExtra("topic").toString()
-            var contactUid = data?.getIntExtra("contactUserId", -1)
-            var daysRemain = data?.getIntExtra("daysRemain", 0)
-            // Placeholder image
-            val drawable =
-                AppCompatResources.getDrawable(this, R.drawable.ic_baseline_add_a_photo_24)
-            val placeholderBitmap = drawable?.toBitmap()
-            Log.d("TAG", "$taskId")
+            title = data.getStringExtra("title").toString()
+            timer = data.getStringExtra("timer").toString()
+            val timerInt = timer.toInt()
+            topic = data.getStringExtra("topic").toString()
+            val contactUid = data.getIntExtra("contactUserId", -1)
+            val daysRemain = data.getIntExtra("daysRemain", 0)
 
-            var byteArray = data?.getByteArrayExtra("img")
-            var img = byteArray?.let { BitmapFactory.decodeByteArray(byteArray, 0, it.size) }
+            val byteArray = data.getByteArrayExtra("img")
+            val img = byteArray?.let { BitmapFactory.decodeByteArray(byteArray, 0, it.size) }
 
-            if(taskId != null && contactUid != null && timer != null && img != null) {
-                var taskToUpdate = Task(
+            if(taskId != null && img != null) {
+                val taskToUpdate = Task(
                     taskId, contactUid, title, timerInt, topic,
-                    img, requestCode!!, daysRemain!!
+                    img, requestCode, daysRemain
                 )
                 taskViewModel.updateTask(taskToUpdate)
             }
         }
 
-        var isDelete = data?.getBooleanExtra("isDelete", false)
+        val isDelete = data?.getBooleanExtra("isDelete", false)
         if (taskId != null) {
             if (isDelete == true && taskId > 0) taskViewModel.deleteTaskById(taskId)
         }

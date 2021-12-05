@@ -8,7 +8,6 @@ import android.graphics.ImageDecoder
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.result.ActivityResult
@@ -33,7 +32,7 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var name: String
 
-    val profileResult: ActivityResultLauncher<Intent> =
+    private val profileResult: ActivityResultLauncher<Intent> =
         registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ) { result: ActivityResult? ->
@@ -45,19 +44,18 @@ class MainActivity : AppCompatActivity() {
                 )
 
                 name = result.data?.getStringExtra("name").toString()
-                var color = result.data?.getStringExtra("color").toString()
+                val color = result.data?.getStringExtra("color").toString()
 
                 val placeholderBitmap = drawable?.toBitmap()
-                var byteArray = result.data?.getByteArrayExtra("img")
-                var img = byteArray?.let {
+                val byteArray = result.data?.getByteArrayExtra("img")
+                val img = byteArray?.let {
                     BitmapFactory.decodeByteArray(byteArray, 0, it.size)
                 }
 
-                lateinit var contact : Contact
-                if (img != null) {
-                    contact = Contact(0, name, img, color, 0)
+                val contact = if (img != null) {
+                    Contact(0, name, img, color, 0)
                 } else {
-                    contact = Contact(0, name, placeholderBitmap!!, color, 0)
+                    Contact(0, name, placeholderBitmap!!, color, 0)
                 }
 
                 contactViewModel.insert(contact)
@@ -68,15 +66,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var alarm = AlarmHandler(this)
+        val alarm = AlarmHandler(this)
         alarm.timeObserve()
-
-        // Placeholder image
-        val drawable = AppCompatResources.getDrawable(
-            this,
-            R.drawable.ic_baseline_image_search_24
-        )
-        val placeholderBitmap = drawable?.toBitmap()
 
         // Create recyclerViews for all of the names.
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerview)
@@ -128,37 +119,36 @@ class MainActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         // This is the hacky part, checking that the activity result isn't from contact creation
         // By checking if the name extra exists.
-        var extraCheck = data?.getStringExtra("name")
+        val extraCheck = data?.getStringExtra("name")
         if(extraCheck == null && data?.data != null){
-            var uriImg = data?.data
-            lateinit var bitmap : Bitmap
+            val uriImg = data.data
 
-            if (Build.VERSION.SDK_INT < 28) {
-                bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uriImg)
+            val bitmap : Bitmap = if (Build.VERSION.SDK_INT < 28) {
+                MediaStore.Images.Media.getBitmap(contentResolver, uriImg)
             } else {
                 val source = ImageDecoder.createSource(contentResolver, uriImg!!)
-                bitmap = ImageDecoder.decodeBitmap(source)
+                ImageDecoder.decodeBitmap(source)
             }
 
             contactViewModel.updateContactImage(requestCode, bitmap)
-            data?.getStringExtra("uid")?.let {
+            data.getStringExtra("uid")?.let {
                 contactViewModel.updateContactImage(it.toInt(), bitmap)
             }
         }
 
-        var uid = data?.getIntExtra("uid", 0)
-        var isUpdate = data?.getBooleanExtra("isUpdate", false)
+        val uid = data?.getIntExtra("uid", 0)
+        val isUpdate = data?.getBooleanExtra("isUpdate", false)
         if (isUpdate == true) {
-            var newName = data?.getStringExtra("name").toString()
-            var newColor = data?.getStringExtra("color").toString()
-            var byteArray = data?.getByteArrayExtra("img")
-            var newImg = byteArray?.let {
+            val newName = data.getStringExtra("name").toString()
+            val newColor = data.getStringExtra("color").toString()
+            val byteArray = data.getByteArrayExtra("img")
+            val newImg = byteArray?.let {
                 BitmapFactory.decodeByteArray(byteArray, 0, it.size)
             }
             contactViewModel.updateContact(uid!!, newName, newImg!!, newColor)
         }
 
-        var isDelete = data?.getBooleanExtra("isDelete", false)
+        val isDelete = data?.getBooleanExtra("isDelete", false)
         if (uid != null) {
             if (isDelete == true && uid > 0) contactViewModel.deleteContactById(uid)
         }

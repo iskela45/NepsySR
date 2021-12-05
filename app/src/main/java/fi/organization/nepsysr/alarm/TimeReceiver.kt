@@ -17,7 +17,7 @@ class TimeReceiver : BroadcastReceiver() {
         val alarm = AlarmHandler(context)
 
         thread {
-            var tasks = database.appDao().getAllTasksList()
+            val tasks = database.appDao().getAllTasksList()
 
             // update the daysRemain-column of the task by subtracting one day
             for (i in tasks) {

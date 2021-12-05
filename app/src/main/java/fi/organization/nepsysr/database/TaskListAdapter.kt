@@ -44,13 +44,13 @@ class TaskListAdapter : ListAdapter<Task, TaskListAdapter.TaskViewHolder>(TasksC
 
     class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val taskItemView: TextView = itemView.findViewById(R.id.textView)
-        var taskImageView: ImageView = itemView.findViewById(R.id.profile_Img)
+        private var taskImageView: ImageView = itemView.findViewById(R.id.profile_Img)
 
         // initialization for resButton and it's context
-        var resButton: Button = itemView.findViewById(R.id.resButton)
+        private var resButton: Button = itemView.findViewById(R.id.resButton)
         var context : Context = resButton.context
         val alarm = AlarmHandler(context)
-        var mContext : Context = itemView.context
+        private var mContext : Context = itemView.context
 
         // initialization for list item and it's context
 
@@ -71,11 +71,11 @@ class TaskListAdapter : ListAdapter<Task, TaskListAdapter.TaskViewHolder>(TasksC
 
             // Check and ask for permissions, then start camera activity.
             taskImageView.setOnClickListener {
-                when {
+                when (PackageManager.PERMISSION_GRANTED) {
                     ContextCompat.checkSelfPermission(
                         mContext,
                         Manifest.permission.CAMERA
-                    ) == PackageManager.PERMISSION_GRANTED -> {
+                    ) -> {
                         // You can use the API that requires the permission.
                         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
                         ActivityCompat.startActivityForResult(
@@ -85,7 +85,6 @@ class TaskListAdapter : ListAdapter<Task, TaskListAdapter.TaskViewHolder>(TasksC
                             null
                         )
                     }
-
                     else -> {
                         // You can directly ask for the permission.
                         ActivityCompat.requestPermissions(
@@ -95,7 +94,7 @@ class TaskListAdapter : ListAdapter<Task, TaskListAdapter.TaskViewHolder>(TasksC
                     }
                 }
             }
-            // Add clicklistener to open addTaskActivity with prefilled
+            // Add clickListener to open addTaskActivity with prefilled
             // saving will update task
             taskItemView.setOnClickListener{
                 val intent = Intent(mContext, AddingTaskActivity::class.java)
@@ -118,7 +117,7 @@ class TaskListAdapter : ListAdapter<Task, TaskListAdapter.TaskViewHolder>(TasksC
         }
 
         companion object {
-            private val IMAGE_PICK_CODE = 1
+            private const val IMAGE_PICK_CODE = 1
 
             fun create(parent: ViewGroup): TaskViewHolder {
                 val view: View = LayoutInflater.from(parent.context)

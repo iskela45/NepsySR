@@ -12,12 +12,12 @@ import androidx.fragment.app.DialogFragment
 class PopTimePicker : DialogFragment() {
 
     private var mListener: OnTimeSetListener? = null
-    private var contexti: Context? = null
+    private var nContext: Context? = null
 
     // Called when a fragment is first attached to its context.
     override fun onAttach(context: Context) {
         super.onAttach(requireContext())
-        this.contexti = context
+        this.nContext = context
     }
 
     fun setListener(mListener: OnTimeSetListener) {

@@ -15,25 +15,25 @@ import fi.organization.nepsysr.R
 
 class AlarmReceiver : BroadcastReceiver() {
 
-    val CHANNEL_ID = "ChannelId"
-    val CHANNEL_NAME = "ChannelName"
+    private val CHANNEL_ID = "ChannelId"
+    private val CHANNEL_NAME = "ChannelName"
 
-    @SuppressLint("WrongConstant")
+    @SuppressLint("WrongConstant", "UnspecifiedImmutableFlag")
     override fun onReceive(context: Context?, intent: Intent?) {
         val notificationId = intent?.getIntExtra("notificationId", 0)
-        var title = intent?.getStringExtra("title")
-        var topic = intent?.getStringExtra("topic")
-        var days = intent?.getIntExtra("days", 0)
+        val title = intent?.getStringExtra("title")
+        val topic = intent?.getStringExtra("topic")
+        val days = intent?.getIntExtra("days", 0)
 
         val sp = PreferenceManager.getDefaultSharedPreferences(context)
-        var notificationsOnOrOff = sp.getBoolean("disable_notifications", false)
+        val notificationsOnOrOff = sp.getBoolean("disable_notifications", false)
 
         if (days!! == 0 && !notificationsOnOrOff) {
             createNotificationChannel(context)
 
             // When notification is tapped, call ProfileActivity
-            var intent = Intent(context, MainActivity::class.java)
-            var contentIntent = PendingIntent.getActivity(context, 0, intent, 0)
+            val intent = Intent(context, MainActivity::class.java)
+            val contentIntent = PendingIntent.getActivity(context, 0, intent, 0)
 
             var notificationManager : NotificationManager =
                 context?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager

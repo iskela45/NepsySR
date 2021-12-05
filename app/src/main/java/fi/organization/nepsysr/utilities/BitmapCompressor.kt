@@ -26,6 +26,6 @@ fun compressBitmap(bitmap: Bitmap): Bitmap {
         bitmap.compress(Bitmap.CompressFormat.WEBP_LOSSY, 40, stream)
     }
 
-    var byteArray = stream.toByteArray()
-    return byteArray!!.let { BitmapFactory.decodeByteArray(byteArray, 0, it.size) }
+    val byteArray = stream.toByteArray()
+    return byteArray.let { BitmapFactory.decodeByteArray(byteArray, 0, it.size) }
 }

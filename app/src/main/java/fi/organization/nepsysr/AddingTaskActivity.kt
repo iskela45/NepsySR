@@ -22,11 +22,11 @@ import fi.organization.nepsysr.utilities.convertBitmap
 
 class AddingTaskActivity : AppCompatActivity() {
 
-    lateinit var editTitle: EditText
-    lateinit var setTimer: EditText
-    lateinit var editTopic: EditText
-    lateinit var saveTask: Button
-    lateinit var taskImageView: ImageView
+    private lateinit var editTitle: EditText
+    private lateinit var setTimer: EditText
+    private lateinit var editTopic: EditText
+    private lateinit var saveTask: Button
+    private lateinit var taskImageView: ImageView
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,9 +40,9 @@ class AddingTaskActivity : AppCompatActivity() {
         this.taskImageView = findViewById(R.id.imageView)
 
 
-        var taskId = intent.getIntExtra("taskId", -1)
-        var isUpdate = intent.getBooleanExtra("isUpdate", false)
-        var contactUserId = intent.getIntExtra("contactUserId", -1)
+        val taskId = intent.getIntExtra("taskId", -1)
+        val isUpdate = intent.getBooleanExtra("isUpdate", false)
+        val contactUserId = intent.getIntExtra("contactUserId", -1)
 
 
         if (isUpdate) {
@@ -55,17 +55,17 @@ class AddingTaskActivity : AppCompatActivity() {
         }
 
         saveTask.setOnClickListener {
-            var title = editTitle.text.toString()
-            var timer = setTimer.text.toString()
-            var topic = editTopic.text.toString()
+            val title = editTitle.text.toString()
+            val timer = setTimer.text.toString()
+            val topic = editTopic.text.toString()
 
             if (timer.isNotEmpty()) {
                 val alarm = AlarmHandler(this)
 
                 alarm.start(title, timer, topic)
 
-                var requestCode = alarm.getRequestCode()
-                var daysRemain = alarm.getDaysDifference()
+                val requestCode = alarm.getRequestCode()
+                val daysRemain = alarm.getDaysDifference()
                 val drawable = taskImageView.drawable
                 val bitmap = drawable.toBitmap()
                 val data = Intent()
@@ -94,11 +94,11 @@ class AddingTaskActivity : AppCompatActivity() {
 
         // Check and ask for permissions, then start gallery activity.
         taskImageView.setOnClickListener {
-            when {
+            when (PackageManager.PERMISSION_GRANTED) {
                 ContextCompat.checkSelfPermission(
                     this,
                     Manifest.permission.CAMERA
-                ) == PackageManager.PERMISSION_GRANTED -> {
+                ) -> {
                     // You can use the API that requires the permission.
                     val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
                     ActivityCompat.startActivityForResult(
@@ -108,7 +108,6 @@ class AddingTaskActivity : AppCompatActivity() {
                         null
                     )
                 }
-
                 else -> {
                     // You can directly ask for the permission.
                     ActivityCompat.requestPermissions(
@@ -134,7 +133,7 @@ class AddingTaskActivity : AppCompatActivity() {
         // handle presses on the action bar menu.
         return when (item.itemId) {
             R.id.action_delete_task -> {
-                var deleteId = intent.getIntExtra("taskId", 0)
+                val deleteId = intent.getIntExtra("taskId", 0)
                 val intent = Intent(this, TaskActivity::class.java)
 
                 intent.putExtra("isDelete", true)

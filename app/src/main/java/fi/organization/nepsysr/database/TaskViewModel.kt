@@ -13,7 +13,7 @@ class TaskViewModel(private val repository: AppRepository) : ViewModel() {
     val allTasks: LiveData<List<Task>> = repository.allTasks.asLiveData()
 
     fun getFilteredList(filter: Int): LiveData<List<Task>> {
-        return Transformations.map(allTasks) {
+        return Transformations.map(allTasks) { it ->
             it.filter {
                 it.contactId == filter
             }

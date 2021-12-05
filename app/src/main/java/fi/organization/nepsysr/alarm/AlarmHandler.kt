@@ -1,5 +1,6 @@
 package fi.organization.nepsysr.alarm
 
+import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
@@ -24,15 +25,16 @@ class AlarmHandler(val context: Context) {
     private val time = TimeHandler(context)
     private val rnd = RandomGenerate()
 
+    @SuppressLint("UnspecifiedImmutableFlag")
     @RequiresApi(Build.VERSION_CODES.N)
     fun start(title : String, timer : String, topic: String) {
 
-        val splittedTime = time.getAlarmTime()
-        var notificationId = rnd.getRandomNumber()
+        val splitTime = time.getAlarmTime()
+        val notificationId = rnd.getRandomNumber()
         this.penIntentRequestCode = rnd.getRandomNumber()
 
-        var cal : Calendar = time.getExactAlarmTime(splittedTime, timer)
-        var alarmStartTime : Long = cal.timeInMillis
+        val cal : Calendar = time.getExactAlarmTime(splitTime, timer)
+        val alarmStartTime : Long = cal.timeInMillis
         this.days = time.getDaysDifference(cal)
 
         val intent = Intent(context, AlarmReceiver::class.java)
@@ -63,7 +65,7 @@ class AlarmHandler(val context: Context) {
 
     fun updateSpecificTaskAlarm(id : Int, timer: Int, reqCode: Int, title: String, topic: String) {
         //var task = database.appDao().getTask(id)
-        var alarmTime = time.getAlarmTime()
+        val alarmTime = time.getAlarmTime()
         thread {
             database.appDao().updateTimer(id, timer)
             intentHandler(timer,title, topic, reqCode, alarmTime)
@@ -73,21 +75,22 @@ class AlarmHandler(val context: Context) {
     @RequiresApi(Build.VERSION_CODES.N)
     fun updateAlarm(newTime : String = "") {
 
-        var splittedTime : List<String>? = null
+        var splitTime : List<String>? = null
 
-        splittedTime = if (newTime.isEmpty()) {
+        splitTime = if (newTime.isEmpty()) {
             time.getAlarmTime()
-        } else newTime!!.split(":")
+        } else newTime.split(":")
 
        thread {
-            var tasks = database.appDao().getAllTasksList()
+            val tasks = database.appDao().getAllTasksList()
             for (i in tasks) {
-                intentHandler(i.daysRemain, i.title, i.topic, i.requestCode, splittedTime)
+                intentHandler(i.daysRemain, i.title, i.topic, i.requestCode, splitTime)
                 //requestCodes.add(i.requestCode)
             }
         }
     }
 
+    @SuppressLint("UnspecifiedImmutableFlag")
     @RequiresApi(Build.VERSION_CODES.N)
     fun intentHandler(daysRemain : Int,
                       title: String,
@@ -98,8 +101,8 @@ class AlarmHandler(val context: Context) {
         val notificationId = rnd.getRandomNumber()
         penIntentRequestCode = requestCode
 
-        var cal : Calendar = time.getExactAlarmTime(splitTime, daysRemain.toString())
-        var alarmStartTime : Long = cal.timeInMillis
+        val cal : Calendar = time.getExactAlarmTime(splitTime, daysRemain.toString())
+        val alarmStartTime : Long = cal.timeInMillis
 
         val intent = Intent(context, AlarmReceiver::class.java)
         intent.putExtra("notificationId", notificationId)
@@ -120,6 +123,7 @@ class AlarmHandler(val context: Context) {
 
     }
 
+    @SuppressLint("UnspecifiedImmutableFlag")
     @RequiresApi(Build.VERSION_CODES.N)
     fun timeObserve() {
 

@@ -27,9 +27,9 @@ import fi.organization.nepsysr.utilities.convertBitmap
 
 class ProfileActivity : AppCompatActivity() {
 
-    lateinit var etName: EditText
-    lateinit var btSave : Button
-    lateinit var tvHeading : TextView
+    private lateinit var etName: EditText
+    private lateinit var btSave : Button
+    private lateinit var tvHeading : TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +38,7 @@ class ProfileActivity : AppCompatActivity() {
         this.etName = findViewById(R.id.etName)
         this.btSave = findViewById(R.id.btSave)
         this.tvHeading = findViewById(R.id.tvHeading)
-        var contactImageView: ImageView = findViewById(R.id.imageView)
+        val contactImageView: ImageView = findViewById(R.id.imageView)
         Log.d("TAG", "wat1 ${intent.getIntExtra("uid", 0)}")
         
         val isUpdate : Boolean = intent.getBooleanExtra("isUpdate", false)
@@ -83,11 +83,11 @@ class ProfileActivity : AppCompatActivity() {
 
         // Check and ask for permissions, then start gallery activity.
         contactImageView.setOnClickListener {
-            when {
+            when (PackageManager.PERMISSION_GRANTED) {
                 ContextCompat.checkSelfPermission(
                     this,
                     Manifest.permission.READ_EXTERNAL_STORAGE
-                ) == PackageManager.PERMISSION_GRANTED -> {
+                ) -> {
                     // You can use the API that requires the permission.
                     val gallery = Intent(
                         Intent.ACTION_PICK,
@@ -101,7 +101,6 @@ class ProfileActivity : AppCompatActivity() {
                         null
                     )
                 }
-
                 else -> {
                     // You can directly ask for the permission.
                     ActivityCompat.requestPermissions(
@@ -127,7 +126,7 @@ class ProfileActivity : AppCompatActivity() {
         // handle presses on the action bar menu.
         return when (item.itemId) {
             R.id.action_delete_contact -> {
-                var deleteId = intent.getIntExtra("uid", 0)
+                val deleteId = intent.getIntExtra("uid", 0)
                 val intent = Intent(this, MainActivity::class.java)
 
                 intent.putExtra("isDelete", true)
@@ -143,14 +142,13 @@ class ProfileActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode == 1001 && data?.data != null){
-            var uriImg = data?.data
-            lateinit var bitmap : Bitmap
+            val uriImg = data.data
 
-            if (Build.VERSION.SDK_INT < 28) {
-                bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uriImg)
+            val bitmap : Bitmap = if (Build.VERSION.SDK_INT < 28) {
+                MediaStore.Images.Media.getBitmap(contentResolver, uriImg)
             } else {
                 val source = ImageDecoder.createSource(contentResolver, uriImg!!)
-                bitmap = ImageDecoder.decodeBitmap(source)
+                ImageDecoder.decodeBitmap(source)
             }
 
             val img : ImageView = findViewById(R.id.imageView)

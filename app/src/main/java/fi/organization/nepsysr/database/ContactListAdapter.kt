@@ -26,7 +26,7 @@ import fi.organization.nepsysr.R
 import fi.organization.nepsysr.TaskActivity
 import fi.organization.nepsysr.utilities.convertBitmap
 
-class ContactListAdapter() : ListAdapter<Contact,
+class ContactListAdapter : ListAdapter<Contact,
                              ContactListAdapter.ContactViewHolder>(ContactsComparator()),
                              ActivityCompat.OnRequestPermissionsResultCallback {
 
@@ -41,10 +41,10 @@ class ContactListAdapter() : ListAdapter<Contact,
 
     class ContactViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val contactItemView: TextView = itemView.findViewById(R.id.textView)
-        var contactImageView: ImageView = itemView.findViewById(R.id.profile_Img)
+        private var contactImageView: ImageView = itemView.findViewById(R.id.profile_Img)
 
         var context : Context = contactImageView.context
-        var mContext : Context = itemView.context
+        private var mContext : Context = itemView.context
 
         fun bind(id: Int, text: String?, img: Bitmap?, color: String?) {
             contactItemView.text = text
@@ -72,11 +72,11 @@ class ContactListAdapter() : ListAdapter<Contact,
 
             // Check and ask for permissions, then start gallery activity.
             contactImageView.setOnClickListener {
-                when {
+                when (PackageManager.PERMISSION_GRANTED) {
                     ContextCompat.checkSelfPermission(
                         mContext,
                         Manifest.permission.READ_EXTERNAL_STORAGE
-                    ) == PackageManager.PERMISSION_GRANTED -> {
+                    ) -> {
                         // You can use the API that requires the permission.
                         val gallery = Intent(
                             Intent.ACTION_PICK,
@@ -85,7 +85,6 @@ class ContactListAdapter() : ListAdapter<Contact,
 
                         startActivityForResult(mContext as Activity, gallery, id, null)
                     }
-
                     else -> {
                         // You can directly ask for the permission.
                         requestPermissions(
@@ -98,7 +97,7 @@ class ContactListAdapter() : ListAdapter<Contact,
         }
 
         companion object {
-            private val IMAGE_PICK_CODE = 1000
+            private const val IMAGE_PICK_CODE = 1000
 
             fun create(parent: ViewGroup): ContactViewHolder {
                 val view: View = LayoutInflater.from(parent.context)
@@ -125,11 +124,11 @@ class ContactListAdapter() : ListAdapter<Contact,
         grantResults: IntArray
     ) {
         if(grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-            Log.d("TAG", "kamera1")
+            Log.d("TAG", "camera1")
         }
 
         if(grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            Log.d("TAG", "kamera2")
+            Log.d("TAG", "camera2")
         }
     }
 }

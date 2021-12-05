@@ -25,18 +25,18 @@ class SettingsFragment : PreferenceFragmentCompat(),
 
         this.timePref = findPreference("alarmTime")
         loadSettings()
-        timePref!!.setOnPreferenceClickListener(this);
+        timePref!!.onPreferenceClickListener = this
     }
 
     // Loads things using shared preferences
-    fun loadSettings() {
+    private fun loadSettings() {
         val sp = PreferenceManager.getDefaultSharedPreferences(context)
         val alarm = sp.getString("alarmTime", "")
-        timePref!!.setSummary(alarm)
+        timePref!!.summary = alarm
     }
 
     // Saves things using shared preferences
-    fun saveSettings(x : String) {
+    private fun saveSettings(x : String) {
         val sp = PreferenceManager.getDefaultSharedPreferences(context)
         val edit = sp.edit()
         edit.putString("alarmTime",x).apply()
@@ -44,11 +44,10 @@ class SettingsFragment : PreferenceFragmentCompat(),
 
     // Called when a preference has been clicked
     override open fun onPreferenceClick(pref: Preference?): Boolean {
-        if ((pref!!.getKey() == "alarmTime")) {
+        if ((pref!!.key == "alarmTime")) {
             val newFragment = PopTimePicker()
             newFragment.setListener(this)
             newFragment.show(requireFragmentManager(), "timePicker")
-        } else {
         }
         return true
     }
@@ -56,13 +55,13 @@ class SettingsFragment : PreferenceFragmentCompat(),
     // Receives the user-selected time after the user presses the OK button on the timer
     override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
 
-        var minuteLeadZero = String.format("%02d", minute)
+        val minuteLeadZero = String.format("%02d", minute)
         val x = "$hourOfDay:$minuteLeadZero"
 
         timePref = findPreference("alarmTime")
 
         // Sets the new time to the "alarm time" summary
-        timePref!!.setSummary(x)
+        timePref!!.summary = x
         saveSettings(x)
     }
 
