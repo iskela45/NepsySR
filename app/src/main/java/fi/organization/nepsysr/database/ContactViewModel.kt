@@ -21,6 +21,10 @@ class ContactViewModel(private val repository: AppRepository) : ViewModel() {
         repository.deleteAll()
     }
 
+    fun deleteContactById(uid: Int) = viewModelScope.launch {
+        repository.deleteContactById(uid)
+    }
+
     fun updateContactImage(uid: Int, img: Bitmap) = viewModelScope.launch {
         repository.updateContactImage(uid, img)
     }

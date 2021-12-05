@@ -106,7 +106,7 @@ class TaskListAdapter : ListAdapter<Task, TaskListAdapter.TaskViewHolder>(TasksC
                 intent.putExtra("daysRemain", daysRemain )
                 intent.putExtra("timer", timer )
                 intent.putExtra("img", img)
-                intent.putExtra("update", true)
+                intent.putExtra("isUpdate", true)
 
                 ActivityCompat.startActivityForResult(
                     mContext as Activity,

@@ -41,6 +41,9 @@ interface AppDao {
     @Update(entity = Contact::class)
     suspend fun updateContact(obj: ContactEditUpdate)
 
+    @Query("DELETE FROM contact WHERE uid == :uid")
+    suspend fun deleteContactById(uid: Int)
+
     // Tasks
 
     @Query("SELECT * FROM task")
@@ -69,5 +72,8 @@ interface AppDao {
 
     @Update(entity = Task::class)
     suspend fun updateTaskImage(obj: TaskImageUpdate)
+
+    @Query("DELETE FROM task WHERE taskId == :id")
+    suspend fun deleteTaskById(id: Int)
 
 }

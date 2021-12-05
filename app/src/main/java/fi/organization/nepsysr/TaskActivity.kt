@@ -100,6 +100,7 @@ class TaskActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         var extraCheck = data?.getStringExtra("title")
+        var taskId = data?.getIntExtra("taskId", -1)
         val imageBitmap = data?.extras?.get("data") as Bitmap?
 
         if(extraCheck == null && imageBitmap != null){
@@ -107,13 +108,13 @@ class TaskActivity : AppCompatActivity() {
             return
         }
 
+        var isUpdate = data?.getBooleanExtra("isUpdate", false)
         // resultcode 2000 is for update
-        if (resultCode == 2000) {
+        if (isUpdate == true) {
             title = data?.getStringExtra("title").toString()
             timer = data?.getStringExtra("timer").toString()
             var timerInt = timer.toInt()
             topic = data?.getStringExtra("topic").toString()
-            var taskId = data?.getIntExtra("taskId", -1)
             var contactUid = data?.getIntExtra("contactUserId", -1)
             var daysRemain = data?.getIntExtra("daysRemain", 0)
             // Placeholder image
@@ -132,6 +133,11 @@ class TaskActivity : AppCompatActivity() {
                 )
                 taskViewModel.updateTask(taskToUpdate)
             }
+        }
+
+        var isDelete = data?.getBooleanExtra("isDelete", false)
+        if (taskId != null) {
+            if (isDelete == true && taskId > 0) taskViewModel.deleteTaskById(taskId)
         }
     }
 

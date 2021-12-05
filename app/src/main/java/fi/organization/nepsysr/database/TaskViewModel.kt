@@ -51,6 +51,10 @@ class TaskViewModel(private val repository: AppRepository) : ViewModel() {
     fun updateTaskImage(uid: Int, img: Bitmap) = viewModelScope.launch {
         repository.updateTaskImage(uid, img)
     }
+
+    fun deleteTaskById(id: Int) = viewModelScope.launch {
+        repository.deleteTaskById(id)
+    }
 }
 
 // Boilerplate code

@@ -16,4 +16,10 @@
     <string name="notifications_on">Ilmoitukset pois päältä</string>
     <string name="notifications_off">Ilmoitukset päällä</string>
 
+    <!--Contacts strings-->
+    <string name="action_delete_contact">Poista kontakti</string>
+
+    <!--Task strings-->
+    <string name="action_delete_task">Poista ajastin</string>
+
 </resources>

@@ -8,6 +8,8 @@ import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -39,7 +41,7 @@ class AddingTaskActivity : AppCompatActivity() {
 
 
         var taskId = intent.getIntExtra("taskId", -1)
-        var isUpdate = intent.getBooleanExtra("update", false)
+        var isUpdate = intent.getBooleanExtra("isUpdate", false)
         var contactUserId = intent.getIntExtra("contactUserId", -1)
 
 
@@ -76,12 +78,9 @@ class AddingTaskActivity : AppCompatActivity() {
                 data.putExtra("daysRemain", daysRemain)
                 data.putExtra("taskId", taskId)
                 data.putExtra("contactUserId", contactUserId)
+                data.putExtra("isUpdate", isUpdate)
 
-                if(isUpdate){
-                    setResult(2000, data)
-                } else {
-                    setResult(RESULT_OK, data)
-                }
+                setResult(RESULT_OK, data)
 
                 finish()
             } else {
@@ -119,6 +118,32 @@ class AddingTaskActivity : AppCompatActivity() {
                     )
                 }
             }
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        if (intent.getBooleanExtra("isUpdate", false)) {
+            val inflater = menuInflater
+            inflater.inflate(R.menu.edit_task_menu, menu)
+        }
+        return true
+    }
+
+    // Determine if action bar item was selected. If true do corresponding action.
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // handle presses on the action bar menu.
+        return when (item.itemId) {
+            R.id.action_delete_task -> {
+                var deleteId = intent.getIntExtra("taskId", 0)
+                val intent = Intent(this, TaskActivity::class.java)
+
+                intent.putExtra("isDelete", true)
+                intent.putExtra("taskId", deleteId)
+                setResult(Activity.RESULT_OK, intent)
+                finish()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 

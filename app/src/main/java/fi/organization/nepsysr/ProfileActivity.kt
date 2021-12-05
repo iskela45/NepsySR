@@ -11,6 +11,8 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -37,6 +39,7 @@ class ProfileActivity : AppCompatActivity() {
         this.btSave = findViewById(R.id.btSave)
         this.tvHeading = findViewById(R.id.tvHeading)
         var contactImageView: ImageView = findViewById(R.id.imageView)
+        Log.d("TAG", "wat1 ${intent.getIntExtra("uid", 0)}")
         
         val isUpdate : Boolean = intent.getBooleanExtra("isUpdate", false)
         
@@ -64,6 +67,7 @@ class ProfileActivity : AppCompatActivity() {
             var color = "#49ba54"
             if (isUpdate) {
                 uid = intent.getIntExtra("uid", 0)
+                Log.d("TAG", "wat2 ${intent.getIntExtra("uid", 0)}")
                 color = intent.getStringExtra("color").toString()
             }
 
@@ -107,6 +111,32 @@ class ProfileActivity : AppCompatActivity() {
                     )
                 }
             }
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        if (intent.getBooleanExtra("isUpdate", false)) {
+            val inflater = menuInflater
+            inflater.inflate(R.menu.profile_menu, menu)
+        }
+        return true
+    }
+
+    // Determine if action bar item was selected. If true do corresponding action.
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // handle presses on the action bar menu.
+        return when (item.itemId) {
+            R.id.action_delete_contact -> {
+                var deleteId = intent.getIntExtra("uid", 0)
+                val intent = Intent(this, MainActivity::class.java)
+
+                intent.putExtra("isDelete", true)
+                intent.putExtra("uid", deleteId)
+                setResult(Activity.RESULT_OK, intent)
+                finish()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 

@@ -129,7 +129,6 @@ class MainActivity : AppCompatActivity() {
         // This is the hacky part, checking that the activity result isn't from contact creation
         // By checking if the name extra exists.
         var extraCheck = data?.getStringExtra("name")
-        var isUpdate = data?.getBooleanExtra("isUpdate", false)
         if(extraCheck == null && data?.data != null){
             var uriImg = data?.data
             lateinit var bitmap : Bitmap
@@ -147,16 +146,21 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        var uid = data?.getIntExtra("uid", 0)
+        var isUpdate = data?.getBooleanExtra("isUpdate", false)
         if (isUpdate == true) {
             var newName = data?.getStringExtra("name").toString()
             var newColor = data?.getStringExtra("color").toString()
-            var uid = data?.getIntExtra("uid", 0)
             var byteArray = data?.getByteArrayExtra("img")
             var newImg = byteArray?.let {
                 BitmapFactory.decodeByteArray(byteArray, 0, it.size)
             }
-
             contactViewModel.updateContact(uid!!, newName, newImg!!, newColor)
+        }
+
+        var isDelete = data?.getBooleanExtra("isDelete", false)
+        if (uid != null) {
+            if (isDelete == true && uid > 0) contactViewModel.deleteContactById(uid)
         }
     }
 }
