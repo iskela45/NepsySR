@@ -60,7 +60,7 @@ class ProfileActivity : AppCompatActivity() {
             val drawable = contactImageView.drawable
             val bitmap = drawable.toBitmap()
             val data = Intent()
-            var uid : Int = 0
+            var uid = 0
             var color = "#49ba54"
             if (isUpdate) {
                 uid = intent.getIntExtra("uid", 0)
@@ -74,7 +74,6 @@ class ProfileActivity : AppCompatActivity() {
             data.putExtra("isUpdate", isUpdate)
 
             setResult(Activity.RESULT_OK, data)
-            Log.d("TAG", "saveTest: ${name}")
             finish()
         }
 

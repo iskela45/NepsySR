@@ -62,18 +62,6 @@ public abstract class AppRoomDatabase : RoomDatabase() {
         suspend fun populateDatabase(appDao: AppDao) {
             // Clearing the previous data.
             appDao.deleteAll()
-
-            // Adding placeholder contacts.
-            //var contact = Contact(0, "Zezima", "img1", "#e34f32", 0)
-            //appDao.insert(contact)
-            //contact = Contact(0, "Kekkonen", "img2", "#e34f32", 0)
-            //appDao.insert(contact)
-
-
-            // Needed to disable since Task now requires bitmap for img
-            //val task = Task(0, 0, "Soitto", 7, "Lomareissu", "img3", 1, 1)
-            //Log.d("TAG", "populate")
-            //appDao.insertTask(task)
         }
     }
 }

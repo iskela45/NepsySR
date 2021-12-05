@@ -40,13 +40,3 @@ class TaskImageUpdate (
     var taskId: Int,
     var img: Bitmap
 )
-
-/*
-data class ContactWithTasks(
-        @Embedded val contact: Contact,
-        @Relation(
-                parentColumn = "uid",
-                entityColumn = "contactId"
-        )
-        val tasks: List<Task>
-)*/

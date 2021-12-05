@@ -70,11 +70,4 @@ interface AppDao {
     @Update(entity = Task::class)
     suspend fun updateTaskImage(obj: TaskImageUpdate)
 
-    /*@Query("SELECT * FROM task WHERE taskId = :id")
-    fun getTask(id: Int)
-*/
-    
-    //@Transaction
-    //@Query("SELECT * FROM contact")
-    //un getContactWithTasks(): List<ContactWithTasks>
 }

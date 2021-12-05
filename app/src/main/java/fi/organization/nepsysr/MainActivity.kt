@@ -61,7 +61,6 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 contactViewModel.insert(contact)
-                Log.d("TAG", "name: ${name}")
             }
         }
 
@@ -129,7 +128,6 @@ class MainActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         // This is the hacky part, checking that the activity result isn't from contact creation
         // By checking if the name extra exists.
-        Log.d("TAG", "BWOAH")
         var extraCheck = data?.getStringExtra("name")
         var isUpdate = data?.getBooleanExtra("isUpdate", false)
         if(extraCheck == null && data?.data != null){
@@ -159,7 +157,6 @@ class MainActivity : AppCompatActivity() {
             }
 
             contactViewModel.updateContact(uid!!, newName, newImg!!, newColor)
-            Log.d("TAG", "saved: ${newName}")
         }
     }
 }
