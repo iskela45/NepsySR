@@ -1,5 +1,6 @@
 package fi.organization.nepsysr
 
+import ColorPickerFragment
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
@@ -30,6 +31,7 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var etName: EditText
     private lateinit var btSave : Button
     private lateinit var tvHeading : TextView
+    private lateinit var btPickColor : Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +40,7 @@ class ProfileActivity : AppCompatActivity() {
         this.etName = findViewById(R.id.etName)
         this.btSave = findViewById(R.id.btSave)
         this.tvHeading = findViewById(R.id.tvHeading)
+        this.btPickColor = findViewById(R.id.btPickColor)
         val contactImageView: ImageView = findViewById(R.id.imageView)
         Log.d("TAG", "wat1 ${intent.getIntExtra("uid", 0)}")
         
@@ -56,6 +59,12 @@ class ProfileActivity : AppCompatActivity() {
 
             etName.setText(editName)
             tvHeading.text = "Muokkaa"
+        }
+
+        btPickColor.setOnClickListener {
+            var dialog = ColorPickerFragment()
+
+            dialog.show(supportFragmentManager, "colorPickerDialog")
         }
 
         btSave.setOnClickListener {
