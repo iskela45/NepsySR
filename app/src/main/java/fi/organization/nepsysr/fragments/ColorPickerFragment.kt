@@ -11,10 +11,14 @@ import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import fi.organization.nepsysr.R
 import android.graphics.drawable.ColorDrawable
+import fi.organization.nepsysr.utilities.ProfileInterface
 import java.lang.String
 
 
 class ColorPickerFragment : DialogFragment() {
+
+    private lateinit var communicator: ProfileInterface
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -32,6 +36,9 @@ class ColorPickerFragment : DialogFragment() {
             val hexColor = "#" + Integer.toHexString(color).substring(2)
 
             Toast.makeText(context, hexColor, Toast.LENGTH_LONG).show()
+
+            communicator = activity as ProfileInterface
+            communicator.passData(hexColor)
 
             dismiss()
         }
