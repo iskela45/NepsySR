@@ -81,8 +81,7 @@
   <Button
       android:id="@+id/btSave"
       android:layout_width="0dp"
-      android:layout_height="50dp"
-      android:background="@color/black"
+      android:layout_height="70dp"
       android:text="Tallenna"
       android:textAllCaps="false"
       android:layout_marginTop="20dp"

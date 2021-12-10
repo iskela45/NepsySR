@@ -7,7 +7,9 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.graphics.ImageDecoder
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -21,6 +23,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.ColorUtils
 import androidx.core.graphics.drawable.toBitmap
 import fi.organization.nepsysr.utilities.ProfileInterface
 import fi.organization.nepsysr.utilities.compressBitmap
@@ -45,13 +48,15 @@ class ProfileActivity : AppCompatActivity(), ProfileInterface {
         this.btPickColor = findViewById(R.id.btPickColor)
         val contactImageView: ImageView = findViewById(R.id.imageView)
         Log.d("TAG", "wat1 ${intent.getIntExtra("uid", 0)}")
+
+
         
         val isUpdate : Boolean = intent.getBooleanExtra("isUpdate", false)
         
         if (isUpdate) {
             val editName = intent.getStringExtra("name")
             val serializedImage = intent.getSerializableExtra("img")
-            // TODO: set color for colorPicker when that feature is done
+
             val editColor = intent.getStringExtra("color")
             contactImageView.setImageBitmap(BitmapFactory.decodeByteArray(
                 serializedImage as ByteArray?,
@@ -59,6 +64,14 @@ class ProfileActivity : AppCompatActivity(), ProfileInterface {
                 serializedImage!!.size
             ))
 
+            supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.parseColor(editColor)))
+            window.statusBarColor = ColorUtils.blendARGB(
+                Color.parseColor(editColor),
+                Color.BLACK,
+                0.4f
+            )
+            btPickColor.setBackgroundColor(Color.parseColor(editColor))
+            btSave.setBackgroundColor(Color.parseColor(editColor))
             etName.setText(editName)
             selectedColor = editColor!!
             tvHeading.text = "Muokkaa"

@@ -20,7 +20,6 @@
         android:id="@+id/textView"
         android:layout_width="236dp"
         android:layout_height="match_parent"
-        android:background="@android:color/holo_orange_light"
         android:minHeight="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/profile_Img"
