@@ -31,14 +31,18 @@ class ColorPickerFragment : DialogFragment() {
         submitButton.setOnClickListener {
             val selectedID = colorRadioGroup.checkedRadioButtonId
             val selectedButton = rootView.findViewById<RadioButton>(selectedID)
-            val viewColor = selectedButton.background as ColorDrawable
-            val color = viewColor.color
-            val hexColor = "#" + Integer.toHexString(color).substring(2)
+            if (selectedButton != null) {
 
-            Toast.makeText(context, hexColor, Toast.LENGTH_LONG).show()
+                val viewColor = selectedButton.background as ColorDrawable
+                val color = viewColor.color
+                val hexColor = "#" + Integer.toHexString(color).substring(2)
 
-            communicator = activity as ProfileInterface
-            communicator.passData(hexColor)
+                Toast.makeText(context, hexColor, Toast.LENGTH_LONG).show()
+
+                communicator = activity as ProfileInterface
+                communicator.passData(hexColor)
+            }
+
 
             dismiss()
         }

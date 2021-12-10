@@ -50,15 +50,15 @@
             android:id="@+id/rbGreen"
             android:layout_width="400dp"
             android:layout_height="wrap_content"
-            android:background="#00ff00"
-            android:text="Vihreä" />
+            android:background="#49BA54"
+            android:text="Tumman vihreä" />
 
         <RadioButton
             android:id="@+id/rbLightGreen"
             android:layout_width="400dp"
             android:layout_height="wrap_content"
-            android:background="#00ff80"
-            android:text="Vaalean vihreä" />
+            android:background="#1ddb1d"
+            android:text="Vihreä" />
 
         <RadioButton
             android:id="@+id/rbCyan"

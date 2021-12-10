@@ -64,14 +64,8 @@ class ProfileActivity : AppCompatActivity(), ProfileInterface {
                 serializedImage!!.size
             ))
 
-            supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.parseColor(editColor)))
-            window.statusBarColor = ColorUtils.blendARGB(
-                Color.parseColor(editColor),
-                Color.BLACK,
-                0.4f
-            )
-            btPickColor.setBackgroundColor(Color.parseColor(editColor))
-            btSave.setBackgroundColor(Color.parseColor(editColor))
+            setColors(editColor!!)
+
             etName.setText(editName)
             selectedColor = editColor!!
             tvHeading.text = "Muokkaa"
@@ -177,7 +171,19 @@ class ProfileActivity : AppCompatActivity(), ProfileInterface {
         }
     }
 
+    fun setColors(newColor: String) {
+        supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.parseColor(newColor)))
+        window.statusBarColor = ColorUtils.blendARGB(
+            Color.parseColor(newColor),
+            Color.BLACK,
+            0.4f
+        )
+        btPickColor.setBackgroundColor(Color.parseColor(newColor))
+        btSave.setBackgroundColor(Color.parseColor(newColor))
+    }
+
     override fun passData(profileColor: String) {
         selectedColor = profileColor
+        setColors(profileColor)
     }
 }
