@@ -64,7 +64,7 @@ class ProfileActivity : AppCompatActivity(), ProfileInterface {
 
             setColors(editColor!!)
             etName.setText(editName)
-            selectedColor = editColor!!
+            selectedColor = editColor
             tvHeading.text = "Muokkaa"
         } else {
             setColors(selectedColor)
