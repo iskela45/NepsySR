@@ -133,9 +133,6 @@ class MainActivity : AppCompatActivity() {
             }
 
             contactViewModel.updateContactImage(requestCode, compressBitmap(bitmap))
-            data.getStringExtra("uid")?.let {
-                contactViewModel.updateContactImage(it.toInt(), compressBitmap(bitmap))
-            }
         }
 
         val uid = data?.getIntExtra("uid", 0)
