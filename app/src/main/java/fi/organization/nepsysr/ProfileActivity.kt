@@ -60,12 +60,12 @@ class ProfileActivity : AppCompatActivity(), ProfileInterface {
             ))
 
             etName.setText(editName)
+            selectedColor = editColor!!
             tvHeading.text = "Muokkaa"
         }
 
         btPickColor.setOnClickListener {
             var dialog = ColorPickerFragment()
-
             dialog.show(supportFragmentManager, "colorPickerDialog")
         }
 
@@ -75,17 +75,14 @@ class ProfileActivity : AppCompatActivity(), ProfileInterface {
             val bitmap = drawable.toBitmap()
             val data = Intent()
             var uid = 0
-            var color = selectedColor
             if (isUpdate) {
                 uid = intent.getIntExtra("uid", 0)
-                Log.d("TAG", "wat2 ${intent.getIntExtra("uid", 0)}")
-                color = intent.getStringExtra("color").toString()
             }
 
             data.putExtra("uid", uid)
             data.putExtra("name", name)
             data.putExtra("img", convertBitmap(bitmap))
-            data.putExtra("color", color)
+            data.putExtra("color", selectedColor)
             data.putExtra("isUpdate", isUpdate)
 
             setResult(Activity.RESULT_OK, data)

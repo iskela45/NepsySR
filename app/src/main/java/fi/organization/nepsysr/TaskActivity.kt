@@ -4,23 +4,21 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.WindowManager
-import android.widget.LinearLayout
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.graphics.ColorUtils
 import androidx.core.graphics.drawable.toBitmap
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import fi.organization.nepsysr.database.*
-import fi.organization.nepsysr.utilities.TaskColorInterface
 
 class TaskActivity : AppCompatActivity() {
 
@@ -47,12 +45,14 @@ class TaskActivity : AppCompatActivity() {
 
         val contactUid = intent.getIntExtra("uid", -1)
         val color = intent.getStringExtra("color").toString()
-        //window.statusBarColor(Color.parseColor(color))
-        //this.window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        //this.window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-        this.window.statusBarColor == Color.parseColor("#000000")
-        this.window.navigationBarColor == Color.parseColor("#000000")
-        window.statusBarColor = Color.BLUE
+
+        supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.parseColor(color)))
+        window.statusBarColor = ColorUtils.blendARGB(
+            Color.parseColor(color),
+            Color.BLACK,
+            0.4f
+        )
+
 
         this.taskResult = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
