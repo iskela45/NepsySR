@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.result.ActivityResult
@@ -90,12 +91,9 @@ class TaskActivity : AppCompatActivity() {
         }
 
         // Create recyclerViews for all of the names.
-        //findViewById<RecyclerView>(R.id.task_View).setBackgroundColor(Color.parseColor(color))
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerviewTasks)
-        //recyclerView.findViewById<LinearLayout>(R.id.task_View).setBackgroundColor(Color.parseColor("#000000"))
         val adapter = TaskListAdapter()
-        //val taskLayout: LinearLayout =
-        //taskLayout.setBackgroundColor(Color.parseColor(color))
+
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
 
