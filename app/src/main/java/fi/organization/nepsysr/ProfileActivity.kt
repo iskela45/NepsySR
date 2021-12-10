@@ -42,14 +42,12 @@ class ProfileActivity : AppCompatActivity(), ProfileInterface {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
 
+        this.selectedColor = "#ff8000"
         this.etName = findViewById(R.id.etName)
         this.btSave = findViewById(R.id.btSave)
         this.tvHeading = findViewById(R.id.tvHeading)
         this.btPickColor = findViewById(R.id.btPickColor)
         val contactImageView: ImageView = findViewById(R.id.imageView)
-        Log.d("TAG", "wat1 ${intent.getIntExtra("uid", 0)}")
-
-
         
         val isUpdate : Boolean = intent.getBooleanExtra("isUpdate", false)
         
@@ -65,10 +63,11 @@ class ProfileActivity : AppCompatActivity(), ProfileInterface {
             ))
 
             setColors(editColor!!)
-
             etName.setText(editName)
             selectedColor = editColor!!
             tvHeading.text = "Muokkaa"
+        } else {
+            setColors(selectedColor)
         }
 
         btPickColor.setOnClickListener {
