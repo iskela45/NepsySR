@@ -20,6 +20,7 @@ import androidx.core.graphics.drawable.toBitmap
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import fi.organization.nepsysr.database.*
+import fi.organization.nepsysr.utilities.compressBitmap
 
 class TaskActivity : AppCompatActivity() {
 
@@ -117,7 +118,7 @@ class TaskActivity : AppCompatActivity() {
         val imageBitmap = data?.extras?.get("data") as Bitmap?
 
         if(extraCheck == null && imageBitmap != null){
-            taskViewModel.updateTaskImage(requestCode, imageBitmap)
+            taskViewModel.updateTaskImage(requestCode, compressBitmap(imageBitmap))
             return
         }
 

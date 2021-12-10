@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import fi.organization.nepsysr.alarm.AlarmHandler
 import fi.organization.nepsysr.database.*
+import fi.organization.nepsysr.utilities.compressBitmap
 
 
 class MainActivity : AppCompatActivity() {
@@ -131,9 +132,9 @@ class MainActivity : AppCompatActivity() {
                 ImageDecoder.decodeBitmap(source)
             }
 
-            contactViewModel.updateContactImage(requestCode, bitmap)
+            contactViewModel.updateContactImage(requestCode, compressBitmap(bitmap))
             data.getStringExtra("uid")?.let {
-                contactViewModel.updateContactImage(it.toInt(), bitmap)
+                contactViewModel.updateContactImage(it.toInt(), compressBitmap(bitmap))
             }
         }
 
