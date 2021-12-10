@@ -10,11 +10,12 @@
 
     <ImageView
         android:id="@+id/profile_Img"
-        android:layout_width="99dp"
-        android:layout_height="96dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:contentDescription="Profile image"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
+        tools:srcCompat="@tools:sample/avatars"
+        android:scaleType="centerCrop" />
 
     <TextView
         android:id="@+id/textView"
@@ -24,6 +25,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/profile_Img"
         android:padding="10dp"
+        android:paddingLeft="8dp"
         android:textColor="@color/black"
         app:layout_constraintTop_toTopOf="parent" />
 
