@@ -56,6 +56,7 @@ class AddingTaskActivity : AppCompatActivity() {
                 Color.BLACK,
                 0.4f
             )
+            saveTask.setBackgroundColor(Color.parseColor(color))
         }
 
 
