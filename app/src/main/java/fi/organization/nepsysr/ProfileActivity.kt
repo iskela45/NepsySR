@@ -170,7 +170,7 @@ class ProfileActivity : AppCompatActivity(), ProfileInterface {
         }
     }
 
-    fun setColors(newColor: String) {
+    private fun setColors(newColor: String) {
         supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.parseColor(newColor)))
         window.statusBarColor = ColorUtils.blendARGB(
             Color.parseColor(newColor),
