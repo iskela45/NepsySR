@@ -1,5 +1,6 @@
 package fi.organization.nepsysr
 
+import ColorPickerFragment
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
@@ -21,15 +22,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
+import fi.organization.nepsysr.utilities.ProfileInterface
 import fi.organization.nepsysr.utilities.compressBitmap
 import fi.organization.nepsysr.utilities.convertBitmap
 
 
-class ProfileActivity : AppCompatActivity() {
+class ProfileActivity : AppCompatActivity(), ProfileInterface {
 
     private lateinit var etName: EditText
     private lateinit var btSave : Button
     private lateinit var tvHeading : TextView
+    private lateinit var btPickColor : Button
+    private lateinit var selectedColor: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +42,7 @@ class ProfileActivity : AppCompatActivity() {
         this.etName = findViewById(R.id.etName)
         this.btSave = findViewById(R.id.btSave)
         this.tvHeading = findViewById(R.id.tvHeading)
+        this.btPickColor = findViewById(R.id.btPickColor)
         val contactImageView: ImageView = findViewById(R.id.imageView)
         Log.d("TAG", "wat1 ${intent.getIntExtra("uid", 0)}")
         
@@ -58,13 +63,19 @@ class ProfileActivity : AppCompatActivity() {
             tvHeading.text = "Muokkaa"
         }
 
+        btPickColor.setOnClickListener {
+            var dialog = ColorPickerFragment()
+
+            dialog.show(supportFragmentManager, "colorPickerDialog")
+        }
+
         btSave.setOnClickListener {
             val name = etName.text.toString()
             val drawable = contactImageView.drawable
             val bitmap = drawable.toBitmap()
             val data = Intent()
             var uid = 0
-            var color = "#49ba54"
+            var color = selectedColor
             if (isUpdate) {
                 uid = intent.getIntExtra("uid", 0)
                 Log.d("TAG", "wat2 ${intent.getIntExtra("uid", 0)}")
@@ -154,5 +165,9 @@ class ProfileActivity : AppCompatActivity() {
             val img : ImageView = findViewById(R.id.imageView)
             img.setImageBitmap(compressBitmap(bitmap))
         }
+    }
+
+    override fun passData(profileColor: String) {
+        selectedColor = profileColor
     }
 }

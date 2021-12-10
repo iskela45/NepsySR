@@ -24,6 +24,8 @@
         android:minHeight="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/profile_Img"
+        android:padding="10dp"
+        android:textColor="@color/black"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
@@ -32,7 +34,6 @@
         android:layout_height="match_parent"
         android:backgroundTint="@color/black"
         android:drawableEnd="@drawable/ic_renew"
-        android:layout_margin="10dp"
         tools:ignore="MissingConstraints" />
 
 
