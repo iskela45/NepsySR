@@ -29,7 +29,7 @@
             android:id="@+id/rbRed"
             android:layout_width="400dp"
             android:layout_height="wrap_content"
-            android:background="#ff0000"
+            android:background="#e61717"
             android:text="Punainen" />
 
         <RadioButton
@@ -43,7 +43,7 @@
             android:id="@+id/rbYellow"
             android:layout_width="400dp"
             android:layout_height="wrap_content"
-            android:background="#ffff00"
+            android:background="#f2d00c"
             android:text="Keltainen" />
 
         <RadioButton
@@ -64,14 +64,14 @@
             android:id="@+id/rbCyan"
             android:layout_width="400dp"
             android:layout_height="wrap_content"
-            android:background="#00ffff"
+            android:background="#1de0e0"
             android:text="Syaani" />
 
         <RadioButton
             android:id="@+id/rbBlue"
             android:layout_width="400dp"
             android:layout_height="wrap_content"
-            android:background="#4747ff"
+            android:background="#5959ff"
             android:text="Sininen" />
 
 
@@ -79,14 +79,14 @@
             android:id="@+id/rbPurple"
             android:layout_width="400dp"
             android:layout_height="wrap_content"
-            android:background="#9932ff"
+            android:background="#ad59ff"
             android:text="Purppura" />
 
         <RadioButton
             android:id="@+id/rbViolet"
             android:layout_width="400dp"
             android:layout_height="wrap_content"
-            android:background="#ff00ff"
+            android:background="#d41cd4"
             android:text="Violetti" />
 
     </RadioGroup>
