@@ -35,7 +35,6 @@ class ProfileActivity : AppCompatActivity(), ProfileInterface {
 
     private lateinit var etName: EditText
     private lateinit var btSave : Button
-    private lateinit var tvHeading : TextView
     private lateinit var btPickColor : Button
     private lateinit var selectedColor: String
 
@@ -46,7 +45,6 @@ class ProfileActivity : AppCompatActivity(), ProfileInterface {
         this.selectedColor = "#ff8000"
         this.etName = findViewById(R.id.etName)
         this.btSave = findViewById(R.id.btSave)
-        this.tvHeading = findViewById(R.id.tvHeading)
         this.btPickColor = findViewById(R.id.btPickColor)
         val contactImageView: ImageView = findViewById(R.id.imageView)
         
@@ -67,7 +65,6 @@ class ProfileActivity : AppCompatActivity(), ProfileInterface {
             setColors(editColor!!)
             etName.setText(editName)
             selectedColor = editColor
-            tvHeading.text = "Muokkaa"
         } else {
             supportActionBar?.title = "Lisää kontakti"
             setColors(selectedColor)

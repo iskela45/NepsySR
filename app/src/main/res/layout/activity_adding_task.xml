@@ -7,50 +7,33 @@
     android:background="#FFFFFF"
     tools:context=".AddingTaskActivity">
 
-    <TextView
-        android:id="@+id/tvHeading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Lisää uusi tehtävä"
-        android:textStyle="bold"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="20dp"
-        />
-
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tvHeading"
-        >
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:focusable="true"
-            android:focusableInTouchMode="true"
-            >
+            android:focusableInTouchMode="true">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                >
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textShortMessage"
-                    android:hint="Otsikko"
                     android:gravity="center"
-                    />
+                    android:hint="Otsikko"
+                    android:inputType="textShortMessage" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -58,32 +41,30 @@
                 android:id="@+id/timer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/title"
-                >
+                app:layout_constraintTop_toBottomOf="@id/title">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/setTimer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Ajastin (päivää)"
                     android:gravity="center"
-                    android:inputType="number"
-                    />
+                    android:hint="Ajastin (päivää)"
+                    android:inputType="number" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/topic"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/timer"
-                >
+                app:layout_constraintTop_toBottomOf="@id/timer">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editTopic"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Aihe"
-                    android:inputType="textShortMessage"
                     android:gravity="center"
-                    />
+                    android:hint="Aihe"
+                    android:inputType="textShortMessage" />
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -91,13 +72,13 @@
                 android:id="@+id/imageView"
                 android:layout_width="124dp"
                 android:layout_height="124dp"
+                android:layout_marginTop="20dp"
                 android:layout_weight="1"
                 android:scaleType="fitXY"
-                android:layout_marginTop="20dp"
                 app:layout_constraintBottom_toTopOf="@+id/saveTask"
-                app:layout_constraintTop_toBottomOf="@+id/topic"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/topic"
                 app:srcCompat="@drawable/ic_baseline_add_a_photo_124"
                 tools:layout_editor_absoluteX="144dp" />
 
@@ -105,12 +86,12 @@
                 android:id="@+id/saveTask"
                 android:layout_width="0dp"
                 android:layout_height="70dp"
+                android:layout_marginTop="20dp"
                 android:text="Tallenna"
                 android:textAllCaps="false"
-                android:layout_marginTop="20dp"
-                app:layout_constraintTop_toBottomOf="@+id/imageView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView"
                 app:layout_constraintWidth_percent="0.7"
                 tools:layout_editor_absoluteY="208dp" />
 
