@@ -71,7 +71,7 @@
             android:id="@+id/rbBlue"
             android:layout_width="400dp"
             android:layout_height="wrap_content"
-            android:background="#5959ff"
+            android:background="#6666fa"
             android:text="Sininen" />
 
 
