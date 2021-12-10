@@ -29,6 +29,7 @@ class TaskActivity : AppCompatActivity() {
     private lateinit var topic: String
     lateinit var img: String
     private lateinit var taskResult: ActivityResultLauncher<Intent>
+    lateinit var color: String
 
 
     private val taskViewModel: TaskViewModel by viewModels {
@@ -45,7 +46,7 @@ class TaskActivity : AppCompatActivity() {
         val placeholderBitmap = drawable?.toBitmap()
 
         val contactUid = intent.getIntExtra("uid", -1)
-        val color = intent.getStringExtra("color").toString()
+        color = intent.getStringExtra("color").toString()
 
         supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.parseColor(color)))
         window.statusBarColor = ColorUtils.blendARGB(
@@ -161,6 +162,7 @@ class TaskActivity : AppCompatActivity() {
         return when (item.itemId) {
             R.id.action_add_task -> {
                 val intent = Intent(this, AddingTaskActivity::class.java)
+                intent.putExtra("color", color)
                 taskResult.launch(intent)
                 true
             }

@@ -5,6 +5,8 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -15,6 +17,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.ColorUtils
 import androidx.core.graphics.drawable.toBitmap
 import fi.organization.nepsysr.alarm.AlarmHandler
 import fi.organization.nepsysr.utilities.compressBitmap
@@ -43,6 +46,17 @@ class AddingTaskActivity : AppCompatActivity() {
         val taskId = intent.getIntExtra("taskId", -1)
         val isUpdate = intent.getBooleanExtra("isUpdate", false)
         val contactUserId = intent.getIntExtra("contactUserId", -1)
+        val color = intent.getStringExtra("color")
+
+
+        if (color != null) {
+            supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.parseColor(color)))
+            window.statusBarColor = ColorUtils.blendARGB(
+                Color.parseColor(color),
+                Color.BLACK,
+                0.4f
+            )
+        }
 
 
         if (isUpdate) {
