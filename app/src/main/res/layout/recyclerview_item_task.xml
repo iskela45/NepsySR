@@ -34,7 +34,7 @@
         android:backgroundTint="#FFFFFF"
         android:drawableEnd="@drawable/ic_renew"
         tools:ignore="MissingConstraints"
-        style="?android:attr/borderlessButtonStyle"/>
+        style="?android:attr/borderlessButtonStyle" />
 
 
 </LinearLayout>
