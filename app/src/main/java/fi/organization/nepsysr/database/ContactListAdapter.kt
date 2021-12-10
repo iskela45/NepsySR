@@ -14,6 +14,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.requestPermissions
 import androidx.core.app.ActivityCompat.startActivityForResult
@@ -41,6 +42,7 @@ class ContactListAdapter : ListAdapter<Contact,
 
     class ContactViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val contactItemView: TextView = itemView.findViewById(R.id.textView)
+        private val contactView: ConstraintLayout = itemView.findViewById(R.id.contact_View)
         private var contactImageView: ImageView = itemView.findViewById(R.id.profile_Img)
 
         var context : Context = contactImageView.context
@@ -48,7 +50,7 @@ class ContactListAdapter : ListAdapter<Contact,
 
         fun bind(id: Int, text: String?, img: Bitmap?, color: String?) {
             contactItemView.text = text
-            contactItemView.setBackgroundColor(Color.parseColor(color))
+            contactView.setBackgroundColor(Color.parseColor(color))
             contactImageView.setImageBitmap(img)
 
             contactItemView.setOnClickListener {
