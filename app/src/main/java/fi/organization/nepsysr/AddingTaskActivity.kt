@@ -63,9 +63,12 @@ class AddingTaskActivity : AppCompatActivity() {
             editTitle.setText(intent.getStringExtra("title").toString())
             setTimer.setText(intent.getIntExtra("timer", 0).toString())
             editTopic.setText(intent.getStringExtra("topic").toString())
+            taskImageView.setImageBitmap(intent.getParcelableExtra("img"))
             this.findViewById<TextView>(R.id.tvHeading).text = "Päivitä tehtävää"
             this.findViewById<TextView>(R.id.saveTask).text = "Päivitä"
-            taskImageView.setImageBitmap(intent.getParcelableExtra("img"))
+            supportActionBar?.title = "Muokkaa tehtävää"
+        } else {
+            supportActionBar?.title = "Lisää uusi tehtävä"
         }
 
         saveTask.setOnClickListener {

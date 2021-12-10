@@ -55,6 +55,7 @@ class ContactListAdapter : ListAdapter<Contact,
 
             contactItemView.setOnClickListener {
                 val intent = Intent(mContext, TaskActivity::class.java)
+                intent.putExtra("name", text)
                 intent.putExtra("uid", id)
                 intent.putExtra("color", color)
                 startActivityForResult(mContext as Activity, intent, 3000, null)

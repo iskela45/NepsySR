@@ -48,6 +48,7 @@ class TaskActivity : AppCompatActivity() {
         val contactUid = intent.getIntExtra("uid", -1)
         color = intent.getStringExtra("color").toString()
 
+        supportActionBar?.title = intent.getStringExtra("name").toString()
         supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.parseColor(color)))
         window.statusBarColor = ColorUtils.blendARGB(
             Color.parseColor(color),

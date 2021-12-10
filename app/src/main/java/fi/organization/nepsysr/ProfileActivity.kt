@@ -5,6 +5,7 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
@@ -54,19 +55,21 @@ class ProfileActivity : AppCompatActivity(), ProfileInterface {
         if (isUpdate) {
             val editName = intent.getStringExtra("name")
             val serializedImage = intent.getSerializableExtra("img")
-
             val editColor = intent.getStringExtra("color")
+
             contactImageView.setImageBitmap(BitmapFactory.decodeByteArray(
                 serializedImage as ByteArray?,
                 0,
                 serializedImage!!.size
             ))
 
+            supportActionBar?.title = "Muokkaa kontaktia"
             setColors(editColor!!)
             etName.setText(editName)
             selectedColor = editColor
             tvHeading.text = "Muokkaa"
         } else {
+            supportActionBar?.title = "Lisää kontakti"
             setColors(selectedColor)
         }
 
@@ -179,6 +182,8 @@ class ProfileActivity : AppCompatActivity(), ProfileInterface {
         )
         btPickColor.setBackgroundColor(Color.parseColor(newColor))
         btSave.setBackgroundColor(Color.parseColor(newColor))
+        //etName.backgroundTintList = ColorStateList.valueOf(Color.parseColor(newColor))
+
     }
 
     override fun passData(profileColor: String) {
