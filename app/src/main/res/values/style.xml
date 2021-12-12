@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Task item-->
+    <style name="TaskListItem" parent="TextAppearance.AppCompat">
+        <item name="android:orientation">horizontal</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">15dp</item>
+    </style>
+
+    <!--Profile list item-->
+    <style name="ProfileListItem" parent="TextAppearance.AppCompat">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_marginTop">15dp</item>
+    </style>
+
+    <!--Recycler list item: Image view-->
+    <style name="ListItemImageView" parent="TextAppearance.AppCompat">
+        <item name="android:layout_width">80dp</item>
+        <item name="android:layout_height">80dp</item>
+        <item name="android:scaleType">centerCrop</item>
+    </style>
+
+    <!--Profile image view. Inherits ListItemImageView -->
+    <style name="ListItemImageView.Profile">
+        <item name="android:contentDescription">Profile image</item>
+    </style>
+
+    <!--Task image view. Inherits ListItemImageView-->
+    <style name="ListItemImageView.Task">
+        <item name="android:contentDescription">Profile image</item>
+    </style>
+
+    <!--Recycler list item: Text view-->
+    <style name="ListItemTextView" parent="TextAppearance.AppCompat">
+        <item name="android:layout_width">250dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:minHeight">28dp</item>
+    </style>
+
+    <!--Profile text view. Inherits ListItemTextView-->
+    <style name="ListItemTextView.Profile">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:layout_marginLeft">24dp</item>
+    </style>
+
+    <!--Task text view. Inherits ListItemTextView-->
+    <style name="ListItemTextView.Task">
+        <item name="android:layout_width">225dp</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_marginLeft">8dp</item>
+    </style>
+
+    <!--Handles title for task. Inherits ListItemTextView.Task -->
+    <style name="ListItemTextView.Task.Title">
+        <item name="android:textSize">18sp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <!--Handles topic for task. Inherits ListItemTextView.Task-->
+    <style name="ListItemTextView.Task.Topic">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <!--Reset button for tasks-->
+    <style name="TaskRefreshButton" parent="@style/Widget.AppCompat.Button.Borderless">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:backgroundTint">#FFFFFF</item>
+        <item name="android:drawableEnd">@drawable/ic_renew</item>
+    </style>
+
+    <!--Tasks, profiles add/modify forms -->
+    <style name="Form" parent="TextAppearance.AppCompat">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <!--Tasks, profiles add/modify forms input fields -->
+    <style name="Form.Input">
+        <item name="android:gravity">center</item>
+    </style>
+</resources>

@@ -21,49 +21,40 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                style="@style/Form"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:hint="Otsikko"
+                    style="@style/Form.Input"
+                    android:hint="Yhteydenpitotapa"
                     android:inputType="textShortMessage" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/timer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                style="@style/Form"
                 app:layout_constraintTop_toBottomOf="@id/title">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/setTimer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:hint="Ajastin (päivää)"
+                    style="@style/Form.Input"
+                    android:hint="Muistutusväli (päiviä)"
                     android:inputType="number" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/topic"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                style="@style/Form"
                 app:layout_constraintTop_toBottomOf="@id/timer">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editTopic"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:hint="Aihe"
+                    style="@style/Form.Input"
+                    android:hint="Keskustelunaihe"
                     android:inputType="textShortMessage" />
             </com.google.android.material.textfield.TextInputLayout>
 

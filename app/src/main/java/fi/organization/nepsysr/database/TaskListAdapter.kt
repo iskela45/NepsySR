@@ -44,9 +44,10 @@ class TaskListAdapter : ListAdapter<Task, TaskListAdapter.TaskViewHolder>(TasksC
     }
 
     class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val taskItemView: TextView = itemView.findViewById(R.id.textView)
+        private val taskItemViewTitle: TextView = itemView.findViewById(R.id.textViewTitle)
+        private val taskItemViewTopic: TextView = itemView.findViewById(R.id.textViewTopic)
         private var taskImageView: ImageView = itemView.findViewById(R.id.profile_Img)
-        private val taskLayout: LinearLayout = itemView.findViewById(R.id.task_View)
+        private val taskTextView: LinearLayout = itemView.findViewById(R.id.taskTextView)
 
         // initialization for resButton and it's context
         private var resButton: Button = itemView.findViewById(R.id.resButton)
@@ -64,7 +65,8 @@ class TaskListAdapter : ListAdapter<Task, TaskListAdapter.TaskViewHolder>(TasksC
                  Int, contactUserId:
                  Int, img: Bitmap
         ) {
-            taskItemView.text = "$title \n$topic \n$daysRemain/$timer päivää jäljellä"
+            taskItemViewTitle.text = "$title"
+            taskItemViewTopic.text = "$topic \n$daysRemain/$timer päivää jäljellä"
             taskImageView.setImageBitmap(img)
 
             resButton.setOnClickListener {
@@ -98,7 +100,7 @@ class TaskListAdapter : ListAdapter<Task, TaskListAdapter.TaskViewHolder>(TasksC
             }
             // Add clickListener to open addTaskActivity with prefilled
             // saving will update task
-            taskItemView.setOnClickListener{
+            taskTextView.setOnClickListener{
                 val intent = Intent(mContext, AddingTaskActivity::class.java)
                 intent.putExtra("contactUserId", contactUserId)
                 intent.putExtra("taskId", taskId)

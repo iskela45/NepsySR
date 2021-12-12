@@ -1,16 +1,12 @@
 package fi.organization.nepsysr
 
-import ColorPickerFragment
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.Color
 import android.graphics.ImageDecoder
-import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -24,55 +20,42 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.ColorUtils
 import androidx.core.graphics.drawable.toBitmap
-import fi.organization.nepsysr.utilities.ProfileInterface
 import fi.organization.nepsysr.utilities.compressBitmap
 import fi.organization.nepsysr.utilities.convertBitmap
 
 
-class ProfileActivity : AppCompatActivity(), ProfileInterface {
+class ProfileActivity : AppCompatActivity() {
 
     private lateinit var etName: EditText
     private lateinit var btSave : Button
-    private lateinit var btPickColor : Button
-    private lateinit var selectedColor: String
+    private lateinit var tvHeading : TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
 
-        this.selectedColor = "#ff8000"
         this.etName = findViewById(R.id.etName)
         this.btSave = findViewById(R.id.btSave)
-        this.btPickColor = findViewById(R.id.btPickColor)
+        // this.tvHeading = findViewById(R.id.tvHeading)
         val contactImageView: ImageView = findViewById(R.id.imageView)
+        Log.d("TAG", "wat1 ${intent.getIntExtra("uid", 0)}")
         
         val isUpdate : Boolean = intent.getBooleanExtra("isUpdate", false)
         
         if (isUpdate) {
             val editName = intent.getStringExtra("name")
             val serializedImage = intent.getSerializableExtra("img")
+            // TODO: set color for colorPicker when that feature is done
             val editColor = intent.getStringExtra("color")
-
             contactImageView.setImageBitmap(BitmapFactory.decodeByteArray(
                 serializedImage as ByteArray?,
                 0,
                 serializedImage!!.size
             ))
 
-            supportActionBar?.title = "Muokkaa kontaktia"
-            setColors(editColor!!)
             etName.setText(editName)
-            selectedColor = editColor
-        } else {
-            supportActionBar?.title = "Lisää kontakti"
-            setColors(selectedColor)
-        }
-
-        btPickColor.setOnClickListener {
-            var dialog = ColorPickerFragment()
-            dialog.show(supportFragmentManager, "colorPickerDialog")
+            // tvHeading.text = "Muokkaa"
         }
 
         btSave.setOnClickListener {
@@ -81,14 +64,17 @@ class ProfileActivity : AppCompatActivity(), ProfileInterface {
             val bitmap = drawable.toBitmap()
             val data = Intent()
             var uid = 0
+            var color = "#49ba54"
             if (isUpdate) {
                 uid = intent.getIntExtra("uid", 0)
+                Log.d("TAG", "wat2 ${intent.getIntExtra("uid", 0)}")
+                color = intent.getStringExtra("color").toString()
             }
 
             data.putExtra("uid", uid)
             data.putExtra("name", name)
             data.putExtra("img", convertBitmap(bitmap))
-            data.putExtra("color", selectedColor)
+            data.putExtra("color", color)
             data.putExtra("isUpdate", isUpdate)
 
             setResult(Activity.RESULT_OK, data)
@@ -168,23 +154,5 @@ class ProfileActivity : AppCompatActivity(), ProfileInterface {
             val img : ImageView = findViewById(R.id.imageView)
             img.setImageBitmap(compressBitmap(bitmap))
         }
-    }
-
-    private fun setColors(newColor: String) {
-        supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.parseColor(newColor)))
-        window.statusBarColor = ColorUtils.blendARGB(
-            Color.parseColor(newColor),
-            Color.BLACK,
-            0.4f
-        )
-        btPickColor.setBackgroundColor(Color.parseColor(newColor))
-        btSave.setBackgroundColor(Color.parseColor(newColor))
-        //etName.backgroundTintList = ColorStateList.valueOf(Color.parseColor(newColor))
-
-    }
-
-    override fun passData(profileColor: String) {
-        selectedColor = profileColor
-        setColors(profileColor)
     }
 }

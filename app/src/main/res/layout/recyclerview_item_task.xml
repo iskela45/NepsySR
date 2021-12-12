@@ -2,41 +2,33 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="horizontal"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="10dp"
+    style="@style/TaskListItem"
     android:id="@+id/task_View">
 
     <ImageView
         android:id="@+id/profile_Img"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:contentDescription="Profile image"
+        style="@style/ListItemImageView.Profile"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars"
-        android:scaleType="centerCrop" />
+        tools:srcCompat="@tools:sample/avatars" />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="236dp"
-        android:layout_height="match_parent"
-        android:minHeight="32dp"
+    <LinearLayout
+        android:id="@+id/taskTextView"
+        style="@style/ListItemTextView.Task"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/profile_Img"
-        android:padding="10dp"
-        android:paddingLeft="8dp"
-        android:textColor="@color/black"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textViewTitle"
+            style="@style/ListItemTextView.Task.Title" />
+        <TextView
+            android:id="@+id/textViewTopic"
+            style="@style/ListItemTextView.Task.Topic" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/resButton"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:backgroundTint="#FFFFFF"
-        android:drawableEnd="@drawable/ic_renew"
-        tools:ignore="MissingConstraints"
-        style="?android:attr/borderlessButtonStyle" />
-
+        style="@style/TaskRefreshButton"
+        tools:ignore="MissingConstraints" />
 
 </LinearLayout>
