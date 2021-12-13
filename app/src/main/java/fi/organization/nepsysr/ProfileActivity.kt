@@ -176,7 +176,6 @@ class ProfileActivity : AppCompatActivity(), ProfileInterface {
         )
         btPickColor.setBackgroundColor(Color.parseColor(newColor))
         btSave.setBackgroundColor(Color.parseColor(newColor))
-        //etName.backgroundTintList = ColorStateList.valueOf(Color.parseColor(newColor))
 
     }
 
