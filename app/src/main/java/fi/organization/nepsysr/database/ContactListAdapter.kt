@@ -14,6 +14,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.requestPermissions
@@ -74,29 +75,19 @@ class ContactListAdapter : ListAdapter<Contact,
             }
 
 
+            val addImageDialog = AlertDialog.Builder(mContext)
+                .setTitle("Lisää kuva")
+                .setMessage("Lisätäänkö kuva kamerasta vai galleriasta?")
+                .setPositiveButton("Kamera") { _, _ ->
+                    openCamera(id)
+                }
+                .setNegativeButton("Galleria") { _, _ ->
+                    openGallery(id)
+                }
+
             // Check and ask for permissions, then start gallery activity.
             contactImageView.setOnClickListener {
-                when (PackageManager.PERMISSION_GRANTED) {
-                    ContextCompat.checkSelfPermission(
-                        mContext,
-                        Manifest.permission.READ_EXTERNAL_STORAGE
-                    ) -> {
-                        // You can use the API that requires the permission.
-                        val gallery = Intent(
-                            Intent.ACTION_PICK,
-                            MediaStore.Images.Media.INTERNAL_CONTENT_URI
-                        )
-
-                        startActivityForResult(mContext as Activity, gallery, id, null)
-                    }
-                    else -> {
-                        // You can directly ask for the permission.
-                        requestPermissions(
-                            mContext as Activity,
-                            arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                            IMAGE_PICK_CODE)
-                    }
-                }
+                addImageDialog.show()
             }
         }
 
@@ -107,6 +98,62 @@ class ContactListAdapter : ListAdapter<Contact,
                 val view: View = LayoutInflater.from(parent.context)
                         .inflate(R.layout.recyclerview_item, parent, false)
                 return ContactViewHolder(view)
+            }
+        }
+
+        private fun openCamera(contactId: Int) {
+            when (PackageManager.PERMISSION_GRANTED) {
+                ContextCompat.checkSelfPermission(
+                    mContext,
+                    Manifest.permission.CAMERA
+                ) -> {
+                    // You can use the API that requires the permission.
+                    val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                    ActivityCompat.startActivityForResult(
+                        mContext as Activity,
+                        takePictureIntent,
+                        contactId,
+                        null
+                    )
+                }
+                else -> {
+                    // You can directly ask for the permission.
+                    ActivityCompat.requestPermissions(
+                        mContext as Activity,
+                        arrayOf(Manifest.permission.CAMERA),
+                        IMAGE_PICK_CODE
+                    )
+                }
+            }
+        }
+
+        private fun openGallery(contactId: Int) {
+            when (PackageManager.PERMISSION_GRANTED) {
+                ContextCompat.checkSelfPermission(
+                    mContext,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                ) -> {
+                    // You can use the API that requires the permission.
+                    val gallery = Intent(
+                        Intent.ACTION_PICK,
+                        MediaStore.Images.Media.INTERNAL_CONTENT_URI
+                    )
+
+                    ActivityCompat.startActivityForResult(
+                        mContext as Activity,
+                        gallery,
+                        contactId,
+                        null
+                    )
+                }
+                else -> {
+                    // You can directly ask for the permission.
+                    ActivityCompat.requestPermissions(
+                        mContext as Activity,
+                        arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                        1001
+                    )
+                }
             }
         }
     }

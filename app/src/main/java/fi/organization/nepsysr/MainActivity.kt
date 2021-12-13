@@ -127,7 +127,7 @@ class MainActivity : AppCompatActivity() {
         if(extraCheck == null && cameraBitmap != null){
             contactViewModel.updateContactImage(requestCode, compressBitmap(cameraBitmap))
             return
-            
+
         } else if (extraCheck == null && data?.data != null) {
             val uriImg = data.data
 
