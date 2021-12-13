@@ -93,13 +93,13 @@ class ProfileActivity : AppCompatActivity(), ProfileInterface {
 
                 setResult(Activity.RESULT_OK, data)
                 finish()
+
             } else {
-                val toast = Toast.makeText(
+                Toast.makeText(
                     applicationContext,
                     "Nimikenttä on tyhjä",
-                    Toast.LENGTH_SHORT)
-                toast.show()
-
+                    Toast.LENGTH_LONG
+                ).show()
             }
         }
 
