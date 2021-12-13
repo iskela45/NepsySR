@@ -121,7 +121,7 @@ class AddingTaskActivity : AppCompatActivity() {
 
         val addImageDialog = AlertDialog.Builder(this)
             .setTitle("Lisää kuva")
-            .setMessage("Tuleeko kuva kamerasta vai galleriasta?")
+            .setMessage("Lisätäänkö kuva kamerasta vai galleriasta?")
             .setPositiveButton("Kamera") { _, _ ->
                 openCamera()
             }

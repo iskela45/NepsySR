@@ -74,7 +74,7 @@ class TaskListAdapter : ListAdapter<Task, TaskListAdapter.TaskViewHolder>(TasksC
 
             val addImageDialog = AlertDialog.Builder(mContext)
                 .setTitle("Lisää kuva")
-                .setMessage("Tuleeko kuva kamerasta vai galleriasta?")
+                .setMessage("Lisätäänkö kuva kamerasta vai galleriasta?")
                 .setPositiveButton("Kamera") { _, _ ->
                     openCamera(taskId)
                 }
