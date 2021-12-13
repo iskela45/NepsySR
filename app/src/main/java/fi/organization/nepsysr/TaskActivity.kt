@@ -4,8 +4,11 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.graphics.ImageDecoder
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -115,10 +118,25 @@ class TaskActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         val extraCheck = data?.getStringExtra("title")
         val taskId = data?.getIntExtra("taskId", -1)
-        val imageBitmap = data?.extras?.get("data") as Bitmap?
+        val cameraBitmap = data?.extras?.get("data") as Bitmap?
+        Log.d("TAG", "BWOAH2")
 
-        if(extraCheck == null && imageBitmap != null){
-            taskViewModel.updateTaskImage(requestCode, compressBitmap(imageBitmap))
+        if(extraCheck == null && cameraBitmap != null){
+            Log.d("TAG", "BWOAH3")
+            taskViewModel.updateTaskImage(requestCode, compressBitmap(cameraBitmap))
+            return
+
+        } else if(extraCheck == null && data?.data != null){
+            Log.d("TAG", "BWOAH4")
+            val uriImg = data.data
+            val galleryBitmap : Bitmap = if (Build.VERSION.SDK_INT < 28) {
+                MediaStore.Images.Media.getBitmap(contentResolver, uriImg)
+            } else {
+                val source = ImageDecoder.createSource(contentResolver, uriImg!!)
+                ImageDecoder.decodeBitmap(source)
+            }
+
+            taskViewModel.updateTaskImage(requestCode, compressBitmap(galleryBitmap))
             return
         }
 

@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
@@ -70,35 +72,25 @@ class TaskListAdapter : ListAdapter<Task, TaskListAdapter.TaskViewHolder>(TasksC
             taskItemViewTopic.text = "$topic \n$daysRemain/$timer päivää jäljellä"
             taskImageView.setImageBitmap(img)
 
+            val addImageDialog = AlertDialog.Builder(mContext)
+                .setTitle("Lisää kuva")
+                .setMessage("Tuleeko kuva kamerasta vai galleriasta?")
+                .setPositiveButton("Kamera") { _, _ ->
+                    openCamera(taskId)
+                }
+                .setNegativeButton("Galleria") { _, _ ->
+                    openGallery(taskId)
+                }
+
+            // Check and ask for permissions, then start camera activity.
+            taskImageView.setOnClickListener {
+                addImageDialog.show()
+            }
+
             resButton.setOnClickListener {
                 alarm.updateSpecificTaskAlarm(taskId, timer, requestCode, title!!, topic)
             }
 
-            // Check and ask for permissions, then start camera activity.
-            taskImageView.setOnClickListener {
-                when (PackageManager.PERMISSION_GRANTED) {
-                    ContextCompat.checkSelfPermission(
-                        mContext,
-                        Manifest.permission.CAMERA
-                    ) -> {
-                        // You can use the API that requires the permission.
-                        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                        ActivityCompat.startActivityForResult(
-                            mContext as Activity,
-                            takePictureIntent,
-                            taskId,
-                            null
-                        )
-                    }
-                    else -> {
-                        // You can directly ask for the permission.
-                        ActivityCompat.requestPermissions(
-                            mContext as Activity,
-                            arrayOf(Manifest.permission.CAMERA),
-                            IMAGE_PICK_CODE)
-                    }
-                }
-            }
             // Add clickListener to open addTaskActivity with prefilled
             // saving will update task
             taskTextView.setOnClickListener{
@@ -128,6 +120,62 @@ class TaskListAdapter : ListAdapter<Task, TaskListAdapter.TaskViewHolder>(TasksC
                 val view: View = LayoutInflater.from(parent.context)
                     .inflate(R.layout.recyclerview_item_task, parent, false)
                 return TaskViewHolder(view)
+            }
+        }
+
+        private fun openCamera(taskId: Int) {
+            when (PackageManager.PERMISSION_GRANTED) {
+                ContextCompat.checkSelfPermission(
+                    mContext,
+                    Manifest.permission.CAMERA
+                ) -> {
+                    // You can use the API that requires the permission.
+                    val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                    ActivityCompat.startActivityForResult(
+                        mContext as Activity,
+                        takePictureIntent,
+                        taskId,
+                        null
+                    )
+                }
+                else -> {
+                    // You can directly ask for the permission.
+                    ActivityCompat.requestPermissions(
+                        mContext as Activity,
+                        arrayOf(Manifest.permission.CAMERA),
+                        IMAGE_PICK_CODE)
+                }
+            }
+        }
+
+        private fun openGallery(taskId: Int) {
+            when (PackageManager.PERMISSION_GRANTED) {
+                ContextCompat.checkSelfPermission(
+                    mContext,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                ) -> {
+                    Log.d("TAG", "BWOAH")
+                    // You can use the API that requires the permission.
+                    val gallery = Intent(
+                        Intent.ACTION_PICK,
+                        MediaStore.Images.Media.INTERNAL_CONTENT_URI
+                    )
+
+                    ActivityCompat.startActivityForResult(
+                        mContext as Activity,
+                        gallery,
+                        taskId,
+                        null
+                    )
+                }
+                else -> {
+                    // You can directly ask for the permission.
+                    ActivityCompat.requestPermissions(
+                        mContext as Activity,
+                        arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                        1001
+                    )
+                }
             }
         }
     }
