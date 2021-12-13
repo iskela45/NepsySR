@@ -12,6 +12,10 @@ import androidx.core.app.NotificationCompat
 import androidx.preference.PreferenceManager
 import fi.organization.nepsysr.MainActivity
 import fi.organization.nepsysr.R
+import fi.organization.nepsysr.database.AppRoomDatabase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
+import kotlin.concurrent.thread
 
 class AlarmReceiver : BroadcastReceiver() {
 
@@ -24,32 +28,47 @@ class AlarmReceiver : BroadcastReceiver() {
         val title = intent?.getStringExtra("title")
         val topic = intent?.getStringExtra("topic")
         val days = intent?.getIntExtra("days", 0)
+        val requestCode = intent?.getIntExtra("requestCode", 0)
+
+        var flag = false
 
         val sp = PreferenceManager.getDefaultSharedPreferences(context)
         val notificationsOnOrOff = sp.getBoolean("disable_notifications", false)
 
-        if (days!! == 0 && !notificationsOnOrOff) {
-            createNotificationChannel(context)
+        val applicationScope = CoroutineScope(SupervisorJob())
+        val database = AppRoomDatabase.getDatabase(context!!, applicationScope)
 
-            // When notification is tapped, call ProfileActivity
-            val intent = Intent(context, MainActivity::class.java)
-            val contentIntent = PendingIntent.getActivity(context, 0, intent, 0)
+        thread {
+            val tasks = database.appDao().getAllTasksList()
+            for (i in tasks) {
+                if (i.requestCode == requestCode) {
+                    flag = true
+                }
+            }
 
-            var notificationManager : NotificationManager =
-                context?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            if (days!! == 0 && !notificationsOnOrOff && flag) {
+                createNotificationChannel(context)
 
-            // Create notification with channel Id
-            val builder = NotificationCompat.Builder(context, CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_notifications)
-                .setContentTitle(title)
-                .setContentText(topic)
-                .setPriority(NotificationCompat.PRIORITY_MAX)
-            builder.setContentIntent(contentIntent).setAutoCancel(true)
+                // When notification is tapped, call ProfileActivity
+                val intent = Intent(context, MainActivity::class.java)
+                val contentIntent = PendingIntent.getActivity(context, 0, intent, 0)
 
-            val mNotificationManager =
-                context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            with(mNotificationManager) {
-                notify(notificationId!!, builder.build())
+                var notificationManager : NotificationManager =
+                    context?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+                // Create notification with channel Id
+                val builder = NotificationCompat.Builder(context, CHANNEL_ID)
+                    .setSmallIcon(R.drawable.ic_notifications)
+                    .setContentTitle(title)
+                    .setContentText(topic)
+                    .setPriority(NotificationCompat.PRIORITY_MAX)
+                builder.setContentIntent(contentIntent).setAutoCancel(true)
+
+                val mNotificationManager =
+                    context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                with(mNotificationManager) {
+                    notify(notificationId!!, builder.build())
+                }
             }
         }
     }

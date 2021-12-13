@@ -42,6 +42,8 @@ class AlarmHandler(val context: Context) {
         intent.putExtra("title", title)
         intent.putExtra("topic", topic)
         intent.putExtra("days", days)
+        intent.putExtra("requestCode", penIntentRequestCode)
+
 
         val alarmIntent : PendingIntent = PendingIntent.getBroadcast(
             context,
@@ -109,6 +111,7 @@ class AlarmHandler(val context: Context) {
         intent.putExtra("title", title)
         intent.putExtra("topic", topic)
         intent.putExtra("days", daysRemain)
+        intent.putExtra("requestCode", requestCode)
 
         val alarmIntent : PendingIntent = PendingIntent.getBroadcast(
             context,
@@ -138,7 +141,6 @@ class AlarmHandler(val context: Context) {
         calendar.set(Calendar.MINUTE, 0)
         calendar.set(Calendar.SECOND, 0)
 
-        Log.d("no", calendar.time.toString())
         if(calendar.before(Calendar.getInstance())) {
             calendar.add(Calendar.DATE, 1)
         }
