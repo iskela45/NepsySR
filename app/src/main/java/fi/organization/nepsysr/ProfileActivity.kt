@@ -18,6 +18,7 @@ import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -75,22 +76,31 @@ class ProfileActivity : AppCompatActivity(), ProfileInterface {
 
         btSave.setOnClickListener {
             val name = etName.text.toString()
-            val drawable = contactImageView.drawable
-            val bitmap = drawable.toBitmap()
-            val data = Intent()
-            var uid = 0
-            if (isUpdate) {
-                uid = intent.getIntExtra("uid", 0)
+            if (name != "") {
+                val drawable = contactImageView.drawable
+                val bitmap = drawable.toBitmap()
+                val data = Intent()
+                var uid = 0
+                if (isUpdate) {
+                    uid = intent.getIntExtra("uid", 0)
+                }
+
+                data.putExtra("uid", uid)
+                data.putExtra("name", name)
+                data.putExtra("img", convertBitmap(bitmap))
+                data.putExtra("color", selectedColor)
+                data.putExtra("isUpdate", isUpdate)
+
+                setResult(Activity.RESULT_OK, data)
+                finish()
+            } else {
+                val toast = Toast.makeText(
+                    applicationContext,
+                    "Nimikenttä on tyhjä",
+                    Toast.LENGTH_SHORT)
+                toast.show()
+
             }
-
-            data.putExtra("uid", uid)
-            data.putExtra("name", name)
-            data.putExtra("img", convertBitmap(bitmap))
-            data.putExtra("color", selectedColor)
-            data.putExtra("isUpdate", isUpdate)
-
-            setResult(Activity.RESULT_OK, data)
-            finish()
         }
 
         val addImageDialog = AlertDialog.Builder(this)
