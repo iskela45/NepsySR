@@ -10,10 +10,12 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.*
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -109,31 +111,20 @@ class AddingTaskActivity : AppCompatActivity() {
             }
         }
 
+        val addImageDialog = AlertDialog.Builder(this)
+            .setTitle("Lisää kuva")
+            .setMessage("Tuleeko kuva kamerasta vai galleriasta?")
+            .setPositiveButton("Kamera") { dialogInterface, i ->
+                openCamera()
+            }
+            .setNegativeButton("Galleria") { dialogInterface, i ->
+                Log.d("TAG", "GALLERY")
+            }
+
         // Check and ask for permissions, then start gallery activity.
         taskImageView.setOnClickListener {
-            when (PackageManager.PERMISSION_GRANTED) {
-                ContextCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.CAMERA
-                ) -> {
-                    // You can use the API that requires the permission.
-                    val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                    ActivityCompat.startActivityForResult(
-                        this as Activity,
-                        takePictureIntent,
-                        1002,
-                        null
-                    )
-                }
-                else -> {
-                    // You can directly ask for the permission.
-                    ActivityCompat.requestPermissions(
-                        this as Activity,
-                        arrayOf(Manifest.permission.CAMERA),
-                        1002
-                    )
-                }
-            }
+            addImageDialog.show()
+
         }
     }
 
@@ -170,6 +161,32 @@ class AddingTaskActivity : AppCompatActivity() {
         if(requestCode == 1002 && bitmap != null){
             val img : ImageView = findViewById(R.id.imageView)
             img.setImageBitmap(compressBitmap(bitmap))
+        }
+    }
+
+    fun openCamera() {
+        when (PackageManager.PERMISSION_GRANTED) {
+            ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.CAMERA
+            ) -> {
+                // You can use the API that requires the permission.
+                val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                ActivityCompat.startActivityForResult(
+                    this as Activity,
+                    takePictureIntent,
+                    1002,
+                    null
+                )
+            }
+            else -> {
+                // You can directly ask for the permission.
+                ActivityCompat.requestPermissions(
+                    this as Activity,
+                    arrayOf(Manifest.permission.CAMERA),
+                    1002
+                )
+            }
         }
     }
 }
