@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.ImageDecoder
 import android.graphics.drawable.ColorDrawable
@@ -64,10 +65,16 @@ class AddingTaskActivity : AppCompatActivity() {
 
 
         if (isUpdate) {
+            var serializedImage = intent.getSerializableExtra("img")
             editTitle.setText(intent.getStringExtra("title").toString())
             setTimer.setText(intent.getIntExtra("timer", 0).toString())
             editTopic.setText(intent.getStringExtra("topic").toString())
-            taskImageView.setImageBitmap(intent.getParcelableExtra("img"))
+            taskImageView.setImageBitmap((
+                    BitmapFactory.decodeByteArray(
+                        serializedImage as ByteArray?,
+                        0,
+                        serializedImage!!.size
+            )))
             this.findViewById<TextView>(R.id.saveTask).text = "Päivitä"
             supportActionBar?.title = "Muokkaa tehtävää"
         } else {

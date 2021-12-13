@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView
 import fi.organization.nepsysr.AddingTaskActivity
 import fi.organization.nepsysr.R
 import fi.organization.nepsysr.alarm.AlarmHandler
+import fi.organization.nepsysr.utilities.convertBitmap
 
 class TaskListAdapter : ListAdapter<Task, TaskListAdapter.TaskViewHolder>(TasksComparator()) {
 
@@ -108,7 +109,7 @@ class TaskListAdapter : ListAdapter<Task, TaskListAdapter.TaskViewHolder>(TasksC
                 intent.putExtra("topic", topic)
                 intent.putExtra("daysRemain", daysRemain )
                 intent.putExtra("timer", timer )
-                intent.putExtra("img", img)
+                intent.putExtra("img", convertBitmap(img))
                 intent.putExtra("isUpdate", true)
 
                 ActivityCompat.startActivityForResult(
