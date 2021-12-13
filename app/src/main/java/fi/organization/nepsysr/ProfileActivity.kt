@@ -39,7 +39,7 @@ class ProfileActivity : AppCompatActivity(), ProfileInterface {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
 
-        this.selectedColor = "#ff8000"
+        this.selectedColor = "#555555"
         this.etName = findViewById(R.id.etName)
         this.btSave = findViewById(R.id.btSave)
         this.btPickColor = findViewById(R.id.btPickColor)
