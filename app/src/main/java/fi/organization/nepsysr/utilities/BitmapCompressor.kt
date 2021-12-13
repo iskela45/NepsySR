@@ -21,9 +21,9 @@ fun compressBitmap(bitmap: Bitmap): Bitmap {
     val stream = ByteArrayOutputStream()
 
     if (Build.VERSION.SDK_INT < 30) {
-        bitmap.compress(Bitmap.CompressFormat.WEBP, 40, stream)
+        bitmap.compress(Bitmap.CompressFormat.WEBP, 25, stream)
     } else {
-        bitmap.compress(Bitmap.CompressFormat.WEBP_LOSSY, 40, stream)
+        bitmap.compress(Bitmap.CompressFormat.WEBP_LOSSY, 25, stream)
     }
 
     val byteArray = stream.toByteArray()
