@@ -85,7 +85,7 @@ class AddingTaskActivity : AppCompatActivity() {
             val timer = setTimer.text.toString()
             val topic = editTopic.text.toString()
 
-            if (timer.isNotEmpty()) {
+            if (timer.isNotEmpty() && title != "") {
                 val alarm = AlarmHandler(this)
 
                 alarm.start(title, timer, topic)
@@ -110,11 +110,25 @@ class AddingTaskActivity : AppCompatActivity() {
 
                 finish()
             } else {
-                Toast.makeText(
-                    applicationContext,
-                    "Aseta ajastimeen tehtävän ilmoitusten aikaväli",
-                    Toast.LENGTH_LONG
-                ).show()
+                if(timer.isEmpty() && title != "") {
+                    Toast.makeText(
+                        applicationContext,
+                        "Aseta ajastimeen tehtävän ilmoitusten aikaväli",
+                        Toast.LENGTH_LONG
+                    ).show()
+                } else if (timer.isNotEmpty() && title == "") {
+                    Toast.makeText(
+                        applicationContext,
+                        "Yhteydenpitotapa on tyhjä",
+                        Toast.LENGTH_LONG
+                    ).show()
+                } else {
+                    Toast.makeText(
+                        applicationContext,
+                        "Yhteydenpitotapa ja ajastin ovat tyhjiä",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
             }
         }
 
