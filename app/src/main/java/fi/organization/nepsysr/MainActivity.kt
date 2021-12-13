@@ -122,7 +122,13 @@ class MainActivity : AppCompatActivity() {
         // This is the hacky part, checking that the activity result isn't from contact creation
         // By checking if the name extra exists.
         val extraCheck = data?.getStringExtra("name")
-        if(extraCheck == null && data?.data != null){
+        val cameraBitmap = data?.extras?.get("data") as Bitmap?
+
+        if(extraCheck == null && cameraBitmap != null){
+            contactViewModel.updateContactImage(requestCode, compressBitmap(cameraBitmap))
+            return
+            
+        } else if (extraCheck == null && data?.data != null) {
             val uriImg = data.data
 
             val bitmap : Bitmap = if (Build.VERSION.SDK_INT < 28) {
@@ -133,6 +139,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             contactViewModel.updateContactImage(requestCode, compressBitmap(bitmap))
+            return
         }
 
         val uid = data?.getIntExtra("uid", 0)
