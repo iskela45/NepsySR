@@ -132,7 +132,6 @@ class AddingTaskActivity : AppCompatActivity() {
         // Check and ask for permissions, then start gallery activity.
         taskImageView.setOnClickListener {
             addImageDialog.show()
-
         }
     }
 

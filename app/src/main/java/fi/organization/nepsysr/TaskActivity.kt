@@ -119,15 +119,12 @@ class TaskActivity : AppCompatActivity() {
         val extraCheck = data?.getStringExtra("title")
         val taskId = data?.getIntExtra("taskId", -1)
         val cameraBitmap = data?.extras?.get("data") as Bitmap?
-        Log.d("TAG", "BWOAH2")
 
         if(extraCheck == null && cameraBitmap != null){
-            Log.d("TAG", "BWOAH3")
             taskViewModel.updateTaskImage(requestCode, compressBitmap(cameraBitmap))
             return
 
         } else if(extraCheck == null && data?.data != null){
-            Log.d("TAG", "BWOAH4")
             val uriImg = data.data
             val galleryBitmap : Bitmap = if (Build.VERSION.SDK_INT < 28) {
                 MediaStore.Images.Media.getBitmap(contentResolver, uriImg)

@@ -154,7 +154,6 @@ class TaskListAdapter : ListAdapter<Task, TaskListAdapter.TaskViewHolder>(TasksC
                     mContext,
                     Manifest.permission.READ_EXTERNAL_STORAGE
                 ) -> {
-                    Log.d("TAG", "BWOAH")
                     // You can use the API that requires the permission.
                     val gallery = Intent(
                         Intent.ACTION_PICK,
