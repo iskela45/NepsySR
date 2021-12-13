@@ -12,7 +12,6 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.*
@@ -164,7 +163,6 @@ class AddingTaskActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         val bitmap = data?.extras?.get("data") as Bitmap?
-
 
         if(requestCode == 1001 && data?.data != null){
             val uriImg = data.data

@@ -18,6 +18,7 @@ import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -92,35 +93,19 @@ class ProfileActivity : AppCompatActivity(), ProfileInterface {
             finish()
         }
 
+        val addImageDialog = AlertDialog.Builder(this)
+            .setTitle("Lisää kuva")
+            .setMessage("Lisätäänkö kuva kamerasta vai galleriasta?")
+            .setPositiveButton("Kamera") { _, _ ->
+                openCamera()
+            }
+            .setNegativeButton("Galleria") { _, _ ->
+                openGallery()
+            }
+
         // Check and ask for permissions, then start gallery activity.
         contactImageView.setOnClickListener {
-            when (PackageManager.PERMISSION_GRANTED) {
-                ContextCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.READ_EXTERNAL_STORAGE
-                ) -> {
-                    // You can use the API that requires the permission.
-                    val gallery = Intent(
-                        Intent.ACTION_PICK,
-                        MediaStore.Images.Media.INTERNAL_CONTENT_URI
-                    )
-
-                    ActivityCompat.startActivityForResult(
-                        this as Activity,
-                        gallery,
-                        1001,
-                        null
-                    )
-                }
-                else -> {
-                    // You can directly ask for the permission.
-                    ActivityCompat.requestPermissions(
-                        this as Activity,
-                        arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                        1001
-                    )
-                }
-            }
+            addImageDialog.show()
         }
     }
 
@@ -152,6 +137,8 @@ class ProfileActivity : AppCompatActivity(), ProfileInterface {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        val bitmap = data?.extras?.get("data") as Bitmap?
+
         if(requestCode == 1001 && data?.data != null){
             val uriImg = data.data
 
@@ -162,6 +149,9 @@ class ProfileActivity : AppCompatActivity(), ProfileInterface {
                 ImageDecoder.decodeBitmap(source)
             }
 
+            val img : ImageView = findViewById(R.id.imageView)
+            img.setImageBitmap(compressBitmap(bitmap))
+        } else if (requestCode == 1002 && bitmap != null) {
             val img : ImageView = findViewById(R.id.imageView)
             img.setImageBitmap(compressBitmap(bitmap))
         }
@@ -183,5 +173,61 @@ class ProfileActivity : AppCompatActivity(), ProfileInterface {
     override fun passData(profileColor: String) {
         selectedColor = profileColor
         setColors(profileColor)
+    }
+
+    private fun openCamera() {
+        when (PackageManager.PERMISSION_GRANTED) {
+            ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.CAMERA
+            ) -> {
+                // You can use the API that requires the permission.
+                val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                ActivityCompat.startActivityForResult(
+                    this as Activity,
+                    takePictureIntent,
+                    1002,
+                    null
+                )
+            }
+            else -> {
+                // You can directly ask for the permission.
+                ActivityCompat.requestPermissions(
+                    this as Activity,
+                    arrayOf(Manifest.permission.CAMERA),
+                    1002
+                )
+            }
+        }
+    }
+
+    private fun openGallery() {
+        when (PackageManager.PERMISSION_GRANTED) {
+            ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            ) -> {
+                // You can use the API that requires the permission.
+                val gallery = Intent(
+                    Intent.ACTION_PICK,
+                    MediaStore.Images.Media.INTERNAL_CONTENT_URI
+                )
+
+                ActivityCompat.startActivityForResult(
+                    this as Activity,
+                    gallery,
+                    1001,
+                    null
+                )
+            }
+            else -> {
+                // You can directly ask for the permission.
+                ActivityCompat.requestPermissions(
+                    this as Activity,
+                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                    1001
+                )
+            }
+        }
     }
 }
