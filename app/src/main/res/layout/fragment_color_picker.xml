@@ -86,8 +86,8 @@
             android:id="@+id/rbViolet"
             android:layout_width="400dp"
             android:layout_height="wrap_content"
-            android:background="#d41cd4"
-            android:text="Violetti" />
+            android:background="#555555"
+            android:text="Harmaa" />
 
     </RadioGroup>
 

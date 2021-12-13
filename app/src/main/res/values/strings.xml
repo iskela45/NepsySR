@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">NepsySR</string>
+    <string name="app_name">Sosiaalinen muistuttaja</string>
 
     <!--Toolbar-->
     <string name="action_settings">Asetukset</string>
