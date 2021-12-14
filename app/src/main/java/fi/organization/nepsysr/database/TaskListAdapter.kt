@@ -106,7 +106,7 @@ class TaskListAdapter : ListAdapter<Task, TaskListAdapter.TaskViewHolder>(TasksC
                 ActivityCompat.startActivityForResult(
                     mContext as Activity,
                     intent,
-                    2000,
+                    requestCode,
                     null
                 )
             }
