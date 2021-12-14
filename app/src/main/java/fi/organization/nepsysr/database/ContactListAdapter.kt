@@ -12,6 +12,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
@@ -44,6 +45,7 @@ class ContactListAdapter : ListAdapter<Contact,
         private val contactItemView: TextView = itemView.findViewById(R.id.textView)
         private val contactView: ConstraintLayout = itemView.findViewById(R.id.contact_View)
         private var contactImageView: ImageView = itemView.findViewById(R.id.profile_Img)
+        private val contactEdit: Button = itemView.findViewById(R.id.btEdit)
 
         var context : Context = contactImageView.context
         private var mContext : Context = itemView.context
@@ -61,7 +63,7 @@ class ContactListAdapter : ListAdapter<Contact,
                 startActivityForResult(mContext as Activity, intent, 3000, null)
             }
 
-            contactItemView.setOnLongClickListener {
+            contactEdit.setOnClickListener {
                 val intent = Intent(mContext, ProfileActivity::class.java)
                 intent.putExtra("uid", id)
                 intent.putExtra("name", text)
@@ -70,7 +72,7 @@ class ContactListAdapter : ListAdapter<Contact,
                 intent.putExtra("color", color)
                 intent.putExtra("isUpdate", true)
                 startActivityForResult(mContext as Activity, intent, 2000, null)
-                return@setOnLongClickListener true
+                return@setOnClickListener
             }
 
 
